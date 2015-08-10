@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.related-words {
+			width: 80px;
+			display: none;
+
+			position: absolute;
+			left: 0;
+			top: 20px; /* temp */
+			
+			border: 1px solid black;
+		}
+
+		.container {
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<div class="container">
+			<input id="input-word" type="text" />
+			<button>Add</button>
+			<div id="related-words">
+				<ul>
+
+				</ul>
+			</div>
+		</div>
+	</form>
+	<script type="text/javascript">
+		var dictionary = [
+			{
+				word: 'dx12',
+				tags: []
+			},
+			{
+				word: 'batman',
+				tags: [],
+			},
+			{
+				word: 'ironman',
+				tags: []
+			},
+			{
+				word: 'joker',
+				tags: []
+			}
+		];
+		var word = document.querySelector("#input-word");
+		var related = document.querySelector("#related-words");
+
+
+		function inputHandler(event) {
+			var whatsinput = this.value;
+			var maxCount = 10;
+			var results = [];
+
+			for (var i = 0; i < dictionary.length; i++) {
+				if (whatsinput && dictionary[i].word.indexOf(whatsinput) > -1) {
+					results.push(dictionary[i].word);
+					if (results.length === maxCount) {
+						break;
+					}
+				}
+			}
+			
+			destoryList();
+			initializeList(results);
+		}
+
+		function initializeList(words) {
+
+			related.style.display = "";
+			for (var i = 0; i < words.length; i++) {
+				var item = document.createElement('li');
+				item.innerHTML = '<span>' + words[i] + '</span>';
+				related.querySelector('ul').appendChild(item);
+			}
+		}
+
+		function destoryList() {
+			related.querySelector('ul').innerHTML = "";
+			related.style.display = "none";			
+		}
+
+		word.addEventListener('keyup', inputHandler, false);
+		word.addEventListener('mouseup', inputHandler, false); // copy and paste
+		word.addEventListener('blur', destoryList, false);
+
+	</script>
+</body>
+</html>
