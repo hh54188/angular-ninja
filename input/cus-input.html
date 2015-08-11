@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller="appController">
+	<cus-input></cus-input>
+	<script type="text/javascript">
+		var myapp = angular.module('myapp', []);
+
+		myapp.controller('appController', function ($scope) {
+			$scope.keywordsDictionary = [
+				// {
+				// 	word: 'dx12',
+				// 	tags: [],
+				// },
+				// {
+				// 	word: 'batman',
+				// 	tags: [],
+				// }				
+			];
+			$scope.userInput = 'Hello World';
+		})
+
+		myapp.directive('cusInput', function () {
+			
+			var templateStr = [
+				'<div ng-model="keywordsDictionary">',
+					'<input ng-model="userInput" value="{{userInput}}" type="text"/>',
+					'<button>Click</button>',
+					'<div>',
+						'<ul ng-show="keywordsDictionary.length">',
+							'<li ng-repeat="item in keywordsDictionary">{{item.word}}</li>',
+						'</ul>',
+					'</div>',
+				'</div>'
+			].join('');
+
+			return {
+				restrict: 'E',
+				template: templateStr,
+				replace: true,
+				compile: function ($templateElement, $templateAttributes) {
+					return function link($scope, $linkElement, $linkAttributes) {
+
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>
