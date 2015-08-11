@@ -13,6 +13,9 @@
 		
 		myapp.controller('demoController', function ($scope) {
 			$scope.userInput = "Hello World";
+			$scope.$watch('userInput', function () {
+				console.log('userInput changed!', arguments);
+			});
 		});
 
 		myapp.directive('custom', function () {

@@ -3,35 +3,49 @@
 <head>
 	<title></title>
 	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../dictionary.js"></script>
 </head>
-<body ng-app="myapp" ng-controller="appController">
+<body ng-app="myapp">
 	<cus-input></cus-input>
 	<script type="text/javascript">
 		var myapp = angular.module('myapp', []);
 
-		myapp.controller('appController', function ($scope) {
-			$scope.keywordsDictionary = [
-				// {
-				// 	word: 'dx12',
-				// 	tags: [],
-				// },
-				// {
-				// 	word: 'batman',
-				// 	tags: [],
-				// }				
-			];
-			$scope.userInput = 'Hello World';
+		myapp.controller('userInputController', function ($scope) {
+			
+			var dictionary = $scope.keywordsDictionary = globalDictionary; 
+			$scope.placeholderText = '输入想查找的关键词';
+			$scope.userInput = '';
+			$scope.suggestResults = [];
+			var suggestMaxCount = 10;
+
+
+			$scope.inputModified = function () {
+				console.log($scope.userInput);
+				$scope.suggestResults = [];
+				for (var i = 0; i < dictionary.length; i++) {
+					var tempWord = dictionary[i].word;
+					if ($scope.userInput && tempWord.indexOf($scope.userInput) > -1) {
+						$scope.suggestResults.push(dictionary[i]);
+						if ($scope.suggestResults.length == suggestMaxCount) {
+							break;
+						}
+					}
+				}
+				console.log($scope.suggestResults);
+			}
 		})
 
 		myapp.directive('cusInput', function () {
 			
 			var templateStr = [
-				'<div ng-model="keywordsDictionary">',
-					'<input ng-model="userInput" value="{{userInput}}" type="text"/>',
-					'<button>Click</button>',
-					'<div>',
-						'<ul ng-show="keywordsDictionary.length">',
-							'<li ng-repeat="item in keywordsDictionary">{{item.word}}</li>',
+				'<div ng-controller="userInputController">',
+					'<form novalidate>',
+						'<input class="input-search-keyword" ng-model="userInput" ng-change="inputModified()" placeholder="{{placeholderText}}" value="" type="text"/>',
+						'<button type="submit" class="btn-submit">Click</button>',
+					'</form>',
+					'<div ng-show="suggestResults.length">',
+						'<ul>',
+							'<li ng-repeat="item in suggestResults">{{item.word}}</li>',
 						'</ul>',
 					'</div>',
 				'</div>'
@@ -44,6 +58,16 @@
 				compile: function ($templateElement, $templateAttributes) {
 					return function link($scope, $linkElement, $linkAttributes) {
 
+						// var linkElement = $linkElement[0];
+						// var searchInput = angular.element(linkElement.querySelector('.input-search-keyword'));
+						// var submitBtn = angular.element(linkElement.querySelector('.btn-submit'));
+
+						// function inputHandler(event) {
+						// 	console.log(this.value);
+						// }
+
+						// searchInput.on('mouseup', inputHandler)
+						// 			.on('keyup', inputHandler);
 					}
 				}
 			}
