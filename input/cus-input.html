@@ -10,18 +10,19 @@
 	<script type="text/javascript">
 		var myapp = angular.module('myapp', []);
 
-		myapp.controller('userInputController', function ($scope) {
+		myapp.controller('userInputController', function ($scope, $sce) {
 			
 			var dictionary = $scope.keywordsDictionary = globalDictionary; 
-			$scope.placeholderText = '输入想查找的关键词';
+			$scope.placeholderText = '\u8bf7\u8f93\u5165\u5173\u952e\u8bcd';// 请输入关键词
 			$scope.userInput = '';
 			$scope.suggestResults = [];
+			$scope.suggestSelectIndex = -1;
 			var suggestMaxCount = 10;
 
 
 			$scope.inputModified = function () {
-				console.log($scope.userInput);
 				$scope.suggestResults = [];
+				$scope.suggestSelectIndex = -1;
 				for (var i = 0; i < dictionary.length; i++) {
 					var tempWord = dictionary[i].word;
 					if ($scope.userInput && tempWord.indexOf($scope.userInput) > -1) {
@@ -31,7 +32,46 @@
 						}
 					}
 				}
-				console.log($scope.suggestResults);
+			}
+
+			$scope.formSubmit = function () {
+				debugger
+			}
+
+			$scope.emphasizeMatched = function (originWord) {
+				return $sce.trustAsHtml(
+							originWord.replace(
+								$scope.userInput, '<strong>' + $scope.userInput + '</strong>'
+							)
+						);
+			}
+
+			$scope.selectIndex = function ($event) {
+				var suggestResultsLen = $scope.suggestResults.length;
+				if (!suggestResultsLen) {
+					return;
+				}		
+				var keyCode = $event.keyCode;
+				switch (keyCode) {
+					// 向上按钮
+					case 38:
+						$scope.suggestSelectIndex = --$scope.suggestSelectIndex < -1
+													? -1
+													: $scope.suggestSelectIndex;
+						break;
+					// 向下按钮
+					case 40:
+						$scope.suggestSelectIndex = ++$scope.suggestSelectIndex > suggestResultsLen - 1
+													? suggestResultsLen - 1
+													: $scope.suggestSelectIndex;					
+						break;
+					// 回车按钮
+					// case 13:
+					default:
+				}
+				if ($scope.suggestSelectIndex !== -1) {
+					$scope.userInput = $scope.suggestResults[$scope.suggestSelectIndex].word;
+				}
 			}
 		})
 
@@ -39,13 +79,22 @@
 			
 			var templateStr = [
 				'<div ng-controller="userInputController">',
-					'<form novalidate>',
-						'<input class="input-search-keyword" ng-model="userInput" ng-change="inputModified()" placeholder="{{placeholderText}}" value="" type="text"/>',
+					'<form ng-submit="formSubmit()" novalidate>',
+						'<input class="input-search-keyword"', 
+							'placeholder="{{placeholderText}}"',
+							'ng-model="userInput"',
+							'ng-keyup="selectIndex($event)"',
+							'ng-change="inputModified()" value="" type="text"/>',
 						'<button type="submit" class="btn-submit">Click</button>',
 					'</form>',
-					'<div ng-show="suggestResults.length">',
+					// suggest-box是否也应该添加一个独立的contoroller?
+					'<div class="suggest-box"ng-show="suggestResults.length">',
 						'<ul>',
-							'<li ng-repeat="item in suggestResults">{{item.word}}</li>',
+							'<li ng-repeat="item in suggestResults">',
+								// ngBindHtml: https://docs.angularjs.org/api/ng/directive/ngBindHtml
+								'<span ng-bind-html="emphasizeMatched(item.word)">',
+								'</span>',
+							'</li>',
 						'</ul>',
 					'</div>',
 				'</div>'
@@ -55,19 +104,9 @@
 				restrict: 'E',
 				template: templateStr,
 				replace: true,
-				compile: function ($templateElement, $templateAttributes) {
-					return function link($scope, $linkElement, $linkAttributes) {
-
-						// var linkElement = $linkElement[0];
-						// var searchInput = angular.element(linkElement.querySelector('.input-search-keyword'));
-						// var submitBtn = angular.element(linkElement.querySelector('.btn-submit'));
-
-						// function inputHandler(event) {
-						// 	console.log(this.value);
-						// }
-
-						// searchInput.on('mouseup', inputHandler)
-						// 			.on('keyup', inputHandler);
+				compile: function () {
+					return function link($scope, $linkElement, $attrs) {
+						var originLinkElement = $linkElement[0];
 					}
 				}
 			}
