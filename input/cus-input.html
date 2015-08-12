@@ -4,29 +4,55 @@
 	<title></title>
 	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
 	<script type="text/javascript" src="../dictionary.js"></script>
+	<style type="text/css">
+		.selected {
+			background: yellow;
+		}
+		.error {
+			background: orange;
+		}
+	</style>
 </head>
 <body ng-app="myapp">
 	<cus-input></cus-input>
 	<script type="text/javascript">
+		/*
+			1. 实现基本功能，将用户输入与controller中的model绑定
+			2. 实现从dictionary中查找suggest结果，并且显示出来
+			3. 实现用户input与suggest联动，可通过上下调整suggest
+			4. 为suggest添加高亮和加粗样式
+			5. 完成表单验证
+			6. 
+		*/
 		var myapp = angular.module('myapp', []);
 
 		myapp.controller('userInputController', function ($scope, $sce) {
 			
-			var dictionary = $scope.keywordsDictionary = globalDictionary; 
 			$scope.placeholderText = '\u8bf7\u8f93\u5165\u5173\u952e\u8bcd';// 请输入关键词
-			$scope.userInput = '';
-			$scope.suggestResults = [];
-			$scope.suggestSelectIndex = -1;
-			var suggestMaxCount = 10;
+			
+			$scope.keywordsDictionary = globalDictionary; // 用于搜寻建议的词典
+			$scope.userInput = ''; // 用户输入
+			$scope.suggestResults = []; // 搜寻建议结果
+			$scope.suggestSelectIndex = -1; // 索引，记录当前选择的建议词
 
+			var suggestMaxCount = 10; // 最大提供10个建议词
+			var dictionary = $scope.keywordsDictionary;
+
+			function resetSuggest() {
+				$scope.suggestResults = []; 
+				$scope.suggestSelectIndex = -1;				
+			}
 
 			$scope.inputModified = function () {
-				$scope.suggestResults = [];
-				$scope.suggestSelectIndex = -1;
+
+				// 每一次用户输入有更改，都要重新进行建议词搜索
+				resetSuggest();
+
 				for (var i = 0; i < dictionary.length; i++) {
 					var tempWord = dictionary[i].word;
 					if ($scope.userInput && tempWord.indexOf($scope.userInput) > -1) {
 						$scope.suggestResults.push(dictionary[i]);
+						// 最多只显示10个建议词
 						if ($scope.suggestResults.length == suggestMaxCount) {
 							break;
 						}
@@ -47,10 +73,12 @@
 			}
 
 			$scope.selectIndex = function ($event) {
+
 				var suggestResultsLen = $scope.suggestResults.length;
 				if (!suggestResultsLen) {
 					return;
-				}		
+				}
+
 				var keyCode = $event.keyCode;
 				switch (keyCode) {
 					// 向上按钮
@@ -65,10 +93,8 @@
 													? suggestResultsLen - 1
 													: $scope.suggestSelectIndex;					
 						break;
-					// 回车按钮
-					// case 13:
-					default:
 				}
+
 				if ($scope.suggestSelectIndex !== -1) {
 					$scope.userInput = $scope.suggestResults[$scope.suggestSelectIndex].word;
 				}
@@ -77,25 +103,42 @@
 
 		myapp.directive('cusInput', function () {
 			
+			var classToggleExpression = "suggestSelectIndex == $index? 'selected': ''";
+
 			var templateStr = [
 				'<div ng-controller="userInputController">',
-					'<form ng-submit="formSubmit()" novalidate>',
-						'<input class="input-search-keyword"', 
+					'<form name="userForm" ng-submit="formSubmit()" novalidate>',
+						'<input name="keywordInput" value="" type="text" ',
+							// Standard HTML5 attributes: 
+							'class="input-search-keyword"', 
 							'placeholder="{{placeholderText}}"',
+							' autofocus ',
+							' required ',
+							// Anuglar validate：
+							'ng-minlength="4"',
+							'ng-maxlength="10"',
+							// Angular event bind
 							'ng-model="userInput"',
 							'ng-keyup="selectIndex($event)"',
-							'ng-change="inputModified()" value="" type="text"/>',
-						'<button type="submit" class="btn-submit">Click</button>',
+							'ng-mouseup="selectIndex($event)"',
+							'ng-change="inputModified()"/>',
+						'<button type="submit" class="btn-submit" ng-disabled="userForm.$invalid" >Click</button>',
 					'</form>',
 					// suggest-box是否也应该添加一个独立的contoroller?
 					'<div class="suggest-box"ng-show="suggestResults.length">',
 						'<ul>',
-							'<li ng-repeat="item in suggestResults">',
+							'<li ng-class="' + classToggleExpression + '" data-index="{{$index}}"  ng-repeat="item in suggestResults track by $index">',
 								// ngBindHtml: https://docs.angularjs.org/api/ng/directive/ngBindHtml
 								'<span ng-bind-html="emphasizeMatched(item.word)">',
 								'</span>',
 							'</li>',
 						'</ul>',
+					'</div>',
+					// 表单验证提示信息
+					'<div>',
+						'<p class="error" ng-show="userForm.keywordInput.$error.minlength">Too short</p>',
+						'<p class="error" ng-show="userForm.keywordInput.$error.maxlength">Too long</p>',						
+						'<p class="error" ng-show="userForm.keywordInput.$error.required">required</p>',						
 					'</div>',
 				'</div>'
 			].join('');

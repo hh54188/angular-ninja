@@ -5,21 +5,41 @@
 	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
 </head>
 <body ng-app="myapp">
-	<div ng-controller="demoController">
-		<input type="text" ng-focus="focusHandler($event)" ng-blur="blurHandler($event)" ng-model="input" />
-	</div>
+
+<!-- 	<div>
+	  <label>Username</label>
+	  	<form name="signup_form">
+		    <input  type="text" 
+		            name="username" 
+		            ng-model="signup.username" 
+		            ng-minlength=3 
+		            ng-maxlength=20 
+		            required />
+	  	</form>
+	  <div class="error-container">
+	    <small class="error" ng-show="signup_form.username.$error.required">
+	    	Please input a username
+	    </small>
+	    <small class="error" ng-show="signup_form.username.$error.minlength">
+	    	Your username is required to be at least 3 characters
+	    </small>
+	    <small class="error" ng-show="signup_form.username.$error.maxlength">
+	    	Your username cannot be longer than 20 characters
+	    </small>
+	  </div>
+	</div> -->
+
+	
+	<form name="userForm" novalidate>
+		<input autofocus name="userInput" type="text" ng-minlength="1" ng-maxlength="6" ng-model="name" required/>
+	</form>
+	<p ng-show="userForm.userInput.$error.required">Show when input is required</p>
+	<p ng-show="userForm.userInput.$error.minlength">Show when form is too short</p>
+	<p ng-show="userForm.userInput.$error.maxlength">Show when form is too long</p>
+
+	
 	<script type="text/javascript">
 		var myapp = angular.module('myapp', []);
-		
-		myapp.controller('demoController', function ($scope, $sce) {
-			$scope.focusHandler = function ($event) {
-				console.log("focus");
-			}
-
-			$scope.blurHandler = function ($event) {
-				console.log("blur")
-			}
-		});
 	</script>
 </body>
 </html>
