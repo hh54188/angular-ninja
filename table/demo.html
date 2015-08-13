@@ -3,29 +3,24 @@
 <head>
 	<title></title>
 	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
-	<script type="text/javascript" src="../bower_components/ng-table/dist/ng-table.min.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="../bower_components/ng-table/dist/ng-table.min.css"> -->
-	<link rel="stylesheet" type="text/css" href="../bower_components/ng-table/dist/ng-table.css">
-	<style type="text/css">
-		.ng-table {
-		    border: 1px solid #000;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/css/bootstrap-theme.min.css">
 </head>
 <body ng-app="myapp">
     <div ng-controller="DemoCtrl">
-        <table ng-table="tableParams">
-            <tr ng-repeat="user in $data"> <!--什么情况下使用$data?-->
-                <td data-title="'Name'">{{user.name}}</td>
-                <td data-title="'Age'">{{user.age}}</td>
+        <table class="table">
+        	<!--排序默认都是从小到大，字幕从A至Z，数字从0至大-->
+            <tr ng-repeat="user in users | orderBy:'name'">
+                <td>{{user.name}}</td>
+                <td>{{user.age}}</td>
             </tr>
         </table>
     </div>
 	<script type="text/javascript">
 		// 怎样才能默认不显示出“每页个数”选项？
-		var app = angular.module('myapp', ['ngTable']);
-		app.controller('DemoCtrl', function ($scope, ngTableParams) {
-		    var customdata = [
+		var app = angular.module('myapp', []);
+		app.controller('DemoCtrl', function ($scope) {
+		    $scope.users = [
 		        {name: "Moroni", age: 50},
 		        {name: "Tiancum", age: 43},
 		        {name: "Jacob", age: 27},
@@ -44,17 +39,6 @@
 		        {name: "Nephi", age: 29},
 		        {name: "Enos", age: 34}
 		    ];
-
-		    $scope.tableParams = new ngTableParams({
-		        page: 1,            // show first page
-		        count: 10           // count per page
-		    }, {
-		        total: customdata.length, // length of data
-		        getData: function ($defer, params) {
-		        	// resolve的第二个参数有什么用？
-		            $defer.resolve(customdata.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-		        }
-		    })
 		})
 	</script>
 </body>
