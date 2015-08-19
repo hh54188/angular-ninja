@@ -7,6 +7,12 @@
 	<script type="text/javascript" src="../../bower_components/jquery-2.1.4/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="../../bower_components/bootstrap/js/bootstrap.min.js"></script>	
 	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		.suggestbox-list li {
+			border-radius:  0px;
+			padding: 5px 10px;			
+		}
+	</style>
 </head>
 <body ng-app="app">
 	<div class="container">
@@ -18,10 +24,29 @@
 			<div ng-controller="keywordsInputController" class="panel panel-default">
 			  	<div class="panel-heading">Panel heading</div>
 			  	<div class="panel-body">
-					<form novalidate>
+					<form name="keywordsForm" ng-submit="submitForm(keywordsForm.$valid)" novalidate>
 						<div class="form-group">
+							<div ng-show="keywordsForm.keywordsInput.$touched && keywordsForm.$invalid" class="alert alert-danger" role="alert">
+								<!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								  <span aria-hidden="true">&times;</span>
+								</button>	 -->						
+								<label>Error!</label>
+								<ul>
+									<li ng-show="keywordsForm.keywordsInput.$error.maxlength">max-length:10</li>
+									<li ng-show="keywordsForm.keywordsInput.$touched && keywordsForm.keywordsInput.$error.required">required</li>
+								</ul>
+							</div>						
 					    	<label for="exampleInputEmail1">Email address</label>
 						    <div class="input-group">
+								<div cus-suggestbox ng-show="suggestResult.length">
+									<ul class="list-group suggestbox-list">
+										<li class="list-group-item"  
+											ng-repeat="item in suggestResult track by $index" 
+											ng-class="{'active': suggestSelectIndex === $index}">
+												<span  ng-bind-html="emphasizeMatchedPart(item.word)"></span>
+										</li>
+									</ul>
+						      	</div>						    
 						    	<!--
 									change事件不是原生事件，没有event对象传递
 									只负责响应model的改变
@@ -30,15 +55,17 @@
 
 									change事件可以右keyup引起，也可以由mouseup（右键菜单-粘贴）引起
 						    	-->
-						    	<input type="text" 
+						    	<input  name="keywordsInput"
+						    			type="text" 
 						    			class="form-control" 
 						    			placeholder="Search for..."
-						    			'required' 
+						    			' required ' 
 						    			ng-model="userInput"  
-						    			ng-minlength="4" 
 						    			ng-maxlength="10"
 						    			ng-keyup="selectFromSuggest($event)"
-						    			ng-change="giveSuggest()">
+						    			ng-change="giveSuggest()"
+						    			ng-blur="resetSuggest()"
+						    			ng-focus="giveSuggest()">
 						      	<span class="input-group-btn">
 						        	<button class="btn btn-default" type="button" ><span class="glyphicon glyphicon-search"></span></button>
 						      	</span>
@@ -47,19 +74,24 @@
 					</form>
 			  	</div>
 			  	<ul class="list-group">
-			  		<li class="list-group-item" ng-repeat="word in keywords">
-			    		<a href="#">{{word}}<!-- <span class="badge">42</span> --></a> 
+			  		<li class="list-group-item clearfix" ng-repeat="word in keywords track by $index">
+			    		<a href="#">{{word}}</a>
+			    		<div ng-show="enableSuggestEdit" class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+							<button ng-click="removeThisWord(word)"  type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+						  	<button ng-click="forwardThisWord(word)" ng-hide="$index == 0" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
+						  	<button ng-click="backwardThisWord(word)" ng-hide="$index == keywords.length - 1" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
+						</div> 
 			  		</li>
 			  	</ul>
 			  	<div class="panel-footer">
 					<div class="btn-group btn-group-sm" role="group">
-					  	<button type="button" class="btn btn-default" ng-disabled="!keywords.length">
+					  	<button ng-click="enableSuggestEdit = !enableSuggestEdit" type="button" class="btn btn-default" ng-disabled="!keywords.length">
 					  		<span>Edit</span>
 					  		<span class="glyphicon glyphicon-cog"></span>
 					  	</button>
 					  	<button type="button" class="btn btn-default" ng-disabled="!keywords.length">
 					  		<span>Clear</span>
-					  		<span class="glyphicon glyphicon-trash"></span>					  		
+					  		<span class="glyphicon glyphicon-trash"></span>
 					  	</button>
 					</div>
 			  	</div>
