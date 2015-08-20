@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+	<style type="text/css">
+	.error {
+		background: red;
+		color: white;
+	}
+	</style>
+</head>
+<body ng-app="app" ng-controller="demoController">
+	<div ng-show="userForm.$invalid && inputIsFocused" class="error">
+		<ul>
+			<li ng-show="userForm.userInput.$error.required && userForm.userInput.$dirty">required</li>
+			<li ng-show="userForm.userInput.$error.maxlength">maxlength is 5</li>
+		</ul>
+	</div>
+	<form name="userForm" novalidate>
+		<input name="userInput" 
+				type="text" 
+				required 
+				ng-model="userInput" 
+				ng-maxlength="5"
+				ng-focus="focusHandler();inputIsFocused=true"
+				ng-blur="blurHandler();inputIsFocused=false">
+	</form>
+	<script type="text/javascript">
+		angular.module('app', []).controller('demoController', function ($scope) {
+			
+			$scope.focusHandler = function () {
+				console.log('focused');
+			}
+
+			$scope.blurHandler = function () {
+				console.log('blured');
+			}
+		});
+	</script>
+</body>
+</html>

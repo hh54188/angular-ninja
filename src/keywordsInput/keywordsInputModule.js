@@ -25,7 +25,7 @@ angular.module('app', [])
 	$scope.suggestResult = [];
 	$scope.suggestSelectIndex = -1;
 	$scope.enableSuggestEdit = false;
-	$scope.keywords = ['1', '2', '3'];
+	$scope.keywords = [];
 
 	var suggestMaxCount = 10;
 
@@ -44,7 +44,13 @@ angular.module('app', [])
 			return false;
 		}
 
+		if ($scope.keywords.indexOf($scope.userInput) > -1) {
+			alert("该关键词已经存在");
+			return false;
+		}
+
 		$scope.keywords.push($scope.userInput);
+		$scope.userInput = '';
 		resetSuggest();
 	}
 
@@ -140,4 +146,11 @@ angular.module('app', [])
 					)
 				);
 	}	
+
+	$scope.emptyKeywords = function () {
+		// 不如使用自定义的模态对话框？
+		if (confirm("Sure to delete?")) {
+			$scope.keywords = [];
+		}
+	}
 })
