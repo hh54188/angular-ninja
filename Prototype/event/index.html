@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>	
+</head>
+<body ng-app="app">
+	<div class="container">
+		<div class="iput" ng-controller="inputController">
+			<form>
+				<input type="text" ng-change="inputChanged()" ng-model="userInput"/>
+			</form>
+		</div>
+		<div class="table" ng-controller="tableController"></div>
+	</div>
+	<script type="text/javascript">
+		var app = angular.module('app', []);
+
+		app.controller('inputController', function ($scope, $rootScope) {
+			$scope.userInput = '';
+			$scope.inputChanged = function () {
+				/*
+					为什么这里用$emit而不是$broadcast
+					因为$rootScope.$broadcast也会触发$scope上监听的事件
+				*/
+				$rootScope.$emit('inputChanged', {});
+			}
+		});
+
+		app.controller('tableController', function ($scope, $rootScope) {
+
+			$rootScope.$on('inputChanged', function (data) {
+				console.log("In $rootScope");
+			})
+		});
+	</script>
+</body>
+</html>
