@@ -19,6 +19,31 @@ angular.module('app', [])
 		}
 	}
 })
+.directive('cusSuggestItem', function ($sce) {
+	return {
+		link: function ($scope, $linkElement, $attrs) {
+			$scope.emphasize = function (originWord) {
+				return $sce.trustAsHtml(
+							originWord.replace(
+								$scope.userInput, '<strong>' + $scope.userInput + '</strong>'
+							)
+						);
+			}	
+		}
+	}
+})
+/*
+	Use controllers to:
+	- Set up the initial state of the $scope object.
+	- Add behavior to the $scope object.
+	
+	Do not use controllers to:
+	- Manipulate DOM — Controllers should contain only business logic. Putting any presentation logic into Controllers significantly affects its testability. Angular has databinding for most cases and directives to encapsulate manual DOM manipulation.
+	- Format input — Use angular form controls instead.
+	- Filter output — Use angular filters instead.
+	- Share code or state across controllers — Use angular services instead.
+	- Manage the life-cycle of other components (for example, to create service instances).
+*/
 .controller('keywordsInputController', function ($scope, $sce) {
 	
 	$scope.userInput = '';
@@ -138,14 +163,6 @@ angular.module('app', [])
 			$scope.userInput = $scope.suggestResult[$scope.suggestSelectIndex].word;
 		}		
 	}
-
-	$scope.emphasizeMatchedPart = function (originWord) {
-		return $sce.trustAsHtml(
-					originWord.replace(
-						$scope.userInput, '<strong>' + $scope.userInput + '</strong>'
-					)
-				);
-	}	
 
 	$scope.emptyKeywords = function () {
 		// 不如使用自定义的模态对话框？

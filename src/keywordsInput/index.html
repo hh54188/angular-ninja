@@ -40,7 +40,8 @@
 										<li class="list-group-item"  
 											ng-repeat="item in suggestResult track by $index" 
 											ng-class="{'active': suggestSelectIndex === $index}">
-												<span  ng-bind-html="emphasizeMatchedPart(item.word)"></span>
+												<!-- <span  ng-bind-html="emphasizeMatchedPart(item.word)"></span> -->
+												<span cus-suggest-item ng-bind-html="emphasize(item.word)"></span>
 										</li>
 									</ul>
 						      	</div>						    
@@ -61,7 +62,7 @@
 						    			ng-maxlength="10"
 						    			ng-keyup="selectFromSuggest($event)"
 						    			ng-change="giveSuggest()"
-						    			ng-blur="resetSuggest();inputIsFocused=false;"
+						    			ng-blur="resetSuggest();inputIsFocused=false;keywordsForm.keywordsInput.$setPristine()"
 						    			ng-focus="giveSuggest();inputIsFocused=true;">
 						      	<span class="input-group-btn">
 						        	<button class="btn btn-default" type="button" ><span class="glyphicon glyphicon-search"></span></button>
@@ -80,8 +81,7 @@
 						</div> 
 			  		</li>
 			  	</ul>
-			  	<div class="panel-footer clearfix">
-
+			  	<div class="panel-footer clearfix" ng-show="keywords.length">
 					<div class="btn-group btn-group-sm" role="group">
 					  	<button ng-click="enableSuggestEdit = !enableSuggestEdit" type="button" class="btn btn-default" ng-class="{'active': enableSuggestEdit}" ng-disabled="!keywords.length">
 					  		<span>Edit</span>
