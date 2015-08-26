@@ -64,8 +64,14 @@ angular.module('app', [])
 
 	$scope.resetSuggest = resetSuggest;
 
-	$scope.submitForm = function (isvalid) {
-		if (!isvalid) {
+	$scope.test = function () {
+		console.log("---");
+	}
+
+	$scope.submitForm = function () {
+		var targetForm = $scope.keywordsForm; // 这么做是不是不太优雅，有操作DOM的嫌疑？
+
+		if (!targetForm.$valid) {
 			return false;
 		}
 
@@ -76,6 +82,10 @@ angular.module('app', [])
 
 		$scope.keywords.push($scope.userInput);
 		$scope.userInput = '';
+
+		targetForm.keywordsInput.$setPristine();
+		targetForm.keywordsInput.$setUntouched();
+
 		resetSuggest();
 	}
 
@@ -128,7 +138,10 @@ angular.module('app', [])
 		resetSuggest();
 		for (var i = 0; i < dictionary.length; i++) {
 			var tempWord = dictionary[i].word;
-			if ($scope.userInput && tempWord.indexOf($scope.userInput) > -1) {
+			if ($scope.userInput 
+				&& tempWord.indexOf($scope.userInput) > -1
+				&& $scope.keywords.indexOf(tempWord) < 0) {
+
 				$scope.suggestResult.push(dictionary[i]);
 				// 最多只显示10个建议词
 				if ($scope.suggestResult.length == suggestMaxCount) {

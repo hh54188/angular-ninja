@@ -24,7 +24,7 @@
 			<div ng-controller="keywordsInputController" class="panel panel-default">
 			  	<div class="panel-heading">Panel heading</div>
 			  	<div class="panel-body">
-					<form name="keywordsForm" ng-submit="submitForm(keywordsForm.$valid)" novalidate>
+					<form name="keywordsForm" ng-submit="submitForm()" novalidate>
 						<div class="form-group">
 							<div ng-show="keywordsForm.$invalid && keywordsForm.keywordsInput.$dirty && inputIsFocused" class="alert alert-danger" role="alert">						
 								<label>Error!</label>
@@ -33,14 +33,13 @@
 									<li ng-show="keywordsForm.keywordsInput.$dirty && keywordsForm.keywordsInput.$error.required">required</li>
 								</ul>
 							</div>						
-					    	<label for="exampleInputEmail1">Email address</label>
+					    	<label for="keywordsInput">Email address</label>
 						    <div class="input-group">
 								<div cus-suggestbox ng-show="suggestResult.length">
 									<ul class="list-group suggestbox-list">
-										<li class="list-group-item"  
+										<li class="list-group-item"
 											ng-repeat="item in suggestResult track by $index" 
 											ng-class="{'active': suggestSelectIndex === $index}">
-												<!-- <span  ng-bind-html="emphasizeMatchedPart(item.word)"></span> -->
 												<span cus-suggest-item ng-bind-html="emphasize(item.word)"></span>
 										</li>
 									</ul>
@@ -94,6 +93,7 @@
 					</div>
 			  	</div>
 			</div>
+		</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="./keywordsInputModule.js"></script>
