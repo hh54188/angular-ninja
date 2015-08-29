@@ -1,4 +1,4 @@
-var globalDictionary = [
+window.globalDictionary = [
 	{
 		word: 'dx06',
 		tags: [],

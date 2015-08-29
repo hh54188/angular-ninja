@@ -44,8 +44,7 @@ angular.module('app', [])
 	- Share code or state across controllers — Use angular services instead.
 	- Manage the life-cycle of other components (for example, to create service instances).
 */
-.controller('keywordsInputController', function ($scope, $sce) {
-	
+.controller('keywordsInputController', function ($scope, $sce, $window) {
 	$scope.userInput = '';
 	$scope.suggestResult = [];
 	$scope.suggestSelectIndex = -1;
@@ -54,7 +53,8 @@ angular.module('app', [])
 
 	var suggestMaxCount = 10;
 
-	var globalDictionary=[{word:"dx06",tags:[],},{word:"dx08",tags:[],},{word:"dx11",tags:[],},{word:"dx12",tags:[],},{word:"dx13",tags:[],},{word:"dx14",tags:[],},{word:"batman",tags:[],}];
+	// var globalDictionary=[{word:"dx06",tags:[],},{word:"dx08",tags:[],},{word:"dx11",tags:[],},{word:"dx12",tags:[],},{word:"dx13",tags:[],},{word:"dx14",tags:[],},{word:"batman",tags:[],}];
+	var globalDictionary = $window.globalDictionary;
 	var dictionary = globalDictionary;
 
 	function resetSuggest() {
