@@ -97,20 +97,6 @@
 						  	</div>
 
 						  	<div class="form-group">
-						  		<label>排序</label>
-						  		<div class="radio">
-									<label>
-										<input ng-model="filter.order" ng-change="orderChanged()"  type="radio" name="order" value="latest" checked>最新
-									</label>
-						  		</div>
-						  		<div class="radio">
-									<label>
-										<input ng-model="filter.order"  ng-change="orderChanged()"  type="radio" name="order" value="price">价格
-									</label>
-						  		</div>
-						  	</div>	
-
-						  	<div class="form-group">
 						  		<!-- <p><strong>Exclude Keywords</strong></p> -->
 								<label>排除关键字</label>
 								<div class="checkbox">
@@ -133,22 +119,27 @@
 										<input ng-change="excludeChanged()" ng-model="filter.exclude.wantbuy" type="checkbox" checked>求购
 									</label>
 								</div>								
-						  	</div>	
+						  	</div>				
 
 						  	<div class="form-group">
-						  		<label>对于非关键词条目</label>
-						  		<div class="radio">
+						  		<!-- <p><strong>Exclude Keywords</strong></p> -->
+								<label>显示列</label>
+								<div class="checkbox">
 									<label>
-										<input  type="radio" value="hidden" checked>直接隐藏
+										<input type="checkbox" checked>来源
 									</label>
-						  		</div>
-						  		<div class="radio">
+								</div>
+								<div class="checkbox">
 									<label>
-										<input  type="radio" value="show">显示但不明显
+										<input type="checkbox" checked>价格
 									</label>
-						  		</div>
-						  	</div>						  					  					  	
-					  	
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" checked>日期
+									</label>
+								</div>
+						  	</div>					  	
 						</form>
 
 					</div>

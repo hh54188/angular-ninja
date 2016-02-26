@@ -9,7 +9,6 @@ angular.module('app')
 			ac: true
 		},
 		time: 'all',
-		order: 'latest',
 		exclude: {
 			accessories: true,
 			headStatue: true,
