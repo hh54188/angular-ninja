@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/jquery-2.1.4/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/bootstrap/js/bootstrap.min.js"></script>	
+	<script type="text/javascript" src="../../dictionary.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">	
+	<style type="text/css">
+		html body {
+			font-family: '思源黑体';
+		}
+	</style>
+</head>
+<body ng-app="app">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="page-header">
+				  <h1>Example page header <small>Subtext for header</small></h1>
+				</div>
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-lg-2 col-md-3 col-sm-3">
+				<div class="panel panel-default">
+				  	<div class="panel-heading"></div>
+				  	<div class="panel-body">
+				  	</div>
+				  	<div class="panel-footer">
+				  	</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-3 col-sm-3">
+				<div class="panel panel-default" ng-controller="FilterController">
+					<div class="panel-heading clearfix">
+						<span>结果过滤</span>						
+					</div>
+					<div class="panel-body">
+						<form name="filterForm">
+						  	<div class="form-group">
+						  		<label>数据来源</label>
+						  		<div class="checkbox">
+									<label>
+										<input name="source-tieba" type="checkbox" value="tieba" checked>贴吧
+									</label>
+									<a href="#" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
+						  		</div>
+						  		<div class="checkbox">
+									<label>
+										<input type="checkbox" value="ebay" checked>ebay
+									</label>
+									<a href="#" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
+						  		</div>
+						  		<div class="checkbox">
+									<label>
+										<input type="checkbox" value="taobao" checked>淘宝二手
+									</label>
+									<a href="#" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>									
+						  		</div>
+						  		<div class="checkbox">
+									<label>
+										<input type="checkbox" value="ac" checked>ac商城
+									</label>
+									<a href="#" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>									
+						  		</div>
+						  	</div>
+
+						  	<div class="form-group">
+						  		<label>只看</label>
+						  		<div class="radio">
+									<label>
+										<input type="radio" name="time" value="all" checked>所有
+									</label>							
+						  		</div>
+						  		<div class="radio">
+									<label>
+										<input type="radio" name="time" value="1hour">一小时内
+									</label>
+						  		</div>
+						  		<div class="radio">
+									<label>
+										<input type="radio" name="time" value="3hour">三小时内
+									</label>
+						  		</div>
+						  		<div class="radio">
+									<label>
+										<input type="radio" name="time" value="today">今天
+									</label>
+						  		</div>
+						  	</div>									  	
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8 col-md-6 col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<span>Result Table</span>
+						<button type="button" class="btn btn-default btn-xs pull-right" aria-label="Left Align">
+							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+						</button>					
+					</div>
+				  	<div class="panel-body">
+				  	</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+	<script type="text/javascript">
+		angular.module('app', []);
+	</script>
+	<script type="text/javascript" src="./DataStorageService.js"></script>
+	<script type="text/javascript" src="./FilterService.js"></script>
+	<script type="text/javascript" src="./FilterController.js"></script>
+</body>
+</html>
