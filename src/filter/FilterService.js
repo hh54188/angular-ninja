@@ -3,21 +3,32 @@
 	Usage：
 		angular.module(name, [requires], [configFn]);
  */
-angular.module('app').factory('FilterService', function(){
-	
-	var properties = [
-		{
-			desc: '数据来源',
-			propertyName: 'source',
-			groupName: 'source'
-		}
-	];
+angular.module('app').factory('FilterService', ['DataStorageService', function(DataStorageService){
 
-	var keywords = [];
+	var filterPropertyName = ['source']; // To config
+	var filterPropertyVal = {};
+	var filterKeywords = [];
+
+	filterPropertyName.forEach(function (name) {
+		filterPropertyVal[name] = [];
+	});
+
+	var data = DataStorageService.getAllData();
+	data.forEach(function (item) {
+		filterPropertyName.forEach(function (name) {
+			var val = item[name];
+			if (filterPropertyVal[name].indexOf(val) < 0) {
+				filterPropertyVal[name].push(val);
+			}
+		});
+	});
 
 	return {
-		get: function () {
-			console.log("This is the get method from FilterService");
+		getKeywords: function () {
+			return filterKeywords;
+		},
+		getProperties: function () {
+			return filterPropertyVal;
 		}
 	}
-})
+}])
