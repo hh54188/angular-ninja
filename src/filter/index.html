@@ -40,13 +40,21 @@
 					</div>
 					<div class="panel-body">
 						<form name="filterForm">
-						  	<div class="form-group" ng-repeat="(propertyName, propertyValArray)  in filterProperties">
-						  		<label>{{propertyName}}</label>
-						  		<div ng-repeat="propertyVal in propertyValArray" class="checkbox">
+						  	<div class="form-group">
+						  		<label>数据来源</label>
+						  		<div ng-repeat="sourceName in filterSources" class="checkbox">
 									<label>
-										<input type="checkbox" value="{{propertyVal}}" checked>{{propertyVal}}
+										<input type="checkbox" value="{{sourceName}}" checked>{{sourceName}}
 									</label>
-									<a href="#" target="_blank" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
+									<a href="{{source2URL(sourceName)}}" target="_blank" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
+						  		</div>						  		
+						  	</div>	
+						  	<div class="form-group">
+						  		<label>时间范围</label>
+						  		<div ng-repeat="time in filterTimeRange" class="radio">
+									<label>
+										<input type="radio" name="timeRange" ng-checked="{{time === 0}}" value="{{time}}" checked>{{hours2Day(time)}}
+									</label>							
 						  		</div>						  		
 						  	</div>						  	
 						</form>

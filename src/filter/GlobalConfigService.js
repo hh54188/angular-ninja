@@ -1,7 +1,15 @@
 angular.module('app').factory('GlobalConfigService', function(){
+	
+	var filterProperty = [
+		{
+			name: 'source',
+			alias: '数据来源'
+		}
+	];
+
 	return {
-		propertyTranslate: {
-			'source': '数据来源'
+		getFilterProperty: function () {
+			return filterPropertyNames;
 		}
 	}
 });

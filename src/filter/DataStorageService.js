@@ -1,5 +1,20 @@
 angular.module('app').factory('DataStorageService', function(){
 
+	var sources = [
+		{
+			name: 'ebay',
+			url: 'http://www.ebay.com'
+		},
+		{
+			name: '贴吧',
+			url: 'http://tieba.baidu.com'
+		},
+		{
+			name: '淘宝',
+			url: 'http://2.taobao.com'
+		}
+	]
+
 	var data = [
 		{
 			source: 'ebay',
@@ -118,6 +133,13 @@ angular.module('app').factory('DataStorageService', function(){
 	return {
 		getAllData: function () {
 			return data;
+		},
+		mapSource2URL: function (sourceName) {
+			for (var i = 0; i < sources.length; i++) {
+				if (sources[i].name === sourceName) {
+					return sources[i].url;
+				}
+			}
 		}
 	}
 })

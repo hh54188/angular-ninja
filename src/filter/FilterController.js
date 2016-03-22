@@ -5,13 +5,34 @@
  */
 angular.module('app')
 .controller('FilterController', 
-	['$scope', 'GlobalConfigService', 'DataStorageService', 'FilterService', 
-	function($scope, GlobalConfigService, DataStorageService, FilterService){
+	['$scope', 'DataStorageService', 'FilterService', 
+	function($scope, DataStorageService, FilterService){
 	
 	var filterKeywords = FilterService.getKeywords();
-	var filterProperties = FilterService.getProperties();
+	var filterSources = FilterService.getSources();
+	var filterTimeRange = FilterService.getTimeRange();
 
 	$scope.filterKeywords = filterKeywords;
-	$scope.filterProperties = filterProperties;
+	$scope.filterSources = filterSources;
+	$scope.filterTimeRange = filterTimeRange;
+
+	$scope.source2URL = function (sourceName) {
+		return DataStorageService.mapSource2URL(sourceName);
+	}
+
+	$scope.hours2Day = function (hours) {
+		var day = Math.floor(hours / 24);
+		var week = Math.floor(day / 7);
+		
+		if (!hours) {
+			return '所有';
+		} else if (day < 1) {
+			return hours + '小时';
+		} else if (day < 7) {
+			return day + '天';
+		} else if (day < 30) {
+			return week + '周';
+		}
+	}
 
 }]);

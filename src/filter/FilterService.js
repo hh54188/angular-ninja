@@ -3,32 +3,30 @@
 	Usage：
 		angular.module(name, [requires], [configFn]);
  */
-angular.module('app').factory('FilterService', ['DataStorageService', function(DataStorageService){
+angular.module('app').factory('FilterService', 
+	['DataStorageService', 
+	function(DataStorageService){
 
-	var filterPropertyName = ['source']; // To config
-	var filterPropertyVal = {};
+	var filterSources = [];
 	var filterKeywords = [];
-
-	filterPropertyName.forEach(function (name) {
-		filterPropertyVal[name] = [];
-	});
+	var filterTimeRange = [0, 1, 3, 24, 24 * 7]; // 单位小时
 
 	var data = DataStorageService.getAllData();
 	data.forEach(function (item) {
-		filterPropertyName.forEach(function (name) {
-			var val = item[name];
-			if (filterPropertyVal[name].indexOf(val) < 0) {
-				filterPropertyVal[name].push(val);
-			}
-		});
+		if (filterSources.indexOf(item.source) < 0 ) {
+			filterSources.push(item.source);
+		}
 	});
 
 	return {
 		getKeywords: function () {
 			return filterKeywords;
 		},
-		getProperties: function () {
-			return filterPropertyVal;
+		getSources: function () {
+			return filterSources;
+		},
+		getTimeRange: function () {
+			return filterTimeRange;
 		}
 	}
 }])
