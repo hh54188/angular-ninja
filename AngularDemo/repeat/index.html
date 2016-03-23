@@ -6,15 +6,13 @@
 </head>
 <body ng-app="app">
 <div ng-controller="TestController">
-	<input ng-repeat="num in array track by $index" ng-model="array[$index]" ng-change="inputChange()"/>
+	<input type="checkbox" checked />
+	<input type="checkbox" checked ng-repeat="num in array track by $index" ng-model="array[$index]" />
 </div>
 <script type="text/javascript">
 	var app = angular.module('app', []);
 	app.controller('TestController', function ($scope) {
 		$scope.array = [1, 2, 3, 4];
-		$scope.inputChange = function () {
-			console.log($scope.array);
-		}
 	});
 </script>
 </body>

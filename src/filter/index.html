@@ -42,18 +42,18 @@
 						<form name="filterForm">
 						  	<div class="form-group">
 						  		<label>数据来源</label>
-						  		<div ng-repeat="sourceName in filterSources" class="checkbox">
+						  		<div ng-repeat="sourceName in filterSources track by $index" class="checkbox">
 									<label>
-										<input type="checkbox" value="{{sourceName}}" checked>{{sourceName}}
+										<input ng-model="filterSources[$index]" type="checkbox" value="{{sourceName}}" checked>{{sourceName}}
 									</label>
-									<a href="{{source2URL(sourceName)}}" target="_blank" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
+									<a href="{{sourceName | Source2URLFilter}}" target="_blank" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
 						  		</div>						  		
 						  	</div>	
 						  	<div class="form-group">
 						  		<label>时间范围</label>
-						  		<div ng-repeat="time in filterTimeRange" class="radio">
+						  		<div ng-repeat="time in filterTimeRange track by $index" class="radio">
 									<label>
-										<input type="radio" name="timeRange" ng-checked="{{time === 0}}" value="{{time}}" checked>{{hours2Day(time)}}
+										<input type="radio" name="timeRange" ng-checked="{{time === 0}}" value="{{time}}" checked>{{time | Hours2DayFilter}}
 									</label>							
 						  		</div>						  		
 						  	</div>						  	
@@ -80,6 +80,8 @@
 	</script>
 	<script type="text/javascript" src="./GlobalConfigService.js"></script>
 	<script type="text/javascript" src="./DataStorageService.js"></script>
+	<script type="text/javascript" src="./Source2URLFilter.js"></script>
+	<script type="text/javascript" src="./Hours2DayFilter.js"></script>
 	<script type="text/javascript" src="./FilterService.js"></script>
 	<script type="text/javascript" src="./FilterController.js"></script>
 </body>
