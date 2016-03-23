@@ -6,7 +6,7 @@
 </head>
 <body ng-app="app">
 <div ng-controller="TestController">
-	<input  ng-repeat="num in array" ng-model="num" ng-change="inputChange()"/>
+	<input ng-repeat="num in array track by $index" ng-model="array[$index]" ng-change="inputChange()"/>
 </div>
 <script type="text/javascript">
 	var app = angular.module('app', []);
