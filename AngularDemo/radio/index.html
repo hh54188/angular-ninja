@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+</head>
+<body ng-app="app">
+<div ng-controller="TestController">
+	<input ng-change="change()" ng-repeat="item in array" ng-model="selected.name" value="{{item.name}}" type="radio"></input>
+</div>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	app.controller('TestController', function ($scope) {
+		$scope.array = [{
+			name: 'lee',
+			seq: 1,
+		}, {
+			name: 'tom',
+			seq: 2,
+		}, {
+			name: 'jack',
+			seq: 3,
+		}];
+
+		// $scope.selected = {
+		// 	name: 'lee',
+		// 	seq: 1,
+		// };
+
+		$scope.selected = Object.assign({}, $scope.array[0]);
+
+		$scope.change = function () {
+			console.log($scope.selected);
+		}
+	});
+</script>
+</body>
+</html>

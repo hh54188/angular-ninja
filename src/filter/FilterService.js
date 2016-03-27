@@ -4,19 +4,25 @@
 		angular.module(name, [requires], [configFn]);
  */
 angular.module('app').factory('FilterService', 
-	['DataStorageService', 
-	function(DataStorageService){
+	['DataStorageService', 'GlobalConfigService',
+	function(DataStorageService, GlobalConfigService){
 
-	var filterSources = [];
-	var filterKeywords = [];
-	var filterTimeRange = [0, 1, 3, 24, 24 * 7]; // 单位小时
+	var filterSources = GlobalConfigService.getFilterSources();
+	var filterTimeRange =GlobalConfigService.getFilterIntervals();
+	var filterKeywords = [1, 2, 3];
 
-	var data = DataStorageService.getAllData();
-	data.forEach(function (item) {
-		if (filterSources.indexOf(item.source) < 0 ) {
-			filterSources.push(item.source);
-		}
+	var selectedSources = [true, true, true, true]; // Get from localStorage or ajax;
+	var selectedTimeInterval = 0;  // 最接近的
+
+	filterSources.forEach(function (sourceItem, index) {
+		sourceItem.checked = selectedSources[index];
 	});
+
+	filterTimeRange.forEach(function (intervalItem, index) {
+		intervalItem.checked = (index === selectedTimeInterval? true: false);
+	});
+
+
 
 	return {
 		getKeywords: function () {

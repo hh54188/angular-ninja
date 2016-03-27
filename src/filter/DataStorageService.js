@@ -1,20 +1,5 @@
 angular.module('app').factory('DataStorageService', function(){
 
-	var sources = [
-		{
-			name: 'ebay',
-			url: 'http://www.ebay.com'
-		},
-		{
-			name: '贴吧',
-			url: 'http://tieba.baidu.com'
-		},
-		{
-			name: '淘宝',
-			url: 'http://2.taobao.com'
-		}
-	]
-
 	var data = [
 		{
 			source: 'ebay',
