@@ -24,74 +24,77 @@
 			</div>
 		</div>	
 		<div class="row">
-			<div class="col-lg-2 col-md-3 col-sm-3">
-				<div class="panel panel-default"  ng-controller="FilterController">
-				  	<div class="panel-heading">Panel heading</div>
-				  	<div class="panel-body">
-						<form>
-							<div class="form-group">						
-						    	<label>Email address</label>
-							    <div class="input-group">
-							    	<input type="text" 
-							    			class="form-control" 
-							    			placeholder="Search for...">
-							      	<span class="input-group-btn">
-							        	<button class="btn btn-default" type="button" ><span class="glyphicon glyphicon-search"></span></button>
-							      	</span>
-							    </div>
+			<div class="col-lg-4 col-md-6 col-sm-6">
+				<div class="row"  ng-controller="FilterController">
+					<div class="col-lg-6 col-md-6 col-sm-6">
+						<div class="panel panel-default">
+						  	<div class="panel-heading">Panel heading</div>
+						  	<div class="panel-body">
+								<form>
+									<div class="form-group">						
+								    	<label>Email address</label>
+									    <div class="input-group">
+									    	<input type="text" 
+									    			class="form-control" 
+									    			placeholder="Search for...">
+									      	<span class="input-group-btn">
+									        	<button class="btn btn-default" type="button" ><span class="glyphicon glyphicon-search"></span></button>
+									      	</span>
+									    </div>
+								  	</div>
+								</form>	
+							  	<ul class="list-group">
+							  		<li class="list-group-item clearfix" ng-repeat="word in filterKeywords track by $index">
+							    		<a href="#">{{word}}</a>
+							    		<div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+											<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+										  	<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
+										  	<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
+										</div> 
+							  		</li>
+							  	</ul>									  	
 						  	</div>
-						</form>	
-					  	<ul class="list-group">
-					  		<li class="list-group-item clearfix" ng-repeat="word in filterKeywords track by $index">
-					    		<a href="#">{{word}}</a>
-					    		<div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
-									<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
-								  	<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
-								  	<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
-								</div> 
-					  		</li>
-					  	</ul>									  	
-				  	</div>
-				  	
-				  	<div class="panel-footer">
-						<div class="btn-group btn-group-sm" role="group" ng-show="filterKeywords.length">
-						  	<button  type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
-						  		<span>Edit</span>
-						  		<span class="glyphicon glyphicon-cog"></span>
-						  	</button>
-						  	<button type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
-						  		<span>Clear</span>
-						  		<span class="glyphicon glyphicon-trash"></span>
-						  	</button>
-						</div>				  	
-				  	</div>
-				</div>
-			</div>
-			<div class="col-lg-2 col-md-3 col-sm-3">
-				<div class="panel panel-default" ng-controller="FilterController">
-					<div class="panel-heading clearfix">
-						<span>结果过滤</span>						
+						  	<div class="panel-footer">
+								<div class="btn-group btn-group-sm" role="group" ng-show="filterKeywords.length">
+								  	<button  type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
+								  		<span>Edit</span>
+								  		<span class="glyphicon glyphicon-cog"></span>
+								  	</button>
+								  	<button type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
+								  		<span>Clear</span>
+								  		<span class="glyphicon glyphicon-trash"></span>
+								  	</button>
+								</div>				  	
+						  	</div>
+						</div>						
 					</div>
-					<div class="panel-body">
-						<form name="filterForm">
-						  	<div class="form-group">
-						  		<label>数据来源</label>
-						  		<div ng-repeat="sourceItem in filterSources track by $index" class="checkbox">
-									<label>
-										<input ng-model="sourceItem.checked" type="checkbox" value="{{sourceItem.name}}" ng-checked="sourceItem.checked" ng-change="sourceSelectChange()">{{sourceItem.name}}
-									</label>
-									<a href="{{sourceItem.url}}" target="_blank" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
-						  		</div>						  		
-						  	</div>
-						  	<div class="form-group">
-						  		<label>时间范围</label>
-						  		<div ng-repeat="intervalItem in filterTimeRangeOptions track by $index" class="radio">
-									<label>
-										<input ng-change="intervalSelectChange()" type="radio" name="timeRange" ng-model="selectedTimeRange.interval" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
-									</label>							
-						  		</div>						  		
-						  	</div>						  	
-						</form>
+					<div class="col-lg-6 col-md-6 col-sm-6">
+						<div class="panel panel-default">
+							<div class="panel-heading clearfix">
+								<span>结果过滤</span>						
+							</div>
+							<div class="panel-body">
+								<form name="filterForm">
+								  	<div class="form-group">
+								  		<label>数据来源</label>
+								  		<div ng-repeat="sourceItem in filterSources track by $index" class="checkbox">
+											<label>
+												<input ng-model="sourceItem.checked" type="checkbox" value="{{sourceItem.name}}" ng-checked="sourceItem.checked" ng-change="sourceSelectChange()">{{sourceItem.name}}
+											</label>
+											<a href="{{sourceItem.url}}" target="_blank" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
+								  		</div>						  		
+								  	</div>
+								  	<div class="form-group">
+								  		<label>时间范围</label>
+								  		<div ng-repeat="intervalItem in filterTimeRangeOptions track by $index" class="radio">
+											<label>
+												<input ng-change="intervalSelectChange()" type="radio" name="timeRange" ng-model="selectedTimeRange.interval" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
+											</label>							
+								  		</div>						  		
+								  	</div>						  	
+								</form>
+							</div>
+						</div>						
 					</div>
 				</div>
 			</div>

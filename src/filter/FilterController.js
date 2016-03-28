@@ -24,13 +24,10 @@ angular.module('app')
 	}))[0]);
 
 	$scope.sourceSelectChange = function () {
-		var result = $scope.filterSources.map(function (item) {
-			return item.checked;
-		});
-		console.log(result);
+		console.log($scope.filterSources);
 	}
 
 	$scope.intervalSelectChange = function () {
-		console.log($scope.selectedTimeRange.interval);
+		console.log($scope.selectedTimeRange);
 	}
 }]);
