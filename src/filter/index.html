@@ -88,7 +88,7 @@
 								  		<label>时间范围</label>
 								  		<div ng-repeat="intervalItem in filterTimeRangeOptions" class="radio">
 											<label>
-												<input ng-change="intervalSelectChange($event)" ng-model="filterTimeRange" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
+												<input ng-click="click($event)" ng-change="intervalSelectChange()" ng-model="filterTimeRange" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
 											</label>							
 								  		</div>						  		
 								  	</div>						  	

@@ -36,8 +36,11 @@ angular.module('app')
 		console.log($scope.filterSources);
 	}
 
-	$scope.intervalSelectChange = function ($event) {
-		console.log($event);
+	$scope.intervalSelectChange = function () {
 		console.log($scope.filterTimeRange);
+	}
+
+	$scope.click = function ($event) {
+		console.log($event.target.value);
 	}
 }]);
