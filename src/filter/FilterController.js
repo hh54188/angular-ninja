@@ -11,26 +11,9 @@ angular.module('app')
 	$scope.filterSourcesOptions = GlobalConfigService.getSourcesConfig();
 	$scope.filterTimeRangeOptions = GlobalConfigService.getIntervalsConfig();
 
-	$scope.filterKeywords = DataStorageService.getFilterKeywords();
+	var filterKeywords = $scope.filterKeywords = DataStorageService.getFilterKeywords();
 	$scope.filterSources = DataStorageService.getFilterSources();
 	$scope.filterTimeRange = DataStorageService.getFilterIntervals();
-
-	// return;
-	
-	// var filterKeywords = FilterService.getKeywords();
-	// var filterSources = FilterService.getSources();
-	// var filterTimeRangeOptions = FilterService.getTimeRange();
-
-	// console.log("filterSources===>", filterSources);
-	// console.log("filterTimeRangeOptions===>", filterTimeRangeOptions);
-
-	// $scope.filterKeywords = filterKeywords;
-	// $scope.filterSources = filterSources;
-	// $scope.filterTimeRangeOptions = filterTimeRangeOptions;
-	// // 这是一个Angular的bug，不能直接赋值引用，详情见Angular Demo中的radio文件夹
-	// $scope.selectedTimeRange = Object.assign({}, (filterTimeRangeOptions.filter(function (ele, index) {
-	// 	return ele.checked;
-	// }))[0]);
 
 	$scope.sourceSelectChange = function () {
 		console.log($scope.filterSources);
@@ -40,7 +23,26 @@ angular.module('app')
 		console.log($scope.filterTimeRange);
 	}
 
-	$scope.click = function ($event) {
-		console.log($event.target.value);
+	$scope.deleteKeyword = function (word) {
+		filterKeywords = DataStorageService.deleteKeyword(word);
+		console.log(filterKeywords);
+		console.log($scope.filterKeywords);		
 	}
+
+	$scope.insertKeyword = function (word, index) {
+		filterKeywords = [];
+		console.log(filterKeywords);
+		console.log($scope.filterKeywords);			
+		// filterKeywords = DataStorageService.insertKeyword(word, index);
+	}
+
+	$scope.deleteAllKeywords = function () {
+		filterKeywords = [];
+		console.log(filterKeywords);
+		console.log($scope.filterKeywords);
+		// filterKeywords = DataStorageService.deleteAllKeywords();
+		// debugger
+		// $scope.filterKeywords = DataStorageService.deleteAllKeywords();
+	}
+
 }]);

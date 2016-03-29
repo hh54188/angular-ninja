@@ -47,9 +47,12 @@
 							  		<li class="list-group-item clearfix" ng-repeat="word in filterKeywords track by $index">
 							    		<a href="#">{{word}}</a>
 							    		<div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
-											<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
-										  	<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
-										  	<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
+							    			<!--删除关键字-->
+											<button ng-click="deleteKeyword(word)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+										  	<!--向上移动关键字-->
+										  	<button ng-click="insertKeyword(word, $index - 1)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
+										  	<!--向下移动关键字-->
+										  	<button ng-click="insertKeyword(word, $index + 1)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
 										</div> 
 							  		</li>
 							  	</ul>									  	
@@ -60,7 +63,8 @@
 								  		<span>Edit</span>
 								  		<span class="glyphicon glyphicon-cog"></span>
 								  	</button>
-								  	<button type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
+								  	<!-- 清除所有关键字 -->
+								  	<button ng-click="deleteAllKeywords()" type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
 								  		<span>Clear</span>
 								  		<span class="glyphicon glyphicon-trash"></span>
 								  	</button>
@@ -88,7 +92,7 @@
 								  		<label>时间范围</label>
 								  		<div ng-repeat="intervalItem in filterTimeRangeOptions" class="radio">
 											<label>
-												<input ng-click="click($event)" ng-change="intervalSelectChange()" ng-model="filterTimeRange" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
+												<input ng-change="intervalSelectChange()" ng-model="$parent.filterTimeRange" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
 											</label>							
 								  		</div>						  		
 								  	</div>						  	

@@ -6,28 +6,25 @@
 </head>
 <body ng-app="app">
 <div ng-controller="TestController">
-	<input ng-change="change()" ng-repeat="item in array" ng-model="selected.name" value="{{item.name}}" type="radio"></input>
+	<input ng-change="change()" ng-repeat="item in array" ng-model="selected.value" name="group" value="{{item.interval}}" type="radio">{{item.desc}}</input>
 </div>
 <script type="text/javascript">
 	var app = angular.module('app', []);
 	app.controller('TestController', function ($scope) {
-		$scope.array = [{
-			name: 'lee',
-			seq: 1,
+		$scope.array = [ {
+			interval: "1",
+			desc: '一小时内'
 		}, {
-			name: 'tom',
-			seq: 2,
+			interval: "3",
+			desc: '三小时内'
 		}, {
-			name: 'jack',
-			seq: 3,
+			interval: "24",
+			desc: '一天内'
 		}];
 
-		// $scope.selected = {
-		// 	name: 'lee',
-		// 	seq: 1,
-		// };
-
-		$scope.selected = Object.assign({}, $scope.array[0]);
+		$scope.selected = {
+			value: 1
+		};
 
 		$scope.change = function () {
 			console.log($scope.selected);

@@ -115,25 +115,59 @@ angular.module('app').factory('DataStorageService', function(){
 		}
 	];
 
-	return {
-		getFilterKeywords: function () {
-			return ['这', '是', '测试'];
+	var keywords = ['这', '是', '测试'];
+
+	var sourceStates = {
+		'ebay': {
+			checked: true
 		},
+		'贴吧': {
+			checked: true
+		},
+		'淘宝': {
+			checked: true
+		}
+	};
+
+	var selectedInterval = 24 * 365;
+
+	return {
 		getFilterSources: function () {
-			return {
-				'ebay': {
-					checked: true
-				},
-				'贴吧': {
-					checked: true
-				},
-				'淘宝': {
-					checked: true
-				}
-			};
+			return sourceStates
+		},
+		setFilterSources: function () {
+
 		},
 		getFilterIntervals: function () {
-			return 24 * 365;
+			return selectedInterval;
+		},
+		setFilterIntervals: function () {
+			
+		},
+		getFilterKeywords: function () {
+			return keywords;
+		},
+		insertKeyword: function (word, index) {
+
+			if (index == undefined) {
+				keywords.push(word);
+				return keywords;
+			}
+
+			this.deleteKeyword(word);
+
+			return keywords;
+		},
+		deleteKeyword: function (word) {
+			var index = keywords.indexOf(word);
+			if (index > -1) {
+				keywords.splice(index, 1);
+			}
+
+			return keywords;
+		},
+		deleteAllKeywords: function () {
+			return (keywords = []);
 		}
 	}
 })
