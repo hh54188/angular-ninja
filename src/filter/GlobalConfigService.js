@@ -12,6 +12,10 @@ angular.module('app').factory('GlobalConfigService', function(){
 		{
 			name: '淘宝',
 			url: 'http://2.taobao.com'
+		},
+		{
+			name: 'AC商城',
+			url: 'https://mall.actoys.net/index.php?app=search&cate_id=30'
 		}
 	];
 
@@ -33,10 +37,10 @@ angular.module('app').factory('GlobalConfigService', function(){
 	}];
 
 	return {
-		getFilterSources: function () {
+		getSourcesConfig: function () {
 			return filterSources;
 		},
-		getFilterIntervals: function () {
+		getIntervalsConfig: function () {
 			return filterTimeInterval;
 		}
 	}

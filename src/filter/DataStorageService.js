@@ -116,15 +116,24 @@ angular.module('app').factory('DataStorageService', function(){
 	];
 
 	return {
-		getAllData: function () {
-			return data;
+		getFilterKeywords: function () {
+			return ['这', '是', '测试'];
 		},
-		mapSource2URL: function (sourceName) {
-			for (var i = 0; i < sources.length; i++) {
-				if (sources[i].name === sourceName) {
-					return sources[i].url;
+		getFilterSources: function () {
+			return {
+				'ebay': {
+					checked: true
+				},
+				'贴吧': {
+					checked: true
+				},
+				'淘宝': {
+					checked: true
 				}
-			}
+			};
+		},
+		getFilterIntervals: function () {
+			return 24 * 365;
 		}
 	}
 })
