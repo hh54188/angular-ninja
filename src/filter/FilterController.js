@@ -11,38 +11,70 @@ angular.module('app')
 	$scope.filterSourcesOptions = GlobalConfigService.getSourcesConfig();
 	$scope.filterTimeRangeOptions = GlobalConfigService.getIntervalsConfig();
 
-	var filterKeywords = $scope.filterKeywords = DataStorageService.getFilterKeywords();
+	$scope.filterKeywords = DataStorageService.getFilterKeywords();
 	$scope.filterSources = DataStorageService.getFilterSources();
 	$scope.filterTimeRange = DataStorageService.getFilterIntervals();
 
+	$scope.keywordsIsEditable = false;
+	$scope.newKeyword = '';
+
+	function setFilterKeywords(keywords) {
+		console.log("FilterController:===>setFilterKeywords", keywords);
+		$scope.filterKeywords = keywords;
+	}
+
+	function disableEditKeywords() {
+		if (!filterKeywords.length) {
+			$scope.keywordsIsEditable = false;
+		}
+	}
+
+	$scope.submitForm = function () {
+		if (!$scope.newKeyword) {
+			return;
+		}
+
+		if ($scope.filterKeywords.indexOf($scope.newKeyword) > -1) {
+			alert("该关键词已经存在");
+			return false;
+		}
+
+		setFilterKeywords(
+			DataStorageService.insertKeyword($scope.newKeyword)
+		);
+		$scope.newKeyword = '';		
+	}
+
+	$scope.enableEditKeywords  = function () {
+		$scope.keywordsIsEditable = !$scope.keywordsIsEditable;
+	}
+
 	$scope.sourceSelectChange = function () {
-		console.log($scope.filterSources);
+		DataStorageService.setFilterSources($scope.filterSources);
 	}
 
 	$scope.intervalSelectChange = function () {
-		console.log($scope.filterTimeRange);
+		DataStorageService.setFilterIntervals($scope.filterTimeRange);
 	}
 
 	$scope.deleteKeyword = function (word) {
-		filterKeywords = DataStorageService.deleteKeyword(word);
-		console.log(filterKeywords);
-		console.log($scope.filterKeywords);		
+		setFilterKeywords(
+			DataStorageService.deleteKeyword(word)
+		);
+		disableEditKeywords();
 	}
 
 	$scope.insertKeyword = function (word, index) {
-		filterKeywords = [];
-		console.log(filterKeywords);
-		console.log($scope.filterKeywords);			
-		// filterKeywords = DataStorageService.insertKeyword(word, index);
+		setFilterKeywords(
+			DataStorageService.insertKeyword(word, index)
+		);
 	}
 
 	$scope.deleteAllKeywords = function () {
-		filterKeywords = [];
-		console.log(filterKeywords);
-		console.log($scope.filterKeywords);
-		// filterKeywords = DataStorageService.deleteAllKeywords();
-		// debugger
-		// $scope.filterKeywords = DataStorageService.deleteAllKeywords();
+		setFilterKeywords(
+			DataStorageService.deleteAllKeywords()		
+		);
+		disableEditKeywords();
 	}
 
 }]);

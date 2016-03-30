@@ -135,26 +135,35 @@ angular.module('app').factory('DataStorageService', function(){
 		getFilterSources: function () {
 			return sourceStates
 		},
-		setFilterSources: function () {
-
+		setFilterSources: function (newSources) {
+			console.log("DataStorageService:setFilterSources===>", newSources);
+			return (sourceStates = newSources)
 		},
 		getFilterIntervals: function () {
 			return selectedInterval;
 		},
-		setFilterIntervals: function () {
-			
+		setFilterIntervals: function (newSelectInterval) {
+			console.log("DataStorageService:setFilterIntervals===>", newSelectInterval);
+			return (selectedInterval = newSelectInterval);
 		},
 		getFilterKeywords: function () {
 			return keywords;
 		},
-		insertKeyword: function (word, index) {
+		insertKeyword: function (word, newIndex) {
 
-			if (index == undefined) {
+			var length = keywords.length;
+
+			if (newIndex == undefined) {
 				keywords.push(word);
 				return keywords;
 			}
 
-			this.deleteKeyword(word);
+			if (newIndex < 0 || newIndex >= length) {
+				return keywords;
+			}
+
+			var oldIndex = keywords.indexOf(word);
+			keywords.splice(newIndex, 0, keywords.splice(oldIndex, 1)[0]);
 
 			return keywords;
 		},

@@ -28,13 +28,18 @@
 				<div class="row"  ng-controller="FilterController">
 					<div class="col-lg-6 col-md-6 col-sm-6">
 						<div class="panel panel-default">
-						  	<div class="panel-heading">Panel heading</div>
+						  	<div class="panel-heading">
+						  		<span>Panel heading</span>
+						  		<button type="button" class="btn btn-default btn-xs pull-right" aria-label="Left Align">
+							<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+						</button>
+						  	</div>
 						  	<div class="panel-body">
-								<form>
+								<form ng-submit="submitForm()" required>
 									<div class="form-group">						
 								    	<label>Email address</label>
 									    <div class="input-group">
-									    	<input type="text" 
+									    	<input ng-model="newKeyword" type="text" 
 									    			class="form-control" 
 									    			placeholder="Search for...">
 									      	<span class="input-group-btn">
@@ -46,20 +51,22 @@
 							  	<ul class="list-group">
 							  		<li class="list-group-item clearfix" ng-repeat="word in filterKeywords track by $index">
 							    		<a href="#">{{word}}</a>
-							    		<div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+							    		<div ng-show="keywordsIsEditable" class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
 							    			<!--删除关键字-->
 											<button ng-click="deleteKeyword(word)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
 										  	<!--向上移动关键字-->
-										  	<button ng-click="insertKeyword(word, $index - 1)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
+										  	<button ng-hide="$index == 0"  ng-click="insertKeyword(word, $index - 1)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
 										  	<!--向下移动关键字-->
-										  	<button ng-click="insertKeyword(word, $index + 1)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
+										  	<button ng-hide="$index == filterKeywords.length - 1" ng-click="insertKeyword(word, $index + 1)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
 										</div> 
 							  		</li>
-							  	</ul>									  	
+							  	</ul>	
+							  	<!-- <div class="alert alert-info" role="alert">最多十个关键字</div> -->
 						  	</div>
-						  	<div class="panel-footer">
-								<div class="btn-group btn-group-sm" role="group" ng-show="filterKeywords.length">
-								  	<button  type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
+						  	<div class="panel-footer" ng-show="filterKeywords.length">
+								<div class="btn-group btn-group-sm" role="group">
+									<!--启用编辑关键字-->
+								  	<button ng-click="enableEditKeywords()" type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
 								  		<span>Edit</span>
 								  		<span class="glyphicon glyphicon-cog"></span>
 								  	</button>

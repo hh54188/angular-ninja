@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+	function move(num, toIndex) {
+		if (toIndex < 0) {
+			return;
+		}
+		
+		var length = arr.length;
+		if (toIndex >= length) {
+			arr.push(num);
+			console.log(arr);
+			return;
+		}
+
+		var oldIndex = arr.indexOf(num);
+		arr.splice(toIndex, 0, arr.splice(oldIndex, 1)[0]);
+		console.log(arr);
+	}
+	move(10, -1);
+
+</script>
+</body>
+</html>
