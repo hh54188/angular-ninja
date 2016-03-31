@@ -1,4 +1,4 @@
-angular.module('app').factory('DataStorageService', function(){
+angular.module('app').factory('DataStorageService', ['$rootScope', function($rootScope){
 
 	var data = [
 		{
@@ -131,11 +131,27 @@ angular.module('app').factory('DataStorageService', function(){
 
 	var selectedInterval = 24 * 365;
 
+	function filterChanged() {
+		$rootScope.$broadcast('filterChanged', {});
+		$rootScope.$emit('filterChanged', {});
+		// $rootScope.$broadcast('filterChanged', {
+		// 	filter: {
+		// 		keywords: keywords,
+		// 		sourceStates: sourceStates,
+		// 		selectedInterval: selectedInterval
+		// 	}
+		// });
+	}
+
 	return {
+		getAllData: function () {
+			return data;
+		},
 		getFilterSources: function () {
 			return sourceStates
 		},
 		setFilterSources: function (newSources) {
+			filterChanged();
 			console.log("DataStorageService:setFilterSources===>", newSources);
 			return (sourceStates = newSources)
 		},
@@ -150,6 +166,15 @@ angular.module('app').factory('DataStorageService', function(){
 			return keywords;
 		},
 		insertKeyword: function (word, newIndex) {
+
+			if (!word) {
+				return keywords;
+			}
+
+			if (keywords.indexOf(word) > -1) {
+				alert("该关键词已经存在");
+				return keywords;
+			}			
 
 			var length = keywords.length;
 
@@ -179,4 +204,4 @@ angular.module('app').factory('DataStorageService', function(){
 			return (keywords = []);
 		}
 	}
-})
+}])

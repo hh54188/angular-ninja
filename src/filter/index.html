@@ -110,7 +110,7 @@
 				</div>
 			</div>
 			<div class="col-lg-8 col-md-6 col-sm-6">
-				<div class="panel panel-default">
+				<div  ng-controller="TableController"  class="panel panel-default">
 					<div class="panel-heading">
 						<span>Result Table</span>
 						<button type="button" class="btn btn-default btn-xs pull-right" aria-label="Left Align">
@@ -118,6 +118,42 @@
 						</button>					
 					</div>
 				  	<div class="panel-body">
+				  		<table class="table table-hover">
+				  			<thead>
+				  				<th ng-repeat="column in tableConfig" class="text-center">
+				  					<span>{{column.desc}}</span>
+				  				</th>		  				
+				  			</thead>
+				  			<tbody>
+								<tr ng-repeat="item in data">
+									<td>{{item.source}}</td>
+									<td>
+										<a target="_blank" href="{{item.url}}">{{item.title}}
+										</a>
+									</td>
+								</tr>  				
+				  			</tbody>
+				  			<tfoot></tfoot>
+				  		</table>	
+				  		<div class="text-center">
+							 <ul class="pagination pagination-sm">
+							    <li>
+							     	<a href="#" aria-label="Previous">
+							        	<span aria-hidden="true">&laquo;</span>
+							      	</a>
+							    </li>
+							    <li><a href="#">1</a></li>
+							    <li><a href="#">2</a></li>
+							    <li><a href="#">3</a></li>
+							    <li><a href="#">4</a></li>
+							    <li><a href="#">5</a></li>
+							    <li>
+							    	<a href="#" aria-label="Next">
+							        	<span aria-hidden="true">&raquo;</span>
+							      	</a>
+							    </li>
+							</ul>
+				  		</div>				  					  	
 				  	</div>
 				</div>
 			</div>
@@ -132,5 +168,6 @@
 	<!-- <script type="text/javascript" src="./Hours2DayFilter.js"></script> -->
 	<script type="text/javascript" src="./FilterService.js"></script>
 	<script type="text/javascript" src="./FilterController.js"></script>
+	<script type="text/javascript" src="./TableController.js"></script>
 </body>
 </html>

@@ -16,22 +16,34 @@
 	<script type="text/javascript">
 		var app = angular.module('app', []);
 
-		app.controller('inputController', function ($scope, $rootScope) {
+		// app.controller('inputController', function ($scope, $rootScope) {
+		app.controller('inputController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 			$scope.userInput = '';
+
+			$scope.$on('inputChanged', function (data) {
+				console.log("inputController===>$scope===>inputChanged");
+			})
+
+			$rootScope.$on('inputChanged', function (data) {
+				console.log("inputController===>$rootScope===>inputChanged");
+			})
+
 			$scope.inputChanged = function () {
-				/*
-					为什么这里用$emit而不是$broadcast
-					因为$rootScope.$broadcast也会触发$scope上监听的事件
-				*/
 				$rootScope.$emit('inputChanged', {});
+				// $rootScope.$broadcast('inputChanged', {});
 			}
-		});
+		}]);
+		// });
 
 		app.controller('tableController', function ($scope, $rootScope) {
 
 			$rootScope.$on('inputChanged', function (data) {
-				console.log("In $rootScope");
+				console.log("tableController===>$rootScope===>inputChanged");
 			})
+
+			$scope.$on('inputChanged', function (data) {
+				console.log("tableController===>$scope===>inputChanged");
+			})			
 		});
 	</script>
 </body>

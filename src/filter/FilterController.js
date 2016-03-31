@@ -30,14 +30,6 @@ angular.module('app')
 	}
 
 	$scope.submitForm = function () {
-		if (!$scope.newKeyword) {
-			return;
-		}
-
-		if ($scope.filterKeywords.indexOf($scope.newKeyword) > -1) {
-			alert("该关键词已经存在");
-			return false;
-		}
 
 		setFilterKeywords(
 			DataStorageService.insertKeyword($scope.newKeyword)

@@ -1,5 +1,16 @@
 angular.module('app').factory('GlobalConfigService', function(){
 	
+	var tableColumn = [
+		{
+			desc: '来源',
+			representProperty: 'source'
+		},
+		{
+			desc: '标题',
+			representProperty: 'title'
+		}
+	];
+
 	var filterSources = [
 		{
 			name: 'ebay',
@@ -37,6 +48,9 @@ angular.module('app').factory('GlobalConfigService', function(){
 	}];
 
 	return {
+		getTableConfig: function () {
+			return tableColumn;
+		},
 		getSourcesConfig: function () {
 			return filterSources;
 		},

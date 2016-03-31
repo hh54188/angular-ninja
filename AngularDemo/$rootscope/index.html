@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+</head>
+<body ng-app="app">
+<div ng-controller="TestController">
+</div>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+
+	app.factory('API', function ($rootScope) {
+		return {
+			test: function () {
+				$rootScope;
+				debugger
+				console.log("This is test method");
+			}
+		}
+	})
+
+	app.controller('TestController', ['$scope', '$rootScope', 'API', function ($scope, $rootScope, api) {
+		api.test();
+	}]);
+</script>
+</body>
+</html>
