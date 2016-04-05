@@ -132,15 +132,13 @@ angular.module('app').factory('DataStorageService', ['$rootScope', function($roo
 	var selectedInterval = 24 * 365;
 
 	function filterChanged() {
-		$rootScope.$broadcast('filterChanged', {});
-		$rootScope.$emit('filterChanged', {});
-		// $rootScope.$broadcast('filterChanged', {
-		// 	filter: {
-		// 		keywords: keywords,
-		// 		sourceStates: sourceStates,
-		// 		selectedInterval: selectedInterval
-		// 	}
-		// });
+		$rootScope.$broadcast('filterChanged', {
+			filter: {
+				keywords: keywords,
+				sourceStates: sourceStates,
+				selectedInterval: selectedInterval
+			}
+		});
 	}
 
 	return {
@@ -152,14 +150,13 @@ angular.module('app').factory('DataStorageService', ['$rootScope', function($roo
 		},
 		setFilterSources: function (newSources) {
 			filterChanged();
-			console.log("DataStorageService:setFilterSources===>", newSources);
 			return (sourceStates = newSources)
 		},
 		getFilterIntervals: function () {
 			return selectedInterval;
 		},
 		setFilterIntervals: function (newSelectInterval) {
-			console.log("DataStorageService:setFilterIntervals===>", newSelectInterval);
+			filterChanged();
 			return (selectedInterval = newSelectInterval);
 		},
 		getFilterKeywords: function () {

@@ -125,7 +125,7 @@
 				  				</th>		  				
 				  			</thead>
 				  			<tbody>
-								<tr ng-repeat="item in data">
+								<tr ng-repeat="item in data | TableDataFilter">
 									<td>{{item.source}}</td>
 									<td>
 										<a target="_blank" href="{{item.url}}">{{item.title}}
@@ -166,6 +166,7 @@
 	<script type="text/javascript" src="./DataStorageService.js"></script>
 	<!-- <script type="text/javascript" src="./Source2URLFilter.js"></script> -->
 	<!-- <script type="text/javascript" src="./Hours2DayFilter.js"></script> -->
+	<script type="text/javascript" src="./TableDataFilter.js"></script>
 	<script type="text/javascript" src="./FilterService.js"></script>
 	<script type="text/javascript" src="./FilterController.js"></script>
 	<script type="text/javascript" src="./TableController.js"></script>
