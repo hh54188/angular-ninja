@@ -4,16 +4,10 @@
 	<title></title>
 	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
 </head>
-<body ng-app="app" ng-controller="TestController">
-<div ng-custom-directive ng-model="liguangyi"></div>
+<body ng-app="app">
+<div ng-custom-directive model="liguangyi"></div>
 <script type="text/javascript">
 	var app = angular.module('app', []);
-	
-	app.controller('TestController', function ($scope) {
-		$scope.Child = 'Parent';
-		$scope.ngModel = 'This is from Parent scope ngModel';
-		$scope.name = 'James';
-	});
 
 	app.directive('ngCustomDirective', function () {
 		console.log("This is a custom directive");
@@ -21,11 +15,9 @@
 			restrict: 'A',
 			// require: '^ngModel',
 			scope: {
-				// ngModel: '='
-				ngModel: '@',
-				name: '@'
+				model: '@',
 			},
-    		template: '<div class="sparkline">{{ngModel}}{{name}}</div>',
+    		template: '<div class="sparkline">{{model}}</div>',
 			compile: function () {
 				return function linkingFunction(scope, element, attrs, controller) {
 					console.log("This is linked function");
