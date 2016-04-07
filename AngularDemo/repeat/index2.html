@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+</head>
+<body ng-app="app">
+<ul ng-controller="TestController">
+    <li ng-repeat="n in [] | range:10">
+        do something number {{$index}}
+    </li>
+</ul>
+<script type="text/javascript">
+    var app = angular.module('app', []);
+    app.controller('TestController', function ($scope) {
+        $scope.count = 10;
+    });
+</script>
+</body>
+</html>

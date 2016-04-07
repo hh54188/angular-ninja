@@ -2,40 +2,75 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">
-
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/jquery-2.1.4/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/bootstrap/js/bootstrap.min.js"></script>	
+	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">	
 </head>
-<body>
-	<div class="text-center">
-		<ul class="pagination">
-			<li>
-				<a href="#" aria-label="Previous">
-				    <!-- <span aria-hidden="true">&laquo;</span> -->
-				    <span aria-hidden="true">上一页</span>
-				</a>
-			</li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">...</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">...</a></li>
-			<li><a href="#">5</a></li>
-			<li>
-				<a href="#" aria-label="Next">
-			    	<!-- <span aria-hidden="true">&raquo;</span> -->
-			    	<span aria-hidden="true">下一页</span>
-			  	</a>
-			</li>
-		</ul>
-	</div>
-	<div class="text-center">
-		<nav>
-			<ul class="pager">
-		    	<li><a href="#">Previous</a></li>
-		    	<li><a href="#">Next</a></li>
-		  	</ul>
-		</nav>
-	</div>
+<body ng-app="app">
+<div pager total-page-count="100" display-pages="7" cur-page="1" class="text-center"></div>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	app.directive('pager', function () {
+		var template = 
+			'<ul class="pagination">' +
+				'<li class="pager-btn-prev">' +
+					'<a href="#" aria-label="Previous">' +
+					    '<span aria-hidden="true">上一页</span>' +
+					'</a>' +
+				'</li>' +  
+				'<li><a href="#">1</a></li>' +
+				'<li><a href="#">...</a></li>' +
+				'<li><a href="#">2</a></li>' +
+				'<li><a href="#">3</a></li>' +
+				'<li><a href="#">4</a></li>' +
+				'<li><a href="#">...</a></li>' +
+				'<li><a href="#">5</a></li>' +
+				'<li class="pager-btn-next">' +
+					'<a href="#" aria-label="Next">' +
+				    	'<span aria-hidden="true">下一页</span>' +
+				  	'</a>' +
+				'</li>' +
+			'</ul>';
+
+		var controller = function ($scope) {
+			console.log($scope);
+		}
+
+		return {
+			restrict: 'AE',
+    		template: template,
+    		scope: {
+    			totalPageCount: '@',
+    			displayPages: '@',
+    			curPage: '@' // 从1开始
+    		},
+    		controller: controller,
+    		link: function ($scope, $element, attrs, controller) {
+    			// https://docs.angularjs.org/api/ng/function/angular.element
+    			var $ = angular.element;
+
+				var disabledClass = 'disabled'; // 或者是hide
+				var activeClass = 'active';
+
+				var curPage = parseInt($scope.curPage, 10);
+				var totalPageCount = parseInt($scope.totalPageCount, 10);
+				var displayPages = parseInt($scope.displayPages, 10); 
+
+				var nakedElement = $element[0]; 
+
+				var prevBtn = nakedElement.querySelector('.pager-btn-prev');
+				var nextBtn = nakedElement.querySelector('.pager-btn-next');
+
+				if (curPage === 1) {
+					$(prevBtn).addClass(disabledClass);
+				} else if (curPage === totalPageCount) {
+					$(nextBtn).addClass(disabledClass);
+				}
+    		}    
+		}
+	})
+</script>
 </body>
 </html>
