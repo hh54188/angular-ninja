@@ -9,25 +9,25 @@
 	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">	
 </head>
 <body ng-app="app">
-<div pager total-page-count="100" display-pages="7" cur-page="1" class="text-center"></div>
+<div pager total-page-count="100" display-pages="3" cur-page="100" class="text-center"></div>
 <script type="text/javascript">
 	var app = angular.module('app', []);
 	app.directive('pager', function () {
 		var template = 
 			'<ul class="pagination">' +
-				'<li class="pager-btn-prev">' +
+				'<li ng-show="showPrevBtn"  class="pager-btn-prev">' +
 					'<a href="#" aria-label="Previous">' +
 					    '<span aria-hidden="true">上一页</span>' +
 					'</a>' +
 				'</li>' +  
-				'<li><a href="#">1</a></li>' +
-				'<li><a href="#">...</a></li>' +
-				'<li><a href="#">2</a></li>' +
-				'<li><a href="#">3</a></li>' +
-				'<li><a href="#">4</a></li>' +
-				'<li><a href="#">...</a></li>' +
-				'<li><a href="#">5</a></li>' +
-				'<li class="pager-btn-next">' +
+				'<li ng-show="showFirstPage"><a href="#">1</a></li>' +
+				'<li ng-show="showPrevEllipsis"><a href="#">...</a></li>' +
+				'<li ng-repeat="page in range">' +
+					'<a href="#">{{page}}</a>' + 
+				'</li>' +
+				'<li ng-show="showNextEllipsis"><a href="#">...</a></li>' +
+				'<li ng-show="showLastPage"><a href="#">{{lastPage}}</a></li>' +
+				'<li ng-show="showNextBtn" class="pager-btn-next">' +
 					'<a href="#" aria-label="Next">' +
 				    	'<span aria-hidden="true">下一页</span>' +
 				  	'</a>' +
@@ -35,7 +35,6 @@
 			'</ul>';
 
 		var controller = function ($scope) {
-			console.log($scope);
 		}
 
 		return {
@@ -48,25 +47,78 @@
     		},
     		controller: controller,
     		link: function ($scope, $element, attrs, controller) {
+
     			// https://docs.angularjs.org/api/ng/function/angular.element
     			var $ = angular.element;
 
 				var disabledClass = 'disabled'; // 或者是hide
 				var activeClass = 'active';
-
-				var curPage = parseInt($scope.curPage, 10);
-				var totalPageCount = parseInt($scope.totalPageCount, 10);
-				var displayPages = parseInt($scope.displayPages, 10); 
+				$scope.activeClass = activeClass;
 
 				var nakedElement = $element[0]; 
 
 				var prevBtn = nakedElement.querySelector('.pager-btn-prev');
 				var nextBtn = nakedElement.querySelector('.pager-btn-next');
 
-				if (curPage === 1) {
-					$(prevBtn).addClass(disabledClass);
-				} else if (curPage === totalPageCount) {
-					$(nextBtn).addClass(disabledClass);
+				$scope.showPrevBtn = true;
+				$scope.showNextBtn = true;
+
+				$scope.showFirstPage = false;
+				$scope.showLastPage = false;
+
+				$scope.showPrevEllipsis = false;
+				$scope.showNextEllipsis = false;
+
+				$scope.curPage = parseInt($scope.curPage, 10) || 1;
+				$scope.totalPageCount = parseInt($scope.totalPageCount, 10);
+				$scope.displayPages = parseInt($scope.displayPages, 10);
+
+				$scope.lastPage = $scope.totalPageCount;
+				$scope.range = [];
+
+				function initPageRange(first, count) {
+					var arr = [];
+					for (var i = 0; i < count; i++) {
+						arr.push(first + i);
+					}
+					return arr;
+				}
+
+				// if ($scope.displayPages <= $scope.totalPageCount) {
+				// 	$scope.range = initPageRange($scope.totalPageCount);
+				// 	console.log($scope.range);
+				// 	return;
+				// }
+
+				if ($scope.displayPages === 0) {
+					if ($scope.curPage === 1) {
+						$(prevBtn).addClass(disabledClass);
+					} else if ($scope.curPage === $scope.lastPage) {
+						$(nextBtn).addClass(disabledClass);
+					}					
+				} else if($scope.displayPages === 1) {					
+					$scope.range = [$scope.curPage];
+					if ($scope.curPage === 1) {
+						$(prevBtn).addClass(disabledClass);
+					} else if ($scope.curPage === $scope.lastPage) {
+						$(nextBtn).addClass(disabledClass);
+					}
+				} else if($scope.displayPages === 2) {
+					if ($scope.curPage === 1) {
+						$scope.range = initPageRange(1, 2);
+					} else if ($scope.curPage === $scope.lastPage) {
+						$scope.range = initPageRange($scope.lastPage - 1, 2);
+					} else {
+						$scope.range = initPageRange($scope.curPage, 2);
+					}
+				}else if($scope.displayPages === 3) {
+					if ($scope.curPage === 1) {
+						$scope.range = initPageRange(1, 3);
+					} else if ($scope.curPage === $scope.lastPage) {
+						$scope.range = initPageRange($scope.lastPage - 2, 3);
+					} else {
+						$scope.range = initPageRange($scope.curPage, 3);
+					}
 				}
     		}    
 		}
