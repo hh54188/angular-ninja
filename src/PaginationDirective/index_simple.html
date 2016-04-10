@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/jquery-2.1.4/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/bootstrap/js/bootstrap.min.js"></script>	
+	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">	
+</head>
+<body ng-app="app" ng-controller="TestController">
+<input ng-model="currentPage" ng-change="change()"/>
+<span>{{currentPage}}</span>
+<div pager total-page-count="10" cur-page="3" class="text-center"></div>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+</script>
+<script type="text/javascript" src="./pager_directive.js"></script>
+<script type="text/javascript">
+	app.controller('TestController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+		$scope.currentPage = 3;
+		$scope.change = function (oldVal, newVal) {
+			$rootScope.$broadcast('pager:setCurPage', {
+				curPage: $scope.currentPage
+			});
+		}
+	}]);
+</script>
+</body>
+</html>

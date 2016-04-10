@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+	<style type="text/css">
+	.active {
+		color: orange;
+	}
+	</style>
+</head>
+<body ng-app="app" ng-controller="TestController">
+<h1 ng-click="change()">Click me!</h1>
+<ul ng-custom-directive current="2"></ul>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	app.controller('TestController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+			$scope.change = function () {
+				$rootScope.$broadcast('event');
+			}
+	}]);
+
+	app.directive('ngCustomDirective', function () {
+		return {
+			restrict: 'A',
+			scope: {
+				current: '@',
+			},
+    		template: '<li ng-repeat="item in range">{{item}}</li>',
+			link: function ($scope, element, attrs, controller) {
+				$scope.range = [1,2,3,4,5];
+				$scope.$on("event", function (e, data) {
+					$scope.range = [1,2,3,4,5,6,7,8,9,10]
+				});
+			}
+		}
+	});	
+</script>
+</body>
+</html>
