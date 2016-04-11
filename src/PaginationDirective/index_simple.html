@@ -9,20 +9,53 @@
 	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">	
 </head>
 <body ng-app="app" ng-controller="TestController">
-<input ng-model="currentPage" ng-change="change()"/>
-<span>{{currentPage}}</span>
-<div pager total-page-count="10" cur-page="3" class="text-center"></div>
+<p>当前页：</p>
+<input ng-model="currentPage" ng-change="changeCurrentPage()"/>
+<p>总页数：</p>
+<input ng-model="totalPage" ng-change="changeTotalPage()"/>
+<!---->
+<div pager
+	go-prev-page-action="goPrevPage()"
+	go-next-page-action="goPrevPage()"
+	go-page-action="goPage()"
+	total-page-count="7" 
+	cur-page="3" 
+	class="text-center"></div>
+<!---->
 <script type="text/javascript">
 	var app = angular.module('app', []);
 </script>
 <script type="text/javascript" src="./pager_directive.js"></script>
 <script type="text/javascript">
 	app.controller('TestController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+		
 		$scope.currentPage = 3;
-		$scope.change = function (oldVal, newVal) {
+		$scope.totalPage = 10;
+
+		$scope.goPrevPage = function () {
+			console.log('goPrevPage');
+		}
+
+		$scope.goNextPage = function () {
+			console.log('goNextPage');
+		}
+
+		$scope.goPage = function (page) {
+			console.log('goPage', page);
+		}
+
+		console.log($scope);
+		
+		$scope.changeCurrentPage = function (oldVal, newVal) {
 			$rootScope.$broadcast('pager:setCurPage', {
 				curPage: $scope.currentPage
 			});
+		}
+
+		$scope.changeTotalPage = function () {
+			$rootScope.$broadcast('pager:setTotalPageCount', {
+				totalPage: $scope.totalPage
+			});			
 		}
 	}]);
 </script>

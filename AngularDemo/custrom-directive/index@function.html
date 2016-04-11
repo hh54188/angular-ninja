@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+</head>
+<body ng-app="app" controller="TestController">
+<div ng-custom-directive model="action"></div>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	
+	app.controller('TestController', function ($scope) {
+		// $scope.action = function () {
+		// 	console.log("Take action!");
+		// }
+
+		$scope.action = 'Hello';
+	});
+
+	app.directive('ngCustomDirective', function () {
+		console.log("This is a custom directive");
+		return {
+			restrict: 'A',
+			scope: {
+				model: '@',
+			},
+    		template: '<div class="sparkline">{{model}}</div>',
+			compile: function () {
+				return function linkingFunction(scope, element, attrs, controller) {
+					console.log("This is linked function");
+					console.log("scope===>", scope);
+					console.log("scope.model===>", scope.model);
+					console.log("element===>", element);
+					console.log("attrs===>", attrs);
+					console.log("controller===>", controller);
+				}
+			}
+		}
+	});	
+</script>
+</body>
+</html>

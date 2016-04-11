@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+</head>
+<body ng-app="app">
+<div ng-controller="TestController">
+<h1 ng-click="clickHandler(1)">Hello World 1</h1>
+<h1 ng-click="clickHandler(page)">Hello World 2</h1>
+</div>
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	app.controller('TestController', function ($scope) {
+		$scope.page = 10;
+		$scope.clickHandler = function (parameter) {
+			console.log(parameter);
+		}
+	});
+</script>
+</body>
+</html>

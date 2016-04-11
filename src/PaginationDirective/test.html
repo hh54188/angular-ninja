@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/jquery-2.1.4/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="../../bower_components/bootstrap/js/bootstrap.min.js"></script>	
+	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">	
+</head>
+<body ng-app="app">
+<div pager total-page-count="1" cur-page="1" class="text-center"></div>
+<hr>
+<div pager total-page-count="7" cur-page="1" class="text-center"></div>
+<div pager total-page-count="7" cur-page="2" class="text-center"></div>
+<div pager total-page-count="7" cur-page="5" class="text-center"></div>
+<div pager total-page-count="7" cur-page="6" class="text-center"></div>
+<div pager total-page-count="7" cur-page="7" class="text-center"></div>
+<hr>
+<div pager total-page-count="10" cur-page="1" class="text-center"></div>
+<div pager total-page-count="10" cur-page="2" class="text-center"></div>
+<div pager total-page-count="10" cur-page="5" class="text-center"></div>
+<div pager total-page-count="10" cur-page="9" class="text-center"></div>
+<div pager total-page-count="10" cur-page="10" class="text-center"></div>
+
+<script type="text/javascript">
+	var app = angular.module('app', []);
+</script>
+<script type="text/javascript" src="./pager_directive.js"></script>
+</script>
+</body>
+</html>

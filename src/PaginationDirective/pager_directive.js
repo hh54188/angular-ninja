@@ -1,19 +1,19 @@
-app.directive('pager', function () {
+angular.module('app').directive('pager', function () {
 	var template = 
 		'<ul class="pagination">' +
-			'<li ng-show="showPrevBtn"  class="pager-btn-prev">' +
+			'<li ng-click="goPrevPageAction()" ng-show="showPrevBtn"  class="pager-btn-prev">' +
 				'<a href="#" aria-label="Previous">' +
 				    '<span aria-hidden="true">Prev</span>' +
 				'</a>' +
 			'</li>' +  
-			'<li ng-show="showFirstPage"><a href="#">1</a></li>' +
+			'<li ng-click="goPageAction(1)" ng-show="showFirstPage"><a href="#">1</a></li>' +
 			'<li ng-show="showPrevEllipsis"><a href="#">...</a></li>' +
-			'<li ng-class="{active:page == curPage}" ng-repeat="page in range">' +
+			'<li ng-click="goPageAction(page)" ng-class="{active:page == curPage}" ng-repeat="page in range">' +
 				'<a href="#">{{page}}</a>' + 
 			'</li>' +
 			'<li ng-show="showNextEllipsis"><a href="#">...</a></li>' +
-			'<li ng-show="showLastPage"><a href="#">{{lastPage}}</a></li>' +
-			'<li ng-show="showNextBtn" class="pager-btn-next">' +
+			'<li ng-click="goPageAction(lastPage)" ng-show="showLastPage"><a href="#">{{lastPage}}</a></li>' +
+			'<li ng-click="goNextPageAction()" ng-show="showNextBtn" class="pager-btn-next">' +
 				'<a href="#" aria-label="Next">' +
 			    	'<span aria-hidden="true">Next</span>' +
 			  	'</a>' +
@@ -27,6 +27,9 @@ app.directive('pager', function () {
 		restrict: 'AE',
 		template: template,
 		scope: {
+			goPrevPageAction: '&',
+			goNextPageAction: '&',
+			goPageAction: '&',
 			totalPageCount: '@',
 			curPage: '@' // 从1开始
 		},
@@ -45,82 +48,111 @@ app.directive('pager', function () {
 			var prevBtn = nakedElement.querySelector('.pager-btn-prev');
 			var nextBtn = nakedElement.querySelector('.pager-btn-next');
 
-			$scope.showPrevBtn = true;
-			$scope.showNextBtn = true;
+			var render;
+			// 每一次当前页和总页数发生改变时
+			// $scope上的变量都要发生更改，因此需要重新执行渲染逻辑
+			(render = function(){
+				// 重置按钮状态
+				$(prevBtn).removeClass(disabledClass);
+				$(nextBtn).removeClass(disabledClass);
 
-			$scope.showFirstPage = false;
-			$scope.showLastPage = false;
+				$scope.showPrevBtn = true;
+				$scope.showNextBtn = true;
 
-			$scope.showPrevEllipsis = false;
-			$scope.showNextEllipsis = false;
+				$scope.showFirstPage = false;
+				$scope.showLastPage = false;
 
-			$scope.curPage = parseInt($scope.curPage, 10) || 1;
-			$scope.totalPageCount = parseInt($scope.totalPageCount, 10);
-			$scope.displayPages = 7; // 简单模式不提倡修改
+				$scope.showPrevEllipsis = false;
+				$scope.showNextEllipsis = false;
 
-			$scope.lastPage = $scope.totalPageCount;
-			$scope.range = [];
+				$scope.curPage = parseInt($scope.curPage, 10) || 1;
+				$scope.totalPageCount = parseInt($scope.totalPageCount, 10);
+				$scope.displayPages = 7; // 简单模式不提倡修改
 
-			function initPageRange(first, count) {
-				var arr = [];
-				for (var i = 0; i < count; i++) {
-					arr.push(first + i);
+				$scope.lastPage = $scope.totalPageCount;
+				$scope.range = [];
+
+				function initPageRange(first, count) {
+					var arr = [];
+					for (var i = 0; i < count; i++) {
+						arr.push(first + i);
+					}
+					return arr;
 				}
-				return arr;
-			}
 
-			if ($scope.totalPageCount <= $scope.displayPages) {
-				$scope.range = initPageRange(1, $scope.totalPageCount);
-				console.log($scope.range);
-				return;
-			}
+				// 决定是否显示“前一页”和“后一页”按钮
+				function decideWhetherShowPrevAndNextButton() {
+					
+					if ($scope.curPage === 1) {
+						$scope.showPrevBtn = false;
+					}
 
-			if ($scope.curPage - 1 > 2 
-				&& $scope.lastPage - $scope.curPage > 2) {
-				
-				$scope.showPrevEllipsis = true;
-				$scope.showNextEllipsis = true;
+					if ($scope.curPage === $scope.lastPage) {
+						$scope.showNextBtn = false;
+					}					
+				}
 
-				$scope.showFirstPage = true;
-				$scope.showLastPage = true;
-				$scope.range = initPageRange($scope.curPage - 1, 3);
+				// 当页数小于等于7时，显示所有页数按钮
+				// 1,2,3,4,5,6,7
+				if ($scope.totalPageCount <= $scope.displayPages) {
+					$scope.range = initPageRange(1, $scope.totalPageCount);
+					decideWhetherShowPrevAndNextButton();
+					return;
+				}
 
-				if ($scope.curPage === 1) {
-					$(prevBtn).addClass(disabledClass);
-				} else if ($scope.curPage === $scope.lastPage) {
-					$(nextBtn).addClass(disabledClass);
-				}	
-			} else if ($scope.curPage - 1 <= 4) {
-				$scope.range = initPageRange(1, 5);
-				$scope.showNextEllipsis = true;
-				$scope.showLastPage = true;
 
-				if ($scope.curPage === 1) {
-					$(prevBtn).addClass(disabledClass);
-				} else if ($scope.curPage === $scope.lastPage) {
-					$(nextBtn).addClass(disabledClass);
-				}						
+				// 当页数处于中央，两头省略号都要出现：
+				// 1,...5,6,7...10
+				if ($scope.curPage - 1 > 2 
+					&& $scope.lastPage - $scope.curPage > 2) {
 
-			} else if ($scope.lastPage - $scope.curPage <= 4) {
-				$scope.range = initPageRange($scope.lastPage - 4, 5);
-				$scope.showPrevEllipsis = true;
-				$scope.showFirstPage = true;
+					$scope.showPrevEllipsis = true;
+					$scope.showNextEllipsis = true;
 
-				if ($scope.curPage === 1) {
-					$(prevBtn).addClass(disabledClass);
-				} else if ($scope.curPage === $scope.lastPage) {
-					$(nextBtn).addClass(disabledClass);
-				}						
-			}
+					$scope.showFirstPage = true;
+					$scope.showLastPage = true;
+					$scope.range = initPageRange($scope.curPage - 1, 3);
+					
+					decideWhetherShowPrevAndNextButton();
+				// 当页数比较靠近第一页时
+				// 隐藏前置省略号
+				// 1,2,3,4...,10
+				} else if ($scope.curPage - 1 <= 4) {
+
+					$scope.range = initPageRange(1, 5);
+					$scope.showNextEllipsis = true;
+					$scope.showLastPage = true;
+
+					$scope.showPrevBtn = true;
+					$scope.showNextBtn = true;					
+					
+					decideWhetherShowPrevAndNextButton();						
+				// 当页数比较靠近最后时
+				// 隐藏后置省略号
+				// 1,...8,9,10
+				} else if ($scope.lastPage - $scope.curPage <= 4) {
+
+					$scope.range = initPageRange($scope.lastPage - 4, 5);
+					$scope.showPrevEllipsis = true;
+					$scope.showFirstPage = true;
+
+					$scope.showPrevBtn = true;
+					$scope.showNextBtn = true;
+
+					decideWhetherShowPrevAndNextButton();
+				}
+
+			})();
 
 			// API:
-			$scope.$on('pager:setTotalPageCount', function () {
-
+			$scope.$on('pager:setTotalPageCount', function (event, data) {
+				$scope.totalPageCount = data.totalPage;
+				render();
 			});
 
 			$scope.$on('pager:setCurPage', function (event, data) {
-				// $scope.curPage = data.curPage;
-				// $scope.showPrevBtn = false;	
+				$scope.curPage = data.curPage;
+				render();
 			});
 		}    
 	}
