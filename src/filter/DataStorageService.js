@@ -1,4 +1,4 @@
-angular.module('app').factory('DataStorageService', ['$rootScope', function($rootScope){
+angular.module('app').factory('DataStorageService', ['$rootScope', '$http',function($rootScope, $http){
 
 	var data = [
 		{
@@ -132,6 +132,7 @@ angular.module('app').factory('DataStorageService', ['$rootScope', function($roo
 	var selectedInterval = 24 * 365;
 
 	function filterChanged() {
+		console.log('filterChanged');
 		$rootScope.$broadcast('filterChanged', {
 			filter: {
 				keywords: keywords,
@@ -140,6 +141,20 @@ angular.module('app').factory('DataStorageService', ['$rootScope', function($roo
 			}
 		});
 	}
+
+	function requestData() {
+		$http.get('http://127.0.0.1/test', {
+			params: {
+				keywords: keywords.join('+')
+			}
+		}).then(function successCallback(response) {
+			// debugger
+		}, function errorCallback(response) {
+			// debugger
+		})
+	}
+
+	requestData();
 
 	return {
 		getAllData: function () {
