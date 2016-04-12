@@ -15,9 +15,7 @@
 <input ng-model="totalPage" ng-change="changeTotalPage()"/>
 <!---->
 <div pager
-	go-prev-page-action="goPrevPage()"
-	go-next-page-action="goPrevPage()"
-	go-page-action="goPage()"
+	go-page-action="goPage(pageNum)"
 	total-page-count="7" 
 	cur-page="3" 
 	class="text-center"></div>
@@ -32,19 +30,9 @@
 		$scope.currentPage = 3;
 		$scope.totalPage = 10;
 
-		$scope.goPrevPage = function () {
-			console.log('goPrevPage');
-		}
-
-		$scope.goNextPage = function () {
-			console.log('goNextPage');
-		}
-
 		$scope.goPage = function (page) {
 			console.log('goPage', page);
 		}
-
-		console.log($scope);
 		
 		$scope.changeCurrentPage = function (oldVal, newVal) {
 			$rootScope.$broadcast('pager:setCurPage', {

@@ -1,19 +1,19 @@
 angular.module('app').directive('pager', function () {
 	var template = 
 		'<ul class="pagination">' +
-			'<li ng-click="goPrevPageAction()" ng-show="showPrevBtn"  class="pager-btn-prev">' +
+			'<li ng-click="goPrevPage()" ng-show="showPrevBtn"  class="pager-btn-prev">' +
 				'<a href="#" aria-label="Previous">' +
 				    '<span aria-hidden="true">Prev</span>' +
 				'</a>' +
 			'</li>' +  
-			'<li ng-click="goPageAction(1)" ng-show="showFirstPage"><a href="#">1</a></li>' +
+			'<li ng-click="goPage(1)" ng-show="showFirstPage"><a href="#">1</a></li>' +
 			'<li ng-show="showPrevEllipsis"><a href="#">...</a></li>' +
-			'<li ng-click="goPageAction(page)" ng-class="{active:page == curPage}" ng-repeat="page in range">' +
+			'<li ng-click="goPage(page)" ng-class="{active:page == curPage}" ng-repeat="page in range">' +
 				'<a href="#">{{page}}</a>' + 
 			'</li>' +
 			'<li ng-show="showNextEllipsis"><a href="#">...</a></li>' +
-			'<li ng-click="goPageAction(lastPage)" ng-show="showLastPage"><a href="#">{{lastPage}}</a></li>' +
-			'<li ng-click="goNextPageAction()" ng-show="showNextBtn" class="pager-btn-next">' +
+			'<li ng-click="goPage(lastPage)" ng-show="showLastPage"><a href="#">{{lastPage}}</a></li>' +
+			'<li ng-click="goNextPage()" ng-show="showNextBtn" class="pager-btn-next">' +
 				'<a href="#" aria-label="Next">' +
 			    	'<span aria-hidden="true">Next</span>' +
 			  	'</a>' +
@@ -21,6 +21,24 @@ angular.module('app').directive('pager', function () {
 		'</ul>';
 
 	var controller = function ($scope) {
+		
+		$scope.goPrevPage = function () {
+			$scope.goPageAction({
+				pageNum: parseInt($scope.curPage, 10) - 1
+			});
+		}
+
+		$scope.goNextPage = function () {
+			$scope.goPageAction({
+				pageNum: parseInt($scope.curPage, 10) + 1
+			});
+		}
+
+		$scope.goPage = function (page) {
+			$scope.goPageAction({
+				pageNum: parseInt(page, 10)
+			});
+		}
 	}
 
 	return {
