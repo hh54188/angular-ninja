@@ -6,7 +6,7 @@
 	<script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
 	<script type="text/javascript" src="../../bower_components/jquery-2.1.4/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="../../bower_components/bootstrap/js/bootstrap.min.js"></script>	
-	<script type="text/javascript" src="../../dictionary.js"></script>
+	<!-- <script type="text/javascript" src="../../dictionary.js"></script> -->
 	<link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/css/bootstrap.min.css">	
 	<style type="text/css">
 		html body {
@@ -148,13 +148,15 @@
 	<script type="text/javascript">
 		angular.module('app', []);
 	</script>
-	<script type="text/javascript" src="./PagerDirective.js"></script>
-	<script type="text/javascript" src="./GlobalConfigService.js"></script>
-	<script type="text/javascript" src="./DataStorageService.js"></script>
-	<!-- <script type="text/javascript" src="./Source2URLFilter.js"></script> -->
-	<!-- <script type="text/javascript" src="./Hours2DayFilter.js"></script> -->
-	<script type="text/javascript" src="./TableDataFilter.js"></script>
-	<script type="text/javascript" src="./FilterService.js"></script>
+	<script type="text/javascript" src="./PagerDirective.js"></script><!--翻页控件-->
+	<script type="text/javascript" src="./GlobalConfigService.js"></script><!--整个app相关的配置-->
+	<script type="text/javascript" src="./DataStorageService.js"></script><!--数据存储方法-->
+	<script type="text/javascript" src="./TableDataFilter.js"></script><!--用于监听过滤事件的触发，随时更改数据-->
+	<script type="text/javascript" src="./FilterService.js"></script><!--过滤服务：根据过滤配置对数据进行过滤-->
+	<!--
+		Controller在DDD中处于什么地位?
+		UI的一部分（passing/transfer the request from the view）？
+	-->
 	<script type="text/javascript" src="./FilterController.js"></script>
 	<script type="text/javascript" src="./TableController.js"></script>
 </body>
