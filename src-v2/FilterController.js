@@ -5,6 +5,10 @@
  */
 angular.module('app')
 .controller('FilterController', 
-	[function(){
+	['$scope', 'FilterModel', function ($scope, FilterModel) {
+		
+		var filterOptions = FilterModel.getOptions();
 
+		$scope.filterSources = filterOptions.filterSources;
+		$scope.filterTimeRanges = filterOptions.filterTimeRanges;		
 }]);

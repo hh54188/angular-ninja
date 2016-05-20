@@ -1,3 +1,10 @@
+## todoMVC
+
+todoMVC只供你了解语法，实际上的开发复杂的多，todoMVC里也有很多不规范的地方，比如
+
+1. `$scope.$watch(todos)`不是一个好的用法
+2. 即使`$scope.$watch`是好的用法，todos通常也需要通过网络请求，同时数据还包括页面信息
+
 ## 如何划分/抽象出模型（Domain Model）
 
 1. Textual Analysis

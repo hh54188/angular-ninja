@@ -2,9 +2,14 @@ angular.module('app')
 .controller('TableController',
 	['$scope', 'DataModel',
 	function($scope, DataModel){
+		
+		var data = DataModel.getData();
+		var metaInfo = data.metaInfo;
 
-		$scope.data = DataModel.getData();
-		// $scope.goPage = function (num) {
-		// 	console.log("Pager Directive Action");
-		// }
+		$scope.records = data.records;
+		$scope.pageInfo = metaInfo.pageInfo; 
+
+		$scope.goPage = function (pageNum) {
+			console.log(pageNum);
+		}
 }]);

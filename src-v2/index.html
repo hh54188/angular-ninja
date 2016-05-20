@@ -89,20 +89,20 @@
 								<form name="filterForm">
 								  	<div class="form-group">
 								  		<label>数据来源</label>
-								  		<div  ng-repeat="sourceItem in filterSourcesOptions" class="checkbox">
+								  		<div  ng-repeat="sourceItem in filterSources" class="checkbox">
 											<label>
-												<input ng-change="sourceSelectChange()" ng-model="filterSources[sourceItem.name].checked" type="checkbox" value="{{sourceItem.name}}" >{{sourceItem.name}}
+												<input ng-change="sourceSelectChange()" ng-model="sourceItem.checked" type="checkbox" value="{{sourceItem.name}}" >{{sourceItem.name}}
 											</label>
 											<a href="{{sourceItem.url}}" target="_blank" class="btn btn-link btn-xs glyphicon glyphicon-new-window"></a>
 								  		</div>						  		
 								  	</div>
 								  	<div class="form-group">
 								  		<label>时间范围</label>
-								  		<div ng-repeat="intervalItem in filterTimeRangeOptions" class="radio">
+								  		<div ng-repeat="intervalItem in filterTimeRanges" class="radio">
 											<label>
 												<input ng-change="intervalSelectChange()" ng-model="$parent.filterTimeRange" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
 											</label>							
-								  		</div>						  		
+								  		</div>
 								  	</div>						  	
 								</form>
 							</div>
@@ -120,14 +120,20 @@
 					</div>
 				  	<div class="panel-body">
 				  		<table style="margin:0;" class="table table-hover">
+				  			<!--
+				  				这里是个坑：如果DataModel字段发生更改，则模板这里需要修改，Model层需要修改，数据库也需要修改？
+								title和url需要进行组合才能显示，所以这里就不适合遍历
+				  			-->
 				  			<thead>
-				  				<th ng-repeat="column in tableConfig" class="text-center">
-				  					<span>{{column.desc}}</span>
-				  				</th>		  				
+				  				<th class="text-left">
+				  					<span>来源</span>
+				  				</th>
+				  				<th class="text-left">
+				  					<span>标题</span>
+				  				</th>				
 				  			</thead>
 				  			<tbody>
-								<!-- <tr ng-repeat="item in data | TableDataFilter"> -->
-								<tr ng-repeat="item in data">
+								<tr ng-repeat="item in records">
 									<td>{{item.source}}</td>
 									<td>
 										<a target="_blank" href="{{item.url}}">{{item.title}}
@@ -139,7 +145,7 @@
 				  		</table>	
 				  	</div>
 				  	<div class="panel-footer">
-				  		<div pager go-page-action="goPage(pageNum)" total-page-count="0" cur-page="0" class="text-center"></div>
+				  		<div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div>
 				  		<!-- <div pager total-page-count="7" cur-page="3" class="text-center"></div> -->
 				  	</div>
 				</div>
