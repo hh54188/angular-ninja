@@ -10,5 +10,6 @@ angular.module('app')
 		var filterOptions = FilterModel.getOptions();
 
 		$scope.filterSources = filterOptions.filterSources;
-		$scope.filterTimeRanges = filterOptions.filterTimeRanges;		
+		$scope.filterTimeRanges = filterOptions.filterTimeRanges;
+		$scope.filterKeywords=  filterOptions.filterKeywords;		
 }]);

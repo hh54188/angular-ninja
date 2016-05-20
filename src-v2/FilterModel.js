@@ -39,29 +39,36 @@ angular.module('app')
 					interval: 24 * 365,
 					desc: '所有'
 				}				
-			]
+			],
+			filterKeywords: []
 		}
 
 		var filterSources = filerOptions.filterSources;
 		var filterTimeRanges = filerOptions.filterTimeRanges;
 
 		var filterSaves = FilterRepo.getRepo();
-		var selectedSources = filterSaves.selectedSources;
+		var unselectedSources = filterSaves.unselectedSources;
 		var selectedInterval = filterSaves.selectedInterval;
+		var keywords = filterSaves.keywords;
 
 		filterSources.forEach(function (sourceOption) {
-			selectedSources.forEach(function (selectedSourceName) {
+			sourceOption.checked = true;
+			unselectedSources.forEach(function (selectedSourceName) {
 				if (sourceOption.name === selectedSourceName) {
-					sourceOption.checked = true;
+					sourceOption.checked = false;
 				}
 			})
 		});
 
-		filterTimeRanges.forEach(function (timeRange) {
+		for (var i = 0; i < filterTimeRanges.length; i++) {
+			var timeRange = filterTimeRanges[i];
 			if (selectedInterval <= timeRange.interval) {
 				timeRange.checked = true;
+				break;
 			}
-		});
+		}
+
+		filerOptions.filterKeywords = keywords;
 
 		return {
 			getOptions: function () {

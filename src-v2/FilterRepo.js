@@ -3,8 +3,9 @@ angular.module('app')
 	[function(){
 
 		var data = {
-			selectedSources: ['ebay', '贴吧', '淘宝'],
-			selectedInterval: 24 * 365
+			unselectedSources: ['ebay'],
+			selectedInterval: 24 * 365,
+			keywords: ['example1', 'example2']
 		}
 
 		return {
