@@ -39,8 +39,7 @@ angular.module('app')
 					interval: 24 * 365,
 					desc: '所有'
 				}				
-			],
-			filterKeywords: []
+			]
 		}
 
 		var filterSources = filerOptions.filterSources;
@@ -49,7 +48,6 @@ angular.module('app')
 		var filterSaves = FilterRepo.getRepo();
 		var unselectedSources = filterSaves.unselectedSources;
 		var selectedInterval = filterSaves.selectedInterval;
-		var keywords = filterSaves.keywords;
 
 		filterSources.forEach(function (sourceOption) {
 			sourceOption.checked = true;
@@ -68,7 +66,6 @@ angular.module('app')
 			}
 		}
 
-		filerOptions.filterKeywords = keywords;
 
 		return {
 			getOptions: function () {

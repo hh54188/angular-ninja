@@ -100,7 +100,7 @@
 								  		<label>时间范围</label>
 								  		<div ng-repeat="intervalItem in filterTimeRanges" class="radio">
 											<label>
-												<input ng-change="intervalSelectChange()" ng-model="intervalItem.checked" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
+												<input ng-change="intervalSelectChange()" ng-model="test" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
 											</label>							
 								  		</div>
 								  	</div>						  	
@@ -159,9 +159,13 @@
 	<script type="text/javascript" src="./PagerDirective.js"></script>
 	<!-- Repositories -->
 	<script type="text/javascript" src="./DataRepo.js"></script>
-	<script type="text/javascript" src="./FilterRepo.js"></script>
+	<script type="text/javascript" src="./SourcesRepo.js"></script>
+	<script type="text/javascript" src="./KeywordsRepo.js"></script>
+	<script type="text/javascript" src="./TimeRangesRepo.js"></script>
 	<!--Domain Model-->
-	<script type="text/javascript" src="./FilterModel.js"></script>
+	<script type="text/javascript" src="./SourcesModel.js"></script>
+	<script type="text/javascript" src="./KeywordsModel.js"></script>
+	<script type="text/javascript" src="./TimeRangesModel.js"></script>
 	<script type="text/javascript" src="./DataModel.js"></script>
 	<!--Controller-->
 	<script type="text/javascript" src="./FilterController.js"></script>

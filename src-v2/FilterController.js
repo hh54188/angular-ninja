@@ -5,11 +5,54 @@
  */
 angular.module('app')
 .controller('FilterController', 
-	['$scope', 'FilterModel', function ($scope, FilterModel) {
+	['$scope', 'SourcesModel', 'KeywordsModel', 'TimeRangesModel',
+	function ($scope, SourcesModel, KeywordsModel, TimeRangesModel) {
 		
-		var filterOptions = FilterModel.getOptions();
+		$scope.filterKeywords= KeywordsModel.getKeywords();
+		$scope.filterSources = SourcesModel.getSources();
+		$scope.filterTimeRanges = TimeRangesModel.getTimeRanges();
+		
+		$scope.test = 24 * 365;
 
-		$scope.filterSources = filterOptions.filterSources;
-		$scope.filterTimeRanges = filterOptions.filterTimeRanges;
-		$scope.filterKeywords=  filterOptions.filterKeywords;		
+		/*
+			Keywords相关操作
+		*/
+		
+		$scope.keywordsIsEditable = false;
+		$scope.newKeyword = '';	
+
+		function setFilterKeywords(keywords) {
+			$scope.filterKeywords = keywords;
+		}
+
+		function disableEditKeywords() {
+			if (!$scope.filterKeywords.length) {
+				$scope.keywordsIsEditable = false;
+			}
+		}
+		
+		$scope.enableEditKeywords  = function () {
+			$scope.keywordsIsEditable = !$scope.keywordsIsEditable;
+		}		
+
+		$scope.deleteKeyword = function (word) {
+			setFilterKeywords(
+				KeywordsModel.deleteKeyword(word)
+			);
+			disableEditKeywords();
+		}
+
+		$scope.insertKeyword = function (word, index) {
+			setFilterKeywords(
+				KeywordsModel.insertKeyword(word, index)
+			);
+		}
+
+		$scope.deleteAllKeywords = function () {
+			setFilterKeywords(
+				KeywordsModel.deleteAllKeywords()		
+			);
+			disableEditKeywords();
+		}		
+
 }]);

@@ -1,7 +1,7 @@
 angular.module('app')
 .factory('DataModel', 
-	['FilterModel', 'DataRepo',
-	function(FilterModel, DataRepo){
+	['DataRepo',
+	function(DataRepo){
 		
 		// function PropertyConstructor(name, alias, visible) {
 		// 	this.name = name,
@@ -19,23 +19,8 @@ angular.module('app')
 
 		return {
 			getDataByPage: function (pageNum) {
-				return {
-					records: [
-						{
-							source: 'example',
-							title: 'example',
-							url: 'http://www.example.com/',
-							date: +new Date,
-							price: ''
-						}
-					],
-					metaInfo: {
-						pageInfo: {
-							total: 5,
-							cur: 1
-						}
-					}
-				}
+				return DataRepo.getRepo();
+
 			},
 			getData: function () {
 				return this.getDataByPage(1);
