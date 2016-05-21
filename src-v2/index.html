@@ -98,9 +98,9 @@
 								  	</div>
 								  	<div class="form-group">
 								  		<label>时间范围</label>
-								  		<div ng-repeat="intervalItem in filterTimeRanges" class="radio">
+								  		<div ng-repeat="intervalItem in timeRangeOptions" class="radio">
 											<label>
-												<input ng-change="intervalSelectChange()" ng-model="test" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
+												<input ng-change="intervalSelectChange()" ng-model="$parent.selectedInterval" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
 											</label>							
 								  		</div>
 								  	</div>						  	

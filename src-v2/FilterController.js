@@ -10,9 +10,16 @@ angular.module('app')
 		
 		$scope.filterKeywords= KeywordsModel.getKeywords();
 		$scope.filterSources = SourcesModel.getSources();
-		$scope.filterTimeRanges = TimeRangesModel.getTimeRanges();
 		
-		$scope.test = 24 * 365;
+		var filterTimeRanges = TimeRangesModel.getTimeRanges();
+		$scope.timeRangeOptions = filterTimeRanges.options;
+		$scope.selectedInterval = filterTimeRanges.selectedInterval;
+		/*
+			Sources相关操作
+		*/
+		$scope.sourceSelectChange = function () {
+			console.log($scope.filterSources);
+		}
 
 		/*
 			Keywords相关操作
