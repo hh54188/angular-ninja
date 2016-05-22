@@ -11,6 +11,9 @@
 		html body {
 			font-family: '微软雅黑', '思源黑体';
 		}
+		* {
+			outline: none;
+		}
 	</style>	
 </head>
 <body>
@@ -67,7 +70,7 @@
 						  	<div class="panel-footer" ng-show="filterKeywords.length">
 								<div class="btn-group btn-group-sm" role="group">
 									<!--启用编辑关键字-->
-								  	<button ng-click="enableEditKeywords()" type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
+								  	<button ng-click="enableEditKeywords()" ng-class="{'active': keywordsIsEditable}" type="button" class="btn btn-default" ng-disabled="!filterKeywords.length">
 								  		<span>Edit</span>
 								  		<span class="glyphicon glyphicon-cog"></span>
 								  	</button>
@@ -103,7 +106,10 @@
 												<input ng-change="intervalSelectChange()" ng-model="$parent.selectedInterval" type="radio" name="timeRange" value="{{intervalItem.interval}}" >{{intervalItem.desc}}
 											</label>							
 								  		</div>
-								  	</div>						  	
+								  	</div>
+								  	<div class="form-group">
+								  		<label>地铁</label>				
+								  	</div>								  							  	
 								</form>
 							</div>
 						</div>						
@@ -125,7 +131,7 @@
 								title和url需要进行组合才能显示，所以这里就不适合遍历
 				  			-->
 				  			<thead>
-				  				<th class="text-left">
+				  				<th class="text-left" width="20%">
 				  					<span>来源</span>
 				  				</th>
 				  				<th class="text-left">
@@ -162,14 +168,14 @@
 	<script type="text/javascript" src="./SourcesRepo.js"></script>
 	<script type="text/javascript" src="./KeywordsRepo.js"></script>
 	<script type="text/javascript" src="./TimeRangesRepo.js"></script>
+	<!--Controller-->
+	<script type="text/javascript" src="./FilterController.js"></script>
+	<script type="text/javascript" src="./TableController.js"></script>
 	<!--Domain Model-->
 	<script type="text/javascript" src="./SourcesModel.js"></script>
 	<script type="text/javascript" src="./KeywordsModel.js"></script>
 	<script type="text/javascript" src="./TimeRangesModel.js"></script>
 	<script type="text/javascript" src="./DataModel.js"></script>
-	<!--Controller-->
-	<script type="text/javascript" src="./FilterController.js"></script>
-	<script type="text/javascript" src="./TableController.js"></script>
 </body>
 </body>
 </html>

@@ -31,8 +31,8 @@ angular.module('app')
 			getSelectedInterval: function () {
 				return selectedInterval;
 			},
-			setSelectedInterval: function (selectedInterval) {
-				console.log(selectedInterval);
+			setSelectedInterval: function (interval) {
+				selectedInterval = interval
 				return true;
 			}
 		}

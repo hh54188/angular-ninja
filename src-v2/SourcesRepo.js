@@ -30,8 +30,16 @@ angular.module('app')
 			getUnselectedSources: function () {
 				return unselectedSources;
 			},
-			setUnselectedSources: function (unselectedSources) {
+			setUnselectedSources: function (sources) {
+				unselectedSources = sources;
 				return true;
+			},
+			getSelectedSources: function () {
+				return sources.map(function (item) {
+					return item.name;
+				}).filter(function (name) {
+					return unselectedSources.indexOf(name) < 0;
+				})
 			}
 		}
 }]);

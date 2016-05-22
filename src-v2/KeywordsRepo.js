@@ -9,12 +9,11 @@ angular.module('app')
 				return keywords;
 			},
 			insertKeyword: function (word, newIndex) {
-
 				if (!word) {
 					return keywords;
 				}
 
-				if (keywords.indexOf(word) > -1) {
+				if (newIndex == undefined && keywords.indexOf(word) > -1) {
 					alert("该关键词已经存在");
 					return keywords;
 				}			

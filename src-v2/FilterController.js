@@ -5,8 +5,8 @@
  */
 angular.module('app')
 .controller('FilterController', 
-	['$scope', 'SourcesModel', 'KeywordsModel', 'TimeRangesModel',
-	function ($scope, SourcesModel, KeywordsModel, TimeRangesModel) {
+	['$scope', '$rootScope', 'SourcesModel', 'KeywordsModel', 'TimeRangesModel',
+	function ($scope, $rootScope, SourcesModel, KeywordsModel, TimeRangesModel) {
 		
 		$scope.filterKeywords= KeywordsModel.getKeywords();
 		$scope.filterSources = SourcesModel.getSources();
@@ -19,12 +19,14 @@ angular.module('app')
 		*/
 		$scope.sourceSelectChange = function () {
 			SourcesModel.setUnselectedSources($scope.filterSources);
+			$rootScope.$broadcast('filterChanged');
 		}
 		/*
 			TimeRange相关操作
 		*/
 		$scope.intervalSelectChange = function () {
 			TimeRangesModel.setSelectedInterval($scope.selectedInterval);
+			$rootScope.$broadcast('filterChanged');
 		}
 
 		/*
@@ -36,7 +38,16 @@ angular.module('app')
 
 		function setFilterKeywords(keywords) {
 			$scope.filterKeywords = keywords;
+			$rootScope.$broadcast('filterChanged');
 		}
+
+		$scope.submitForm = function () {
+			setFilterKeywords(
+				KeywordsModel.insertKeyword($scope.newKeyword)
+			);
+			$scope.newKeyword = '';		
+		}
+
 
 		function disableEditKeywords() {
 			if (!$scope.filterKeywords.length) {

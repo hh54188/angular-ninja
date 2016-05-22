@@ -26,6 +26,9 @@ angular.module('app')
 				});
 
 				SourcesRepo.setUnselectedSources(unselectedSources);
+			},
+			getSelectedSources: function () {
+				return SourcesRepo.getSelectedSources();
 			}
 		}
 }]);
