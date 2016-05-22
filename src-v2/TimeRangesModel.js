@@ -2,8 +2,6 @@ angular.module('app')
 .factory('TimeRangesModel', 
 	['TimeRangesRepo', function(TimeRangesRepo){
 		
-
-
 		return {
 			getTimeRanges: function () {
 				var timeRangesOptions = TimeRangesRepo.getPlainTimeRanges();
@@ -13,6 +11,9 @@ angular.module('app')
 					options: timeRangesOptions,
 					selectedInterval: selectedInterval
 				};			
+			},
+			setSelectedInterval: function (selectedInterval) {
+				TimeRangesRepo.setSelectedInterval(selectedInterval);
 			}
 		}
 }]);

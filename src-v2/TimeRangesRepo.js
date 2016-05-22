@@ -30,6 +30,10 @@ angular.module('app')
 			},
 			getSelectedInterval: function () {
 				return selectedInterval;
+			},
+			setSelectedInterval: function (selectedInterval) {
+				console.log(selectedInterval);
+				return true;
 			}
 		}
 }]);

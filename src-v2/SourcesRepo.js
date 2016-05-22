@@ -29,6 +29,9 @@ angular.module('app')
 			},
 			getUnselectedSources: function () {
 				return unselectedSources;
+			},
+			setUnselectedSources: function (unselectedSources) {
+				return true;
 			}
 		}
 }]);

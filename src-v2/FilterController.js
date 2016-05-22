@@ -18,7 +18,13 @@ angular.module('app')
 			Sources相关操作
 		*/
 		$scope.sourceSelectChange = function () {
-			console.log($scope.filterSources);
+			SourcesModel.setUnselectedSources($scope.filterSources);
+		}
+		/*
+			TimeRange相关操作
+		*/
+		$scope.intervalSelectChange = function () {
+			TimeRangesModel.setSelectedInterval($scope.selectedInterval);
 		}
 
 		/*

@@ -17,6 +17,15 @@ angular.module('app')
 				});
 
 				return sourceOptions;			
+			},
+			setUnselectedSources: function (sourcesWithCheckStatus) {
+				var unselectedSources = sourcesWithCheckStatus.filter(function (source) {
+					return source.checked === false;
+				}).map(function (temp) {
+					return temp.name;
+				});
+
+				SourcesRepo.setUnselectedSources(unselectedSources);
 			}
 		}
 }]);
