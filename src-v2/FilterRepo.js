@@ -4,7 +4,8 @@ angular.module('app')
 
 		var data = {
 			unselectedSources: ['ebay'],
-			selectedInterval: 24 * 365
+			selectedInterval: 24 * 365,
+			selectedSubways: []
 		}
 
 		return {

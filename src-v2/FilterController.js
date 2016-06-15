@@ -5,12 +5,13 @@
  */
 angular.module('app')
 .controller('FilterController', 
-	['$scope', '$rootScope', 'SourcesModel', 'KeywordsModel', 'TimeRangesModel',
-	function ($scope, $rootScope, SourcesModel, KeywordsModel, TimeRangesModel) {
+	['$scope', '$rootScope', 'SourcesModel', 'KeywordsModel', 'TimeRangesModel', 'SubwaysModel', 
+	function ($scope, $rootScope, SourcesModel, KeywordsModel, TimeRangesModel, SubwaysModel) {
 		
 		$scope.filterKeywords= KeywordsModel.getKeywords();
 		$scope.filterSources = SourcesModel.getSources();
-		
+		$scope.filterSubways = SubwaysModel.getSubways();
+
 		var filterTimeRanges = TimeRangesModel.getTimeRanges();
 		$scope.timeRangeOptions = filterTimeRanges.options;
 		$scope.selectedInterval = filterTimeRanges.selectedInterval;
@@ -28,6 +29,10 @@ angular.module('app')
 			TimeRangesModel.setSelectedInterval($scope.selectedInterval);
 			$rootScope.$broadcast('filterChanged');
 		}
+		/*
+			Subways相关操作
+		*/
+
 
 		/*
 			Keywords相关操作

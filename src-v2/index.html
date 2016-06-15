@@ -11,8 +11,12 @@
 		html body {
 			font-family: '微软雅黑', '思源黑体';
 		}
-		.margin-b5 {
+		.btn-subway-margin {
+			margin-left: 5px;
 			margin-bottom: 5px;
+		}
+		#unselectedSubways label:first-of-type {
+			margin-left: 10px;
 		}
 		* {
 			outline: none;
@@ -116,28 +120,44 @@
 								  				<span>地铁</span>
 								  			</label>
 								  		</div>
-								  		<button type="button" class="btn btn-default btn-xs margin-b5">
+								  		<button ng-model="subwayItem.checked" ng-repeat="subwayItem in filterSubways | SelectedSubwayFilter"  type="button" class="btn btn-default btn-xs btn-subway-margin">
   											<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-  											<span>1号线</span>
-										</button>
-								  		<button type="button" class="btn btn-default btn-xs margin-b5">
-  											<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-  											<span>2号线</span>
-										</button>
-								  		<button type="button" class="btn btn-default btn-xs margin-b5">
-  											<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-  											<span>3号线</span>
-										</button>
-								  		<button type="button" class="btn btn-default btn-xs margin-b5">
-  											<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-  											<span>4号线</span>
-										</button>
-										<div>
+  											<span>{{subwayItem.desc}}</span>								  		
+								  		</button>
+										<div style="position:relative;">
 									  		<button type="button" class="btn btn-default btn-primary btn-xs">
 	  											<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
 	  											<span>添加</span>
 											</button>
+											<div class="popover show right" role="tooltip" style="left:60px;">
+												<!-- <div class="arrow" style="top:0;"></div> -->
+												<h3 class="popover-title">Title</h3>
+												<div class="popover-content">
+													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
+  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+  														<span class="ng-binding">1号线</span>								  		
+											  		</button>
+													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
+  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+  														<span class="ng-binding">1号线</span>								  		
+											  		</button>											  		
+													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
+  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+  														<span class="ng-binding">1号线</span>								  		
+											  		</button>
+													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
+  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+  														<span class="ng-binding">1号线</span>								  		
+											  		</button>											  													  		
+											  	</div>
+											</div>
 										</div>
+								  		<div id="unselectedSubways" class="show">
+								  			<label ng-repeat="subwayItem in filterSubways" class="checkbox-inline">
+								  				<input type="checkbox" ng-model="subwayItem.checked">
+								  				<span>{{subwayItem.desc}}</span>
+								  			</label>
+								  		</div>										
 								  	</div>								  							  	
 								</form>
 							</div>
@@ -190,9 +210,16 @@
 	<script type="text/javascript">
 		angular.module('app', []);
 	</script>
+	<script type="text/javascript">
+
+	</script>
+	<!-- Fitler -->
+	<script type="text/javascript" src="./SelectedSubwayFilter.js"></script>
+	<script type="text/javascript" src="./UnselectedSubwayFilter.js"></script>
 	<!--Directive-->
 	<script type="text/javascript" src="./PagerDirective.js"></script>
 	<!-- Repositories -->
+	<script type="text/javascript" src="./SubwaysRepo.js"></script>
 	<script type="text/javascript" src="./DataRepo.js"></script>
 	<script type="text/javascript" src="./SourcesRepo.js"></script>
 	<script type="text/javascript" src="./KeywordsRepo.js"></script>
@@ -202,6 +229,7 @@
 	<script type="text/javascript" src="./TableController.js"></script>
 	<!--Domain Model-->
 	<script type="text/javascript" src="./SourcesModel.js"></script>
+	<script type="text/javascript" src="./SubwaysModel.js"></script>
 	<script type="text/javascript" src="./KeywordsModel.js"></script>
 	<script type="text/javascript" src="./TimeRangesModel.js"></script>
 	<script type="text/javascript" src="./DataModel.js"></script>
