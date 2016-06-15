@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../bower_components/jquery-2.1.4/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="../bower_components/bootstrap/js/bootstrap.min.js"></script>		
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/css/bootstrap.min.css">		
+</head>
+<body>
+<button type="button" class="btn btn-lg btn-danger" data-toggle="popover">Click to toggle popover</button>
+<div id="target" style="display:none;">
+<label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">一号线</label><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">二号线</label><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">四号线</label><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">五号线</label><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">六号线</label><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">七号线</label><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">八号线</label><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"> 1</label>	
+</div>
+<script type="text/javascript">
+
+	var html = document.querySelector("#target").innerHTML;
+
+	$('button').popover({
+		title: 'Title',
+		html: true,
+		content: html
+	}).popover('show');
+</script>
+</body>
+</html>
