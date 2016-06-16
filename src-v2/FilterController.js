@@ -32,8 +32,30 @@ angular.module('app')
 		/*
 			Subways相关操作
 		*/
+		function setSubways(subways) {
+			$scope.filterSubways = subways;
+		}
 
-
+		$scope.tempSelectedSubway = '';
+		$scope.tempSelectedChanged = function () {
+			console.log($scope.tempSelectedSubway);
+		}
+		$scope.addSelectedSubway = function () {
+			setSubways(
+				SubwaysModel.addSelectedSubway($scope.tempSelectedSubway)
+			);
+			$scope.tempSelectedSubway = '';
+		}
+		$scope.clearSelectedSubways = function () {
+			setSubways(
+				SubwaysModel.clearSelectedSubways($scope.tempSelectedSubway)
+			);
+		}
+		$scope.removeSubway = function (val) {
+			setSubways(
+				SubwaysModel.removeSubway(val)
+			);			
+		}
 		/*
 			Keywords相关操作
 		*/

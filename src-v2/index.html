@@ -15,8 +15,11 @@
 			margin-left: 5px;
 			margin-bottom: 5px;
 		}
-		#unselectedSubways label:first-of-type {
-			margin-left: 10px;
+		.inline-block {
+			display: inline-block;
+		}
+		.custom-hr {
+			margin: 10px 0 10px 0;
 		}
 		* {
 			outline: none;
@@ -120,44 +123,26 @@
 								  				<span>地铁</span>
 								  			</label>
 								  		</div>
-								  		<button ng-model="subwayItem.checked" ng-repeat="subwayItem in filterSubways | SelectedSubwayFilter"  type="button" class="btn btn-default btn-xs btn-subway-margin">
-  											<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-  											<span>{{subwayItem.desc}}</span>								  		
-								  		</button>
-										<div style="position:relative;">
-									  		<button type="button" class="btn btn-default btn-primary btn-xs">
+										<div>
+											<select ng-change="tempSelectedChanged()" ng-model="tempSelectedSubway" class="form-control input-sm inline-block" style="width:30%;">
+												<option value="">无</option>
+												<option ng-repeat="subwayItem in filterSubways |
+												 UnselectedSubwayFilter" value="{{subwayItem.val}}">{{subwayItem.desc}}</option>
+											</select>
+									  		<button ng-disabled="!tempSelectedSubway" ng-click="addSelectedSubway()" type="button" class="btn btn-default btn-primary btn-xs">
 	  											<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
 	  											<span>添加</span>
 											</button>
-											<div class="popover show right" role="tooltip" style="left:60px;">
-												<!-- <div class="arrow" style="top:0;"></div> -->
-												<h3 class="popover-title">Title</h3>
-												<div class="popover-content">
-													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
-  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
-  														<span class="ng-binding">1号线</span>								  		
-											  		</button>
-													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
-  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
-  														<span class="ng-binding">1号线</span>								  		
-											  		</button>											  		
-													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
-  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
-  														<span class="ng-binding">1号线</span>								  		
-											  		</button>
-													<button type="button" class="btn btn-default btn-xs btn-subway-margin">
-  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
-  														<span class="ng-binding">1号线</span>								  		
-											  		</button>											  													  		
-											  	</div>
-											</div>
+									  		<button ng-click="clearSelectedSubways()" type="button" class="btn btn-default btn-primary btn-xs">
+	  											<span class="glyphicon glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+	  											<span>清空</span>
+											</button>
+											<hr class="custom-hr">
 										</div>
-								  		<div id="unselectedSubways" class="show">
-								  			<label ng-repeat="subwayItem in filterSubways" class="checkbox-inline">
-								  				<input type="checkbox" ng-model="subwayItem.checked">
-								  				<span>{{subwayItem.desc}}</span>
-								  			</label>
-								  		</div>										
+								  		<button ng-click="removeSubway(subwayItem.val)" ng-model="subwayItem.checked" ng-repeat="subwayItem in filterSubways | SelectedSubwayFilter"  type="button" class="btn btn-default btn-xs btn-subway-margin">
+  											<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+  											<span>{{subwayItem.desc}}</span>								  		
+								  		</button>
 								  	</div>								  							  	
 								</form>
 							</div>

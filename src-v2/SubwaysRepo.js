@@ -1,6 +1,9 @@
 angular.module('app')
 .factory('SubwaysRepo', 
 	[function(){
+		
+		var selectedSubways = ['s1', 's4'];
+		// var selectedSubways = [];
 
 		var subways = [
 			{
@@ -90,16 +93,27 @@ angular.module('app')
 			}
 		];
 
-		var selectedSubways = ['s1', 's4'];
-		// var selectedSubways = [];
-		 
-
 		return {
 			getSubways: function () {
 				return subways;
 			},
 			getSelectedSubways: function () {
 				return selectedSubways
+			},
+			addSelectedSubway: function (subwayVal) {
+				if (selectedSubways.indexOf(subwayVal) < 0) {
+					selectedSubways.push(subwayVal);
+				}
+				return selectedSubways;
+			},
+			clearSelectedSubways: function () {
+				return (selectedSubways = []);
+			},
+			removeSubway: function (val) {
+				var index = selectedSubways.indexOf(val);
+				if (index > -1) {
+					selectedSubways.splice(index, 1);
+				}
 			}
 		}
 }])
