@@ -2,7 +2,14 @@ angular.module('app')
 .factory('KeywordsRepo', 
 	[function(){
 
-		var keywords = ['example1', 'example2']
+		var keywords = ['example1', 'example2', 'example3', 'example4', 'example5']
+		// var keywords = [
+		// 	'example1', 'example2', 
+		// 	'example3', 'example4', 
+		// 	'example5', 'example6', 
+		// 	'example7', 'example8', 
+		// 	'example9', 'example10'
+		// ];
 
 		return {
 			getRepo: function () {

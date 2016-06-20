@@ -69,6 +69,18 @@ angular.module('app')
 		}
 
 		$scope.submitForm = function () {
+			if (!$scope.newKeyword) {
+				console.log('[ERROR]===>', 'newKeyword is empty');
+				return false;
+			}
+
+			if ($scope.filterKeywords.indexOf($scope.newKeyword) > -1) {
+				$scope.newKeyword = '';
+				console.log('[ERROR]===>', 'keyword already exist');
+				return false;
+			}
+			console.log();
+
 			setFilterKeywords(
 				KeywordsModel.insertKeyword($scope.newKeyword)
 			);
