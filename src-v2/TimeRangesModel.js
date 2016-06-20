@@ -7,12 +7,20 @@ angular.module('app')
 				var timeRangesOptions = TimeRangesRepo.getPlainTimeRanges();
 				var selectedInterval = TimeRangesRepo.getSelectedInterval();;				
 				
+				// TEST START
+				console.log("Default selectedInterval===>", selectedInterval);
+				timeRangesOptions.forEach(function (option) {
+					console.log(option.desc, option.interval);
+				});
+				// TEST END
+
 				return {
 					options: timeRangesOptions,
 					selectedInterval: selectedInterval
 				};			
 			},
 			setSelectedInterval: function (selectedInterval) {
+				console.log("selectedInterval===>", selectedInterval, "hours");
 				TimeRangesRepo.setSelectedInterval(selectedInterval);
 			},
 			getSelectedInterval: function () {

@@ -17,6 +17,23 @@
 - [TODO]最大10个单词提示
 - [V2 TODO]XSS攻击
 
+### 数据来源[View/Data]
+
+- 勾选[pass]
+- 取消勾选[pass]
+- 全部选择[pass]
+- 全部取消选择[pass]
+
+### 时间范围[View/Data]
+
+- 选择[pass]
+
+### 地铁选择[View/Data]
+
+- 点击删除单个[pass]
+- 清空[pass]
+- 添加[pass]
+
 
 ## todoMVC
 

@@ -16,6 +16,12 @@ angular.module('app')
 					})
 				});
 
+				// TEST START
+				sourceOptions.forEach(function (option) {
+					console.log(option.name, option.checked);
+				});
+				// TEST END
+
 				return sourceOptions;			
 			},
 			setUnselectedSources: function (sourcesWithCheckStatus) {
@@ -24,7 +30,7 @@ angular.module('app')
 				}).map(function (temp) {
 					return temp.name;
 				});
-
+				console.log("unselectedSources===>", unselectedSources);
 				SourcesRepo.setUnselectedSources(unselectedSources);
 			},
 			getSelectedSources: function () {

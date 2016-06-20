@@ -33,6 +33,11 @@ angular.module('app')
 			Subways相关操作
 		*/
 		function setSubways(subways) {
+			// TEST START
+			subways.forEach(function (sub) {
+				console.log(sub.desc, sub.checked);
+			})
+			// TEST END
 			$scope.filterSubways = subways;
 		}
 
