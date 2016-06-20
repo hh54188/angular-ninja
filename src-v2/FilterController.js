@@ -33,6 +33,7 @@ angular.module('app')
 			Subways相关操作
 		*/
 		function setSubways(subways) {
+			$rootScope.$broadcast('filterChanged');
 			// TEST START
 			subways.forEach(function (sub) {
 				console.log(sub.desc, sub.checked);

@@ -1,8 +1,12 @@
 angular.module('app')
 .controller('TableController',
-	['$scope', 'DataModel',
-	function($scope, DataModel){
+	['$scope', 'DataModel', '$rootScope',
+	function($scope, DataModel, $rootScope){
 		
+		$rootScope.$on('filterChanged', function () {
+			console.log('filterChanged');
+		});
+
 		var data = DataModel.getData();
 		var metaInfo = data.metaInfo;
 
