@@ -21,6 +21,9 @@ angular.module('app')
 			getSubways: function () {
 				return mergeSelected2Options();
 			},
+			getSelectedSubways: function () {
+				return SubwaysRepo.getSelectedSubways();
+			},
 			addSelectedSubway: function (subway) {
 				SubwaysRepo.addSelectedSubway(subway);
 				return mergeSelected2Options();

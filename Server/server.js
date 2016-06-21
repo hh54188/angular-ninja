@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 app.get('/query', function (req, res) {
-	res.send("Hello World");
+	console.log(req.query.keywords); 
 });
 
 app.listen(8080);

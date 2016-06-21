@@ -33,6 +33,9 @@ angular.module('app')
 				console.log("unselectedSources===>", unselectedSources);
 				SourcesRepo.setUnselectedSources(unselectedSources);
 			},
+			getUnselectedSources: function () {
+				return SourcesRepo.getUnselectedSources();
+			},
 			getSelectedSources: function () {
 				return SourcesRepo.getSelectedSources();
 			}
