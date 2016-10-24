@@ -32,13 +32,20 @@ angular.module('app')
 		}
 	}
 
-	var keywords = ['这', '是', '测试'];
+	var filterOptions = {
+		keywords: [],
+		selectedInterval: 24 * 365,
+		selectedSubways: [],
+		unselectedSources: []
+	}
 
-	var selectedInterval = 24 * 365;
+	// var keywords = ['这', '是', '测试'];
 
-	var selectedSubways = ['s1', 's4'];
+	// var selectedInterval = 24 * 365;
 
-	var unselectedSources = ['ebay'];
+	// var selectedSubways = ['s1', 's4'];
+
+	// var unselectedSources = ['ebay'];
 
 	function fetchServerData() {
 		$http.get('http://127.0.0.1/test', {
@@ -53,9 +60,45 @@ angular.module('app')
 		})
 	}
 
+	function _setVariable(name, value) {
+		filterOptions[name] = value;
+	}
+
+	function _getVariable(name) {
+		return filterOptions[name];
+	}
+
 	return {
 		getData: function () {
 			return data;
+		},
+		// Keywords
+		setKeywords: function () {
+
+		},
+		getKeywords: function () {
+
+		},
+		// Interval
+		setInterval: function () {
+
+		},
+		getInterval: function () {
+
+		},
+		// Un-Select-Sources
+		setUnselectedSources: function () {
+
+		},
+		getUnselectedSources: function () {
+
+		},
+		// Subways
+		setSubways: function () {
+
+		},
+		getSubways: function () {
+
 		}
 	}
 }])
