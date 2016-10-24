@@ -33,12 +33,12 @@ angular.module('app')
 			var unselectedSources = SourcesModel.getUnselectedSources();
 			var subways = SubwaysModel.getSelectedSubways();
 			var selectedInterval = TimeRangesModel.getSelectedInterval();
-			joinQueryParams(keywords, unselectedSources, subways, selectedInterval);
-			console.log('filterChanged');
-			console.log("Submit keywords===>", keywords);
-			console.log("Submit unselectedSources===>", unselectedSources);
-			console.log("Submit subways===>", subways);
-			console.log("Submit selectedInterval===>", selectedInterval)
+			// joinQueryParams(keywords, unselectedSources, subways, selectedInterval);
+			console.log('------------------------------');
+			// console.log("Submit keywords===>", keywords);
+			// console.log("Submit unselectedSources===>", unselectedSources);
+			// console.log("Submit selectedInterval===>", selectedInterval)
+			// console.log("Submit subways===>", subways);
 		});
 
 		var data = DataModel.getData();

@@ -1,12 +1,13 @@
 angular.module('app')
 .factory('DataModel', 
-	['$rootScope', 'DataRepo', 'KeywordsModel', 'SourcesModel', 'TimeRangesModel', 
-	function($rootScope, DataRepo, KeywordsModel, SourcesModel, TimeRangesModel){
+	['$rootScope', 'DataRepo', 'KeywordsModel', 'SourcesModel', 'TimeRangesModel', 'SubwaysModel',
+	function($rootScope, DataRepo, KeywordsModel, SourcesModel, TimeRangesModel, SubwaysModel){
 		
 		$rootScope.$on('filterChanged', function (event) {
 			var selectedSourcesNames = SourcesModel.getSelectedSources();
 			var selectedInterval = TimeRangesModel.getSelectedInterval();
 			var keywords = KeywordsModel.getKeywords();
+			var subways = SubwaysModel.getSelectedSubways();
 		})
 
 		return {

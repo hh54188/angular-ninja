@@ -17,9 +17,9 @@ angular.module('app')
 				});
 
 				// TEST START
-				sourceOptions.forEach(function (option) {
-					console.log(option.name, option.checked);
-				});
+				// sourceOptions.forEach(function (option) {
+				// 	console.log(option.name, option.checked);
+				// });
 				// TEST END
 
 				return sourceOptions;			

@@ -35,9 +35,9 @@ angular.module('app')
 		function setSubways(subways) {
 			$rootScope.$broadcast('filterChanged');
 			// TEST START
-			subways.forEach(function (sub) {
-				console.log(sub.desc, sub.checked);
-			})
+			// subways.forEach(function (sub) {
+			// 	console.log(sub.desc, sub.checked);
+			// })
 			// TEST END
 			$scope.filterSubways = subways;
 		}
@@ -85,7 +85,6 @@ angular.module('app')
 				console.log('[ERROR]===>', 'keyword already exist');
 				return false;
 			}
-			console.log();
 
 			setFilterKeywords(
 				KeywordsModel.insertKeyword($scope.newKeyword)
