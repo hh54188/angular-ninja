@@ -42,10 +42,9 @@ angular.module('app')
 		});
 
 		var data = DataModel.getData();
-		var metaInfo = data.metaInfo;
 
-		$scope.records = data.records;
-		$scope.pageInfo = metaInfo.pageInfo; 
+		$scope.list = data.list;
+		$scope.pageInfo = data.pageInfo; 
 
 		$scope.goPage = function (pageNum) {
 			console.log(pageNum);

@@ -160,50 +160,28 @@
 						</button>					
 					</div>
 				  	<div class="panel-body">
-						<div class="tab">
-							<!-- Nav tabs -->
-							<ul class="nav nav-tabs" role="tablist">
-								<li class="active">
-									<a href="#home" data-toggle="tab">所有</a>
-								</li>
-								<li >
-									<a href="#profile" data-toggle="tab">搜索结果</a>
-								</li>
-							</ul>
-							<!-- Tab panes -->
-							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active" id="home">
-							  		<table style="margin:0;" class="table table-hover">
-							  			<!--
-							  				这里是个坑：如果DataModel字段发生更改，则模板这里需要修改，Model层需要修改，数据库也需要修改？
-											title和url需要进行组合才能显示，所以这里就不适合遍历
-							  			-->
-							  			<thead>
-							  				<th class="text-left" width="20%">
-							  					<span>来源</span>
-							  				</th>
-							  				<th class="text-left">
-							  					<span>标题</span>
-							  				</th>				
-							  			</thead>
-							  			<tbody>
-											<tr ng-repeat="item in records">
-												<td>{{item.source}}</td>
-												<td>
-													<a target="_blank" href="{{item.url}}">{{item.title}}
-													</a>
-												</td>
-											</tr>  				
-							  			</tbody>
-							  			<tfoot>
-							  			</tfoot>
-							  		</table>									
-				  					<div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div>
-								</div>
-								<div role="tabpanel" class="tab-pane" id="profile">...</div>
-							</div>
-						</div>				  	
-	
+				  		<table style="margin:0;" class="table table-hover">
+				  			<!--
+				  				这里是个坑：如果DataModel字段发生更改，则模板这里需要修改，Model层需要修改，数据库也需要修改？
+								title和url需要进行组合才能显示，所以这里就不适合遍历
+				  			-->
+				  			<!-- <thead>
+				  				<th class="text-left">
+				  					<span>标题</span>
+				  				</th>				
+				  			</thead> -->
+				  			<tbody>
+								<tr ng-repeat="item in list">
+									<td>
+										<a target="_blank" href="{{item.url}}">{{item.title}}
+										</a>
+									</td>
+								</tr>  				
+				  			</tbody>
+				  			<tfoot>
+				  			</tfoot>
+				  		</table>									
+	  					<div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div>
 				  	</div>
 				  	<!-- <div class="panel-footer"> -->
 				  		<!-- <div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div> -->
@@ -218,7 +196,7 @@
 	</script>
 	<script type="text/javascript">
 		// $('.tooltip').tooltip();
-		$('.tab').tab();
+		// $('.tab').tab();
 	</script>
 	<!-- Fitler -->
 	<script type="text/javascript" src="./SelectedSubwayFilter.js"></script>
@@ -240,6 +218,8 @@
 	<script type="text/javascript" src="./KeywordsModel.js"></script>
 	<script type="text/javascript" src="./TimeRangesModel.js"></script>
 	<script type="text/javascript" src="./DataModel.js"></script>
+	<!--Service-->
+	<script type="text/javascript" src="./DataStorageService.js"></script>
 </body>
 </body>
 </html>

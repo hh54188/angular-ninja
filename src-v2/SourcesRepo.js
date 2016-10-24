@@ -24,7 +24,7 @@ angular.module('app')
 		var unselectedSources = ['ebay'];
 
 		return {
-			getPlainSources: function () {
+			getSourceOptions: function () {
 				return sources;
 			},
 			getUnselectedSources: function () {

@@ -4,7 +4,7 @@ angular.module('app')
 
 		return {
 			getSources: function () {
-				var sourceOptions = SourcesRepo.getPlainSources();
+				var sourceOptions = SourcesRepo.getSourceOptions();
 				var unselectedSources = SourcesRepo.getUnselectedSources();
 
 				sourceOptions.forEach(function (option) {

@@ -1,10 +1,24 @@
 angular.module('app')
 .factory('DataRepo', 
-	['$http',
-	function($http){
+	['$http', 'DataStorageService',
+	function($http, DataStorageService){
 
 		var data = {
-			records: [
+			list: [
+				{
+					source: 'example',
+					title: 'example',
+					url: 'http://www.example.com/',
+					date: +new Date,
+					price: ''
+				},
+				{
+					source: 'example',
+					title: 'example',
+					url: 'http://www.example.com/',
+					date: +new Date,
+					price: ''
+				},
 				{
 					source: 'example',
 					title: 'example',
@@ -13,17 +27,15 @@ angular.module('app')
 					price: ''
 				}
 			],
-			metaInfo: {
-				pageInfo: {
-					total: 5,
-					cur: 1
-				}
+			pageInfo: {
+				total: 5,
+				cur: 1
 			}
 		}
 	
 	return {
 		getRepo: function () {
-			return data;
+			return DataStorageService.getData();
 		}
 	}		
 }])
