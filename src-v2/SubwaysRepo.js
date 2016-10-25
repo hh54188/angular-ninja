@@ -1,10 +1,7 @@
 angular.module('app')
 .factory('SubwaysRepo', 
-	[function(){
+	['DataStorageService', function (DataStorageService) {
 		
-		var selectedSubways = ['s1', 's4'];
-		// var selectedSubways = [];
-
 		var subways = [
 			{
 				val: 's1',
@@ -94,26 +91,31 @@ angular.module('app')
 		];
 
 		return {
-			getSubways: function () {
+			getSubwayOptions: function () {
 				return subways;
 			},
 			getSelectedSubways: function () {
-				return selectedSubways
+				return DataStorageService.getSubways();
 			},
 			addSelectedSubway: function (subwayVal) {
+				var selectedSubways = DataStorageService.getSubways();
 				if (selectedSubways.indexOf(subwayVal) < 0) {
 					selectedSubways.push(subwayVal);
 				}
+				DataStorageService.setSubways(selectedSubways);
 				return selectedSubways;
 			},
 			clearSelectedSubways: function () {
-				return (selectedSubways = []);
+				DataStorageService.setSubways([]);
+				return [];
 			},
 			removeSubway: function (val) {
+				var selectedSubways = DataStorageService.getSubways();
 				var index = selectedSubways.indexOf(val);
 				if (index > -1) {
 					selectedSubways.splice(index, 1);
 				}
+				DataStorageService.setSubways(selectedSubways);
 			}
 		}
 }])

@@ -4,7 +4,7 @@ angular.module('app')
 
 		return {
 			getKeywords: function () {
-				return KeywordsRepo.getRepo()
+				return KeywordsRepo.getKeywords()
 			},
 			deleteKeyword: function (word) {
 				var result = KeywordsRepo.deleteKeyword(word);

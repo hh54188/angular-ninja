@@ -30,7 +30,6 @@ angular.module('app')
 				}).map(function (temp) {
 					return temp.name;
 				});
-				console.log("unselectedSources===>", unselectedSources);
 				SourcesRepo.setUnselectedSources(unselectedSources);
 			},
 			getUnselectedSources: function () {

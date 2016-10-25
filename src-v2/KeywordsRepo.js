@@ -1,6 +1,6 @@
 angular.module('app')
 .factory('KeywordsRepo', 
-	[function(){
+	['DataStorageService', function (DataStorageService) {
 
 		var keywords = ['example1', 'example2', 'example3', 'example4', 'example5']
 		// var keywords = [
@@ -12,10 +12,11 @@ angular.module('app')
 		// ];
 
 		return {
-			getRepo: function () {
-				return keywords;
+			getKeywords: function () {
+				return DataStorageService.getKeywords();
 			},
 			insertKeyword: function (word, newIndex) {
+				var keywords = DataStorageService.getKeywords();
 				if (!word) {
 					return keywords;
 				}
@@ -39,18 +40,23 @@ angular.module('app')
 				var oldIndex = keywords.indexOf(word);
 				keywords.splice(newIndex, 0, keywords.splice(oldIndex, 1)[0]);
 
+				DataStorageService.setKeywords(keywords);
 				return keywords;
 			},			
 			deleteKeyword: function (word) {
+				var keywords = DataStorageService.getKeywords();
 				var index = keywords.indexOf(word);
 				if (index > -1) {
 					keywords.splice(index, 1);
 				}
 
+				DataStorageService.setKeywords(keywords);
 				return keywords;
 			},
 			deleteAllKeywords: function () {
-				return (keywords = []);
+				var keywords = [];
+				DataStorageService.setKeywords(keywords);
+				return keywords;
 			}			
 		}
 }])

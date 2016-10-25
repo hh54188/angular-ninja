@@ -1,6 +1,6 @@
 angular.module('app')
 .factory('TimeRangesRepo', 
-	[function(){
+	['DataStorageService', function (DataStorageService) {
 		
 		var timeRanges = [
 			{
@@ -22,18 +22,15 @@ angular.module('app')
 			}				
 		];
 
-		var selectedInterval = 24 * 365;
-
 		return {
-			getPlainTimeRanges: function () {
+			getTimeRangesOptions: function () {
 				return timeRanges;
 			},
 			getSelectedInterval: function () {
-				return selectedInterval;
+				return DataStorageService.getInterval();
 			},
 			setSelectedInterval: function (interval) {
-				selectedInterval = interval
-				return true;
+				DataStorageService.setInterval(interval);
 			}
 		}
 }]);

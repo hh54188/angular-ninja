@@ -33,19 +33,11 @@ angular.module('app')
 	}
 
 	var filterOptions = {
-		keywords: [],
+		keywords: ['example1', 'example2', 'example3'],
 		selectedInterval: 24 * 365,
-		selectedSubways: [],
-		unselectedSources: []
-	}
-
-	// var keywords = ['这', '是', '测试'];
-
-	// var selectedInterval = 24 * 365;
-
-	// var selectedSubways = ['s1', 's4'];
-
-	// var unselectedSources = ['ebay'];
+		selectedSubways: ['s1', 's4'],
+		unselectedSources: ['ebay']
+	};
 
 	function fetchServerData() {
 		$http.get('http://127.0.0.1/test', {
@@ -69,36 +61,36 @@ angular.module('app')
 	}
 
 	return {
-		getData: function () {
+		getData: function (pageNum) {
 			return data;
 		},
 		// Keywords
-		setKeywords: function () {
-
+		setKeywords: function (value) {
+			_setVariable('keywords', value);
 		},
 		getKeywords: function () {
-
+			return _getVariable('keywords');
 		},
 		// Interval
-		setInterval: function () {
-
+		setInterval: function (value) {
+			_setVariable('selectedInterval', value);
 		},
 		getInterval: function () {
-
+			return _getVariable('selectedInterval');
 		},
 		// Un-Select-Sources
-		setUnselectedSources: function () {
-
+		setUnselectedSources: function (value) {
+			_setVariable('unselectedSources', value);
 		},
 		getUnselectedSources: function () {
-
+			return _getVariable('unselectedSources');
 		},
 		// Subways
-		setSubways: function () {
-
+		setSubways: function (value) {
+			_setVariable('selectedSubways', value);
 		},
 		getSubways: function () {
-
+			return _getVariable('selectedSubways');
 		}
 	}
 }])

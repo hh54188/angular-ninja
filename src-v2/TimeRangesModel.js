@@ -4,9 +4,8 @@ angular.module('app')
 		
 		return {
 			getTimeRanges: function () {
-				var timeRangesOptions = TimeRangesRepo.getPlainTimeRanges();
+				var timeRangesOptions = TimeRangesRepo.getTimeRangesOptions();
 				var selectedInterval = TimeRangesRepo.getSelectedInterval();;				
-				
 				// TEST START
 				// console.log("Default selectedInterval===>", selectedInterval);
 				// timeRangesOptions.forEach(function (option) {
