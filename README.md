@@ -1,3 +1,40 @@
+## test list
+
+### Keywords[View/Data]
+
+- 启用编辑[pass]
+- 取消编辑[pass]
+- 清空[pass]
+- 删除单个单词[pass]
+- 添加单词(回车或者点击搜索按钮)[pass]
+- 单词向上移动[pass]
+- 单词向下移动[pass]
+- 单词向上移动到顶端[pass]
+- 单词向下移动到底部[pass]
+- 最大不超过10个单词[pass]
+- 不允许添加重复[pass]
+- [TODO]不允许重复添加提示
+- [TODO]最大10个单词提示
+- [V2 TODO]XSS攻击
+
+### 数据来源[View/Data]
+
+- 勾选[pass]
+- 取消勾选[pass]
+- 全部选择[pass]
+- 全部取消选择[pass]
+
+### 时间范围[View/Data]
+
+- 选择[pass]
+
+### 地铁选择[View/Data]
+
+- 点击删除单个[pass]
+- 清空[pass]
+- 添加[pass]
+
+
 ## todoMVC
 
 todoMVC只供你了解语法，实际上的开发复杂的多，todoMVC里也有很多不规范的地方，比如

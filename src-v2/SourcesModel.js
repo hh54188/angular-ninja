@@ -4,7 +4,7 @@ angular.module('app')
 
 		return {
 			getSources: function () {
-				var sourceOptions = SourcesRepo.getPlainSources();
+				var sourceOptions = SourcesRepo.getSourceOptions();
 				var unselectedSources = SourcesRepo.getUnselectedSources();
 
 				sourceOptions.forEach(function (option) {
@@ -16,6 +16,12 @@ angular.module('app')
 					})
 				});
 
+				// TEST START
+				// sourceOptions.forEach(function (option) {
+				// 	console.log(option.name, option.checked);
+				// });
+				// TEST END
+
 				return sourceOptions;			
 			},
 			setUnselectedSources: function (sourcesWithCheckStatus) {
@@ -24,8 +30,10 @@ angular.module('app')
 				}).map(function (temp) {
 					return temp.name;
 				});
-
 				SourcesRepo.setUnselectedSources(unselectedSources);
+			},
+			getUnselectedSources: function () {
+				return SourcesRepo.getUnselectedSources();
 			},
 			getSelectedSources: function () {
 				return SourcesRepo.getSelectedSources();

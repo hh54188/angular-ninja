@@ -1,13 +1,30 @@
 angular.module('app')
 .controller('TableController',
-	['$scope', 'DataModel',
-	function($scope, DataModel){
+	['$http', '$scope', 'DataModel', '$rootScope', 
+	'SourcesModel', 'KeywordsModel', 'TimeRangesModel', 'SubwaysModel', 
+	function($http, $scope, DataModel, $rootScope, 
+		SourcesModel, KeywordsModel, TimeRangesModel, SubwaysModel){
 		
-		var data = DataModel.getData();
-		var metaInfo = data.metaInfo;
+		function getData() {
+			var data = DataModel.getDataByPage();
+			$scope.list = data.list;
+			$scope.pageInfo = data.pageInfo; 			
+		}
 
-		$scope.records = data.records;
-		$scope.pageInfo = metaInfo.pageInfo; 
+		$rootScope.$on('filterChanged', function () {
+			getData();
+			// var keywords= KeywordsModel.getKeywords();
+			// var unselectedSources = SourcesModel.getUnselectedSources();
+			// var subways = SubwaysModel.getSelectedSubways();
+			// var selectedInterval = TimeRangesModel.getSelectedInterval();
+
+			// console.log("Submit keywords===>", keywords);
+			// console.log("Submit unselectedSources===>", unselectedSources);
+			// console.log("Submit selectedInterval===>", selectedInterval)
+			// console.log("Submit subways===>", subways);
+		});
+
+		getData(); 
 
 		$scope.goPage = function (pageNum) {
 			console.log(pageNum);

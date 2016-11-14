@@ -1,8 +1,8 @@
 angular.module('app')
-.factory('SourcesRepo', 
-	[function(){
+.factory('SourcesRepo',
+	['DataStorageService', function(DataStorageService){
 
-		var sources = [
+		var sourcesOptions = [
 			{
 				name: 'ebay',
 				url: 'http://www.ebay.com'
@@ -21,21 +21,19 @@ angular.module('app')
 			}
 		];
 
-		var unselectedSources = ['ebay'];
-
 		return {
-			getPlainSources: function () {
-				return sources;
+			getSourceOptions: function () {
+				return sourcesOptions;
 			},
 			getUnselectedSources: function () {
-				return unselectedSources;
+				return DataStorageService.getUnselectedSources();
 			},
 			setUnselectedSources: function (sources) {
-				unselectedSources = sources;
-				return true;
+				DataStorageService.setUnselectedSources(sources);
 			},
 			getSelectedSources: function () {
-				return sources.map(function (item) {
+				var unselectedSources = DataStorageService.getUnselectedSources(); 
+				return sourcesOptions.map(function (item) {
 					return item.name;
 				}).filter(function (name) {
 					return unselectedSources.indexOf(name) < 0;

@@ -33,6 +33,12 @@ angular.module('app')
 			Subways相关操作
 		*/
 		function setSubways(subways) {
+			$rootScope.$broadcast('filterChanged');
+			// TEST START
+			// subways.forEach(function (sub) {
+			// 	console.log(sub.desc, sub.checked);
+			// })
+			// TEST END
 			$scope.filterSubways = subways;
 		}
 
@@ -69,6 +75,17 @@ angular.module('app')
 		}
 
 		$scope.submitForm = function () {
+			if (!$scope.newKeyword) {
+				console.log('[ERROR]===>', 'newKeyword is empty');
+				return false;
+			}
+
+			if ($scope.filterKeywords.indexOf($scope.newKeyword) > -1) {
+				$scope.newKeyword = '';
+				console.log('[ERROR]===>', 'keyword already exist');
+				return false;
+			}
+
 			setFilterKeywords(
 				KeywordsModel.insertKeyword($scope.newKeyword)
 			);

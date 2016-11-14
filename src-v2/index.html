@@ -57,7 +57,7 @@
 									    			placeholder="关键词不超过10个">
 									      	<span class="input-group-btn">
 									    		<button type="button" class="btn btn-default" aria-label="Help"><span class="glyphicon glyphicon-question-sign"></span></button>
-									        	<button class="btn btn-default" type="button" ><span class="glyphicon glyphicon-search"></span></button>
+									        	<button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span></button>
 									      	</span>
 									    </div>
 								  	</div>
@@ -137,7 +137,7 @@
 	  											<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
 	  											<span>添加</span>
 											</button>
-									  		<button ng-click="clearSelectedSubways()" type="button" class="btn btn-default btn-primary btn-xs">
+									  		<button ng-disabled="!filterSubways" ng-click="clearSelectedSubways()" type="button" class="btn btn-default btn-primary btn-xs">
 	  											<span class="glyphicon glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
 	  											<span>清空</span>
 											</button>
@@ -168,30 +168,28 @@
 				  				这里是个坑：如果DataModel字段发生更改，则模板这里需要修改，Model层需要修改，数据库也需要修改？
 								title和url需要进行组合才能显示，所以这里就不适合遍历
 				  			-->
-				  			<thead>
-				  				<th class="text-left" width="20%">
-				  					<span>来源</span>
-				  				</th>
+				  			<!-- <thead>
 				  				<th class="text-left">
 				  					<span>标题</span>
 				  				</th>				
-				  			</thead>
+				  			</thead> -->
 				  			<tbody>
-								<tr ng-repeat="item in records">
-									<td>{{item.source}}</td>
+								<tr ng-repeat="item in list">
 									<td>
 										<a target="_blank" href="{{item.url}}">{{item.title}}
 										</a>
 									</td>
 								</tr>  				
 				  			</tbody>
-				  			<tfoot></tfoot>
-				  		</table>	
+				  			<tfoot>
+				  			</tfoot>
+				  		</table>									
+	  					<div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div>
 				  	</div>
-				  	<div class="panel-footer">
-				  		<div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div>
+				  	<!-- <div class="panel-footer"> -->
+				  		<!-- <div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div> -->
 				  		<!-- <div pager total-page-count="7" cur-page="3" class="text-center"></div> -->
-				  	</div>
+				  	<!-- </div> -->
 				</div>
 			</div>
 		</div>
@@ -201,6 +199,7 @@
 	</script>
 	<script type="text/javascript">
 		// $('.tooltip').tooltip();
+		// $('.tab').tab();
 	</script>
 	<!-- Fitler -->
 	<script type="text/javascript" src="./SelectedSubwayFilter.js"></script>
@@ -222,6 +221,8 @@
 	<script type="text/javascript" src="./KeywordsModel.js"></script>
 	<script type="text/javascript" src="./TimeRangesModel.js"></script>
 	<script type="text/javascript" src="./DataModel.js"></script>
+	<!--Service-->
+	<script type="text/javascript" src="./DataStorageService.js"></script>
 </body>
 </body>
 </html>

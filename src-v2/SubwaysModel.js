@@ -3,7 +3,7 @@ angular.module('app')
 	['SubwaysRepo', function(SubwaysRepo){
 
 		function mergeSelected2Options() {
-			var subwaysOptions = SubwaysRepo.getSubways();
+			var subwaysOptions = SubwaysRepo.getSubwayOptions();
 			var getSelectedSubways = SubwaysRepo.getSelectedSubways();
 
 			subwaysOptions.forEach(function (subway) {
@@ -20,6 +20,9 @@ angular.module('app')
 		return {
 			getSubways: function () {
 				return mergeSelected2Options();
+			},
+			getSelectedSubways: function () {
+				return SubwaysRepo.getSelectedSubways();
 			},
 			addSelectedSubway: function (subway) {
 				SubwaysRepo.addSelectedSubway(subway);
