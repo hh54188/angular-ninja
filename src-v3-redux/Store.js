@@ -1,5 +1,6 @@
 var Store = {
-	dispatch: function () {
-		
+	dispatch: function (action) {
+		var initialState = {};
+		rootReducer(initialState, action);
 	}
 }
