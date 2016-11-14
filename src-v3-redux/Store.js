@@ -1,0 +1,5 @@
+var Store = {
+	dispatch: function () {
+		
+	}
+}

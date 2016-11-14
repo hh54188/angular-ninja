@@ -32,48 +32,37 @@ angular.module('app')
 		];
 		$scope.selectedInterval = 24 * 365;
 
-		$scope.sourceSelectChange = function () {
+		$scope.keyword = '';
 
+		// UI Logic
+		$scope.keywordsIsEditable = false;
+		$scope.enableEditKeywords = function () {
+			$scope.keywordsIsEditable = !$scope.keywordsIsEditable;
 		}
 
-		$scope.intervalSelectChange = function () {
+		// Business Logic
 
+		$scope.addKeyword = function (keyword) {
+			debugger
+			Store.dispatch(addKeyword(keyword));
 		}
 
-		$scope.tempSelectedChanged = function () {
-
+		$scope.deleteKeyword = function (keyword) {
+			debugger
+			Store.dispatch(deleteKeyword(keyword));
 		}
 
-		$scope.addSelectedSubway = function () {
-
+		$scope.sortKeyword = function (oldIndex, newIndex) {
+			debugger
+			Store.dispatch(sortKeyword({
+				oldIndex: oldIndex,
+				newIndex: newIndex
+			}));
 		}
 
-		$scope.clearSelectedSubways = function () {
-
+		$scope.emptyKeywords = function () {
+			debugger
+			Store.dispatch(emptyKeywords());
 		}
-
-		$scope.removeSubway = function (val) {
-
-		}
-
-		$scope.submitForm = function () {
-
-		}
-		
-		$scope.enableEditKeywords  = function () {
-
-		}		
-
-		$scope.deleteKeyword = function (word) {
-
-		}
-
-		$scope.insertKeyword = function (word, index) {
-
-		}
-
-		$scope.deleteAllKeywords = function () {
-
-		}		
 
 }]);
