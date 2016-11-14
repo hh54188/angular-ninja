@@ -9,7 +9,13 @@ angular.module('app')
 	function ($scope, $rootScope) {
 		
 		$scope.filterKeywords= ['example1', 'example2', 'example3'];
-		$scope.filterSources = ['ebay'];
+		$scope.filterSources = [
+			{
+				name: 'ebay',
+				checked: false,
+				url: 'http://example.com'
+			}
+		];
 		$scope.filterSubways = ['s1', 's4'];
 		$scope.timeRangeOptions = [
 			{
