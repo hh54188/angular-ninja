@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/immutable/dist/immutable.min.js"></script>
+	<script type="text/javascript" src="../reducers/keyword.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		// Insert
+		var keywords = Immutable.List();
+
+		var insertAction01 = {
+			type: 'ADD_KEYWORD',
+			payload: 'liguangyi01'
+		};
+
+		var insertAction02 = {
+			type: 'ADD_KEYWORD',
+			payload: 'liguangyi02'
+		};
+
+		var insertAction03 = {
+			type: 'ADD_KEYWORD',
+			payload: 'liguangyi03'
+		};
+
+		var insertAction04 = {
+			type: 'ADD_KEYWORD',
+			payload: 'liguangyi04'
+		};
+
+		var insertAction05 = {
+			type: 'ADD_KEYWORD',
+			payload: 'liguangyi05'
+		};
+
+		var insertAction06 = {
+			type: 'ADD_KEYWORD',
+			payload: 'liguangyi06'
+		};		
+
+		var state01 = keywordReducer(keywords, insertAction01);
+		console.log(state01.includes('liguangyi01'));
+
+		var state02 = keywordReducer(state01, insertAction02);
+		console.log(state02.includes('liguangyi02'));
+
+		var state03 = keywordReducer(state02, insertAction03);
+		console.log(state03.includes('liguangyi03'));
+
+		var state04 = keywordReducer(state03, insertAction04);
+		console.log(state04.includes('liguangyi04'));
+
+		var state05 = keywordReducer(state04, insertAction05);
+		console.log(state05.includes('liguangyi05'));
+
+		var lastState = keywordReducer(state05, insertAction06);
+		console.log(lastState.includes('liguangyi06'));						
+
+		// DELETE
+		var deleteAction = {
+			type: 'DELETE_KEYWORD',
+			payload: 'liguangyi01'
+		}
+		var stateDelete = keywordReducer(lastState, deleteAction);
+		console.log(stateDelete.size);
+		console.log(stateDelete.includes('liguangyi01'));
+		console.log(stateDelete.toArray());
+
+		// SORT
+		// ["liguangyi02", "liguangyi03", "liguangyi04", "liguangyi05", "liguangyi06"]
+		var sortAction = {
+			type: 'SORT_KEYWORD',
+			payload: {
+				oldIndex: 1, 
+				newIndex: 3
+			}
+		}
+		var stateSort = keywordReducer(stateDelete, sortAction);
+		console.log(stateSort.toArray());
+		// 结果应该是: ["liguangyi02", "liguangyi04", "liguangyi05", "liguangyi03", "liguangyi06"] 
+
+		// Empty
+		var emptyAction = {
+			type: 'EMPTY_KEYWORDS',
+			payload: ''
+		};
+		var stateEmpty = keywordReducer(stateSort, emptyAction);
+		console.log(stateEmpty.size);
+	</script>
+</body>
+</html>
