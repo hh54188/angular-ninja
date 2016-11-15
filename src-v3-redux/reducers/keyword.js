@@ -15,7 +15,9 @@ function _sortKeyword(keywords, oldIndex, newIndex) {
 function _empaytKeywords(keywords) {
 	return keywords.clear();
 }
-
+/*
+	State looks like ['keyword01', 'keyword02', 'keyword03']
+*/
 function keywordReducer(state, action) {
 	var payload = action.payload;
 	
