@@ -8,49 +8,30 @@ angular.module('app')
 	['$scope', '$rootScope', 
 	function ($scope, $rootScope) {
 
+		function getSelectedTimeId(times) {
+			return times.find(function (item) {
+				return item.get('checked') == true;
+			}).get('id');
+		}
+
+		function  assignState(scope, state) {
+			scope.keywords = state.get('keywords').toJS();
+			scope.sources = state.get('sources').toJS();
+			scope.subways = state.get('subways').toJS();
+			scope.times = state.get('times').toJS();
+			// scope.data = state.get('data').toJS();
+			scope.selectedTimeId = getSelectedTimeId(state.get('times'));
+			scope.pagination = state.get('pagination').toJS();
+		}
+
 		Store.subscribe(function (state) {
-			$scope.keywords = state.get('keywords').toJS();
-			$scope.sources = state.get('sources').toJS();
+			assignState($scope, state);
 		});
 
-		var state = Store.getState();
-		$scope.keywords = state.get('keywords').toJS();
-		$scope.sources = state.get('sources').toJS();
-		$scope.subways = state.get('subways').toJS();
-		$scope.times = state.get('times').toJS();
-		
-		// $scope.filterKeywords= ['example1', 'example2', 'example3'];
-		// $scope.filterSources = [
-		// 	{
-		// 		name: 'ebay',
-		// 		checked: false,
-		// 		url: 'http://example.com'
-		// 	}
-		// ];
-		// $scope.filterSubways = ['s1', 's4'];
-		// $scope.timeRangeOptions = [
-		// 	{
-		// 		interval: 1,
-		// 		desc: '一小时内'
-		// 	}, {
-		// 		interval: 3,
-		// 		desc: '三小时内'
-		// 	}, {
-		// 		interval: 24,
-		// 		desc: '一天内'
-		// 	}, {
-		// 		interval: 24 * 7,
-		// 		desc: '一周内'
-		// 	},
-		// 	{
-		// 		interval: 24 * 365,
-		// 		desc: '所有'
-		// 	}				
-		// ];
-		// $scope.selectedInterval = 24 * 365;
+		assignState($scope, Store.getState());
 
-		$scope.keyword = '';
-		$scope.tempSelectedSubway = '';
+		$scope.tempKeyword = '';
+		$scope.tempSubway = '';
 
 		// UI Logic
 		$scope.keywordsIsEditable = false;
@@ -61,6 +42,7 @@ angular.module('app')
 		// Business Logic:
 		// Keywords----------
 		$scope.addKeyword = function (keyword) {
+			$scope.tempKeyword = ''; // UI Logic, bad practice
 			Store.dispatch(addKeyword(keyword));
 		}
 
@@ -84,7 +66,23 @@ angular.module('app')
 			Store.dispatch(toggleSource(sourceId));
 		}
 
+		// Time----------
 		$scope.toggleTime = function (timeId) {
-			
+			Store.dispatch(chooseTime(timeId));
+		}
+
+		// Subway----------
+		$scope.toggleSubway = function (subwayId) {
+			$scope.tempSubway = ''; // UI Logic, bad practice
+			Store.dispatch(toggleSubway(subwayId));
+		}
+
+		$scope.deselectSubways = function () {
+			Store.dispatch(deselectSubways());
+		}
+
+		$scope.goPage = function (pageNum) {
+			$scope.$broadcast('pagination:setCur', pageNum);
+			Store.dispatch(turnToPage(pageNum));
 		}
 }]);

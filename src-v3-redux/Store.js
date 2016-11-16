@@ -1,6 +1,10 @@
 var _listenerQueue = [];
 var _currentState = null;
 var _initialState = Immutable.fromJS({
+	pagination: {
+		total: 10,
+		cur: 3
+	},
 	keywords: ['keyword01', 'keyword02', 'keyword03'],
 	sources: [
 		{
@@ -151,7 +155,54 @@ var _initialState = Immutable.fromJS({
 			desc: '所有',
 			checked: true,
 		}
-	]
+	],
+	data: [
+		{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+				{
+			id: 784533,
+			title: 'zhihu.com',
+			url: 'http://zhihu.com'
+		},
+	]	
 })
 
 function publish(state) {

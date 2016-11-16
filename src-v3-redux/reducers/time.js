@@ -10,17 +10,16 @@
 function _chooseRange(ranges, rangeId) {
 	return ranges.map(function (item) {
 		if (item.get('id') === rangeId) {
-			item.set('checked', true);
+			return item.set('checked', true);
 		} else {
-			item.set('checked', false);
+			return item.set('checked', false);
 		}
-		return item;
 	})
 }
 
 function timeReducer(state, action) {
 	switch (action.type) {
-		case 'CHOOSE_RANGE':
+		case 'CHOOSE_TIME':
 			return _chooseRange(state, action.payload);
 		default: 
 			return state;

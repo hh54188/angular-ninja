@@ -32,3 +32,30 @@ function toggleSource(sourceId) {
 		payload: sourceId
 	}
 }
+
+function toggleSubway(subwayId) {
+	return {
+		type: SUBWAY.TOGGLE_SUBWAY,
+		payload: subwayId
+	}
+}
+
+function deselectSubways() {
+	return {
+		type: SUBWAY.DESELECT_SUBWAYS
+	}
+}
+
+function chooseTime(timeId) {
+	return {
+		type: TIME.CHOOSE_TIME,
+		payload: timeId
+	}
+}
+
+function turnToPage(pageNum) {
+	return {
+		type: PAGINATION.TURN_TO_PAGE,
+		payload: pageNum
+	}
+}

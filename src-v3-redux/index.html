@@ -49,11 +49,11 @@
 						</button>
 						  	</div>
 						  	<div class="panel-body">
-								<form ng-submit="addKeyword(keyword)" required>
+								<form ng-submit="addKeyword(tempKeyword)" required>
 									<div class="form-group">						
 								    	<label>关键词</label>
 									    <div class="input-group">
-									    	<input ng-disabled="keywords.length >= 10" ng-model="keyword" type="text" 
+									    	<input ng-disabled="keywords.length >= 10" ng-model="tempKeyword" type="text" 
 									    			class="form-control" 
 									    			placeholder="Search for...">
 									      	<span class="input-group-btn">
@@ -114,7 +114,7 @@
 								  		<label>时间范围</label>
 								  		<div ng-repeat="timeItem in times" class="radio">
 											<label>
-												<input ng-change="toggleTime(timeItem.id)" ng-model="timeItem.checked" type="radio" name="time" value="{{timeItem.id}}" >{{timeItem.desc}}
+												<input ng-change="toggleTime(timeItem.id)" ng-model="$parent.selectedTimeId" type="radio" name="time" value="{{timeItem.id}}" >{{timeItem.desc}}
 											</label>							
 								  		</div>
 								  	</div>
@@ -126,21 +126,21 @@
 								  			</label>
 								  		</div>
 										<div>
-											<select ng-change="tempSelectedChanged()" ng-model="tempSelectedSubway" class="form-control input-sm inline-block" style="width:30%;">
+											<select ng-model="tempSubway" class="form-control input-sm inline-block" style="width:30%;">
 												<option value="">无</option>
-												<option ng-repeat="subwayItem in subways " value="{{subwayItem.id}}">{{subwayItem.desc}}</option>
+												<option ng-repeat="subwayItem in subways | UnselectedSubwayFilter" value="{{subwayItem.id}}">{{subwayItem.desc}}</option>
 											</select>
-									  		<button ng-disabled="!tempSelectedSubway" ng-click="addSelectedSubway()" type="button" class="btn btn-default btn-primary btn-xs">
+									  		<button ng-disabled="!tempSubway" ng-click="toggleSubway(tempSubway)" type="button" class="btn btn-default btn-primary btn-xs">
 	  											<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
 	  											<span>添加</span>
 											</button>
-									  		<button ng-disabled="!subways" ng-click="clearSelectedSubways()" type="button" class="btn btn-default btn-primary btn-xs">
+									  		<button ng-disabled="!subways" ng-click="deselectSubways()" type="button" class="btn btn-default btn-primary btn-xs">
 	  											<span class="glyphicon glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
 	  											<span>清空</span>
 											</button>
 											<hr class="custom-hr">
 										</div>
-								  		<button ng-click="removeSubway(subwayItem.id)" ng-model="subwayItem.checked" ng-repeat="subwayItem in subways"  type="button" class="btn btn-default btn-xs btn-subway-margin">
+								  		<button ng-click="toggleSubway(subwayItem.id)" ng-model="subwayItem.checked" ng-repeat="subwayItem in subways | SelectedSubwayFilter"  type="button" class="btn btn-default btn-xs btn-subway-margin">
   											<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
   											<span>{{subwayItem.desc}}</span>								  		
 								  		</button>
@@ -161,17 +161,13 @@
 					</div>
 				  	<div class="panel-body">
 				  		<table style="margin:0;" class="table table-hover">
-				  			<!--
-				  				这里是个坑：如果DataModel字段发生更改，则模板这里需要修改，Model层需要修改，数据库也需要修改？
-								title和url需要进行组合才能显示，所以这里就不适合遍历
-				  			-->
 				  			<!-- <thead>
 				  				<th class="text-left">
 				  					<span>标题</span>
 				  				</th>				
 				  			</thead> -->
 				  			<tbody>
-								<tr ng-repeat="item in list">
+								<tr ng-repeat="item in data">
 									<td>
 										<a target="_blank" href="{{item.url}}">{{item.title}}
 										</a>
@@ -181,12 +177,10 @@
 				  			<tfoot>
 				  			</tfoot>
 				  		</table>									
-	  					<!-- <div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div> -->
 				  	</div>
-				  	<!-- <div class="panel-footer"> -->
-				  		<!-- <div pager go-page-action="goPage(pageNum)" total-page-count="{{pageInfo.total}}" cur-page="{{pageInfo.cur}}" class="text-center"></div> -->
-				  		<!-- <div pager total-page-count="7" cur-page="3" class="text-center"></div> -->
-				  	<!-- </div> -->
+				  	<div class="panel-footer">
+				  		<div go-page-action="goPage(pageNum)" pagination total="{{pagination.total}}" cur="{{pagination.cur}}" class="text-center"></div>
+				  	</div>
 				</div>
 			</div>
 		</div>
@@ -194,7 +188,13 @@
 	<script type="text/javascript">
 		angular.module('app', []);
 	</script>
+	<!--  Directive-->
+	<script type="text/javascript" src="./PaginationDirective.js"></script>
+	<!-- Fitler -->
+	<script type="text/javascript" src="./SelectedSubwayFilter.js"></script>
+	<script type="text/javascript" src="./UnselectedSubwayFilter.js"></script>	
 	<!-- Reducers -->
+	<script type="text/javascript" src="./reducers/pagination.js"></script>
 	<script type="text/javascript" src="./reducers/time.js"></script>
 	<script type="text/javascript" src="./reducers/subway.js"></script>
 	<script type="text/javascript" src="./reducers/keyword.js"></script>

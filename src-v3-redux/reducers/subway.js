@@ -6,7 +6,7 @@
 // 	checked: true
 // }]
 
-function _unselectAllSubways(subways) {
+function _deselectSubways(subways) {
 	return subways.map(function (item) {
 		return item.set('checked', false);
 	});
@@ -24,8 +24,8 @@ function subwayReducer(state, action) {
 	switch (action.type) {
 		case 'TOGGLE_SUBWAY':
 			return _toggleSubway(state, action.payload);
-		case 'UNSELECT_ALL_SUBWAYS':
-			return _unselectAllSubways(state);
+		case 'DESELECT_SUBWAYS':
+			return _deselectSubways(state);
 		default: 
 			return state;
 	}

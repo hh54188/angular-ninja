@@ -1,8 +1,12 @@
+## 注意
+
+代码中可能使用了`Array.map`或者是`Array.filter`方法，上线的时候需要留意，要做polyfill
+
 ## Redux
 
 redux是一种思想，是一种解决问题的方式，不是redux必须依靠redux.js，就好像这世上根本就没有一个Flux框架一样。
 
-所以要在Angular1中实现Redux，最重要的是搞清楚Redux有哪些关键的角色，不同的角色是干什么的，准确来说是提供了什么接口。如果你愿意的话，还可以实现一些原生的方法例如 combineRedux
+所以要在Angular1中实现Redux，最重要的是搞清楚Redux有哪些关键的角色，不同的角色是干什么的，准确来说是提供了什么接口。如果你愿意的话，还可以实现一些原生的方法例如 combineRedux, redux-trunk
 
 ## 两种逻辑
 
