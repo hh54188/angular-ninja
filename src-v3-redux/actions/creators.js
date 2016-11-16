@@ -25,3 +25,10 @@ function emptyKeywords() {
 		type: KEYWORD.EMPTY_KEYWORDS
 	}
 }
+
+function toggleSource(sourceId) {
+	return {
+		type: SOURCE.TOGGLE_SOURCE,
+		payload: sourceId
+	}
+}

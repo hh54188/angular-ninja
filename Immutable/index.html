@@ -7,32 +7,48 @@
 <body>
 	<script type="text/javascript">
 		var sources = Immutable.List.of(
-			{
+			Immutable.Map({
 				id: 'ebay',
 				name: 'ebay',
 				url: 'http://www.ebay.com',
 				enable: true
-			},
-			{
+			}),
+			Immutable.Map({
 				id: 'tieba',
 				name: '贴吧',
 				url: 'http://tieba.baidu.com',
 				enable: true
-			},
-			{
+			}),
+			Immutable.Map({
 				id: 'taobao',
 				name: '淘宝',
 				url: 'http://2.taobao.com',
 				enable: true
-			},
-			{
+			}),
+			Immutable.Map({
 				id: 'actoys',
 				name: 'AC商城',
 				url: 'https://mall.actoys.net/index.php?app=search&cate_id=30',
 				enable: true
+			})
+		);
+
+		// var newSources = sources.map(function (item) {
+		// 	return item.set('enable', false);
+		// });
+
+		// console.log(newSources.toJS());
+
+
+		var temp = sources.update(
+			sources.findIndex(function (item) {
+				return item.get('id') === 'actoys';
+			}), 
+			function (item) {
+				return item.set('enable', false);
 			}
 		);
-		console.log(sources.toArray());
+		console.log(temp.toJS());
 	</script>
 </body>
 </html>

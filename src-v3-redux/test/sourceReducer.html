@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="../../bower_components/immutable/dist/immutable.min.js"></script>
+	<script type="text/javascript" src="../reducers/source.js"></script>	
+</head>
+<body>
+<script type="text/javascript">
+	var sources = Immutable.List.of(
+		Immutable.Map({
+			id: 'ebay',
+			name: 'ebay',
+			url: 'http://www.ebay.com',
+			enable: true
+		}),
+		Immutable.Map({
+			id: 'tieba',
+			name: '贴吧',
+			url: 'http://tieba.baidu.com',
+			enable: true
+		}),
+		Immutable.Map({
+			id: 'taobao',
+			name: '淘宝',
+			url: 'http://2.taobao.com',
+			enable: true
+		}),
+		Immutable.Map({
+			id: 'actoys',
+			name: 'AC商城',
+			url: 'https://mall.actoys.net/index.php?app=search&cate_id=30',
+			enable: true
+		})
+	);
+
+	var newSources = sourceReducer(sources, {
+		type: 'TOGGLE_SOURCE',
+		payload: 'taobao'
+	});
+
+	console.log(newSources.get(2).toJS());
+</script>
+</body>
+</html>
