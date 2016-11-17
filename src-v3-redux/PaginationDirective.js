@@ -87,8 +87,6 @@ angular.module('app').directive('pagination', function () {
 				$scope.total = parseInt($scope.total, 10);
 				$scope.displayPages = 7; // 简单模式不提倡修改
 
-				console.log('cur--->', $scope.cur, 'total--->', $scope.total);
-				
 				$scope.lastPage = $scope.total;
 				$scope.range = [];
 

@@ -81,6 +81,7 @@ angular.module('app')
 			Store.dispatch(deselectSubways());
 		}
 
+		// Pagination----------
 		$scope.goPage = function (pageNum) {
 			$scope.$broadcast('pagination:setCur', pageNum);
 			Store.dispatch(turnToPage(pageNum));
