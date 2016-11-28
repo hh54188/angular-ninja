@@ -1,23 +1,37 @@
 function rootReducer(state, action) {
 
-
-
+	// 虽然Store存储的state里还有appState这个属性
+	// 但是它没有自己的reducer，
+	// 它的状态的改变是由 dataReducer修改的
 	var reduceArr = [
 		{'keywords': keywordReducer},
 		{'sources': sourceReducer},
 		{'subways': subwayReducer},
 		{'times': timeReducer},
-		{'pagination': paginationReducer}
+		{'pagination': paginationReducer},
+		{'data': dataReducer}
 	];
 
+	// data字段的属性和其他的属性（如keywords、sources等）不同
+	// 其他的属性状态是可以自治的，所以reducer传入的状态也是自己的
+	// 但是data值是依赖其他值决定
+	// 所以dataReducer必须放在最后，等待其他值都更新完毕之后
+	// 再依据它们决定自己的值，所以dataReducer传入的是整个状态的值
 	function stateReduce(reducers, initialState) {
-		reducers.forEach(function (reducerItem) {
+		reducers.forEach(function (reducerItem, index) {
 			for (var property in reducerItem) {
 				var reducer = reducerItem[property];
-				initialState = initialState.set(
-					property, 
-					reducer(initialState.get(property), action)
-				);
+				if (index === reducers.length - 1) {
+					initialState = reducer(initialState, action)
+				} else {
+					initialState = initialState.set(
+						property, 
+						reducer(
+							initialState.get(property),
+							action
+						)
+					);
+				}
 			}
 		});
 

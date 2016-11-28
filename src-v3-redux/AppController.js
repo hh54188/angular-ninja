@@ -19,9 +19,10 @@ angular.module('app')
 			scope.sources = state.get('sources').toJS();
 			scope.subways = state.get('subways').toJS();
 			scope.times = state.get('times').toJS();
-			// scope.data = state.get('data').toJS();
+			scope.data = state.get('data').toJS();
 			scope.selectedTimeId = getSelectedTimeId(state.get('times'));
 			scope.pagination = state.get('pagination').toJS();
+			scope.appState = state.get('appState');
 		}
 
 		Store.subscribe(function (state) {
@@ -32,6 +33,7 @@ angular.module('app')
 
 		$scope.tempKeyword = '';
 		$scope.tempSubway = '';
+		$scope.appState = '';
 
 		// UI Logic
 		$scope.keywordsIsEditable = false;
@@ -39,11 +41,17 @@ angular.module('app')
 			$scope.keywordsIsEditable = !$scope.keywordsIsEditable;
 		}
 
+		// Store.dispatch应该被bound起来：
+		// const boundAddTodo = (text) => dispatch(addTodo(text))
+		// const boundCompleteTodo = (index) => dispatch(completeTodo(index))
+
+
 		// Business Logic:
 		// Keywords----------
 		$scope.addKeyword = function (keyword) {
 			$scope.tempKeyword = ''; // UI Logic, bad practice
 			Store.dispatch(addKeyword(keyword));
+			Store.dispatch(dataLoadingBegin(Store.dispatch.bind(Store)));
 		}
 
 		$scope.deleteKeyword = function (keyword) {

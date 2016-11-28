@@ -1,3 +1,24 @@
+function dataLoadingBegin(dispatchFn) {
+	return {
+		type: DATA.LOADING_BEGIN,
+		payload: dispatchFn
+	}
+}
+
+function dataLoadingSuccess(data) {
+	return {
+		type: DATA.LOADING_SUCCESS,
+		payload: data
+	}
+}
+
+function dataLoadingFailed(errorMessage) {
+	return {
+		type: DATA.LOADING_FAILED,
+		payload: errorMessage
+	}
+}
+
 function addKeyword(word) {
 	return {
 		type: KEYWORD.ADD_KEYWORD,

@@ -1,6 +1,7 @@
 var _listenerQueue = [];
 var _currentState = null;
 var _initialState = Immutable.fromJS({
+	appState: 'app-state-normal',
 	pagination: {
 		total: 10,
 		cur: 3
@@ -209,6 +210,12 @@ function publish(state) {
 	_listenerQueue.forEach(function (listener) {
 		listener(state);
 	});
+}
+
+function isFunction(obj) {
+	return Object.prototype.toString.call(obj) === '[object Function]'
+			? true
+			: false;
 }
 
 var Store = {
