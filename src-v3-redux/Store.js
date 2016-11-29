@@ -220,11 +220,15 @@ function isFunction(obj) {
 
 var Store = {
 	dispatch: function (action) {
-		_currentState = rootReducer(
-			this.getState(),
-			action
-		);
-		publish(_currentState);
+		if (isFunction(action)) {
+			action(this.dispatch.bind(this));
+		} else {
+			_currentState = rootReducer(
+				this.getState(),
+				action
+			);
+			publish(_currentState);
+		}
 	},
 	getState: function () {
 		return _currentState || _initialState;

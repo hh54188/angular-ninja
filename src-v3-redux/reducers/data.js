@@ -32,12 +32,12 @@ function _dataLoadingFailed(allStates) {
 function dataReducer(state, action) {
 	var payload = action.payload;
 	switch (action.type) {
-		case 'LOADING_BEGIN':
-			return _dataLoadingBegin(state, payload);
-		case 'LOADING_SUCCESS':
-			return _dataLoadingSuccess(state, payload);
-		case 'LOADING_FAILED':
-			return _dataLoadingFailed(state, payload);
+		// case 'LOADING_BEGIN':
+		// 	return _dataLoadingBegin(state, payload);
+		// case 'LOADING_SUCCESS':
+		// 	return _dataLoadingSuccess(state, payload);
+		// case 'LOADING_FAILED':
+		// 	return _dataLoadingFailed(state, payload);
 		default:
 			return state;
 	}

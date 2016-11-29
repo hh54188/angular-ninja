@@ -1,21 +1,31 @@
-function dataLoadingBegin(dispatchFn) {
-	return {
-		type: DATA.LOADING_BEGIN,
-		payload: dispatchFn
+function requestData(parameters) {
+	return function (dispatch) {
+		$.ajax({
+			url: 'http://example.com/',
+			dataType: 'json',
+			timeout: 1000 * 1,
+			data: parameters,
+			success: function (data, textStatus, jqXHR) {
+				dispatch(receiveData({
+					data: data,
+					error: ''
+				}))
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				dispatch(receiveData({
+					data: [],
+					error: textStatus
+				}));
+			},
+			complete: function (jqXHR, textStatus) {}
+		});
 	}
 }
 
-function dataLoadingSuccess(data) {
+function receiveData(result) {
 	return {
-		type: DATA.LOADING_SUCCESS,
-		payload: data
-	}
-}
-
-function dataLoadingFailed(errorMessage) {
-	return {
-		type: DATA.LOADING_FAILED,
-		payload: errorMessage
+		type: DATA.RECEIVE_DATA,
+		payload: result // {data: [], error: ''}
 	}
 }
 

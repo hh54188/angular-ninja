@@ -14,6 +14,25 @@ angular.module('app')
 			}).get('id');
 		}
 
+		function assembleParameters(states) {
+
+			function filterCheckedItem(items) {
+				return items.filter(function (item) {
+							return item.checked == true;
+						}).map(function (item) {
+							return item.id;
+						});
+			}
+
+			return {
+				page: states.pagination.cur,
+				keywords: states.keywords,
+				sourceIds: filterCheckedItem(states.sources),
+				subwayIds: filterCheckedItem(states.subways),
+				timeId: filterCheckedItem(states.times)
+			}
+		}
+
 		function  assignState(scope, state) {
 			scope.keywords = state.get('keywords').toJS();
 			scope.sources = state.get('sources').toJS();
@@ -51,7 +70,11 @@ angular.module('app')
 		$scope.addKeyword = function (keyword) {
 			$scope.tempKeyword = ''; // UI Logic, bad practice
 			Store.dispatch(addKeyword(keyword));
-			Store.dispatch(dataLoadingBegin(Store.dispatch.bind(Store)));
+			Store.dispatch(
+				requestData(
+					assembleParameters(Store.getState().toJS())
+				)
+			);
 		}
 
 		$scope.deleteKeyword = function (keyword) {

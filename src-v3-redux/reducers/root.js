@@ -21,9 +21,9 @@ function rootReducer(state, action) {
 		reducers.forEach(function (reducerItem, index) {
 			for (var property in reducerItem) {
 				var reducer = reducerItem[property];
-				if (index === reducers.length - 1) {
-					initialState = reducer(initialState, action)
-				} else {
+				// if (index === reducers.length - 1) {
+				// 	initialState = reducer(initialState, action)
+				// } else {
 					initialState = initialState.set(
 						property, 
 						reducer(
@@ -31,7 +31,7 @@ function rootReducer(state, action) {
 							action
 						)
 					);
-				}
+				// }
 			}
 		});
 
