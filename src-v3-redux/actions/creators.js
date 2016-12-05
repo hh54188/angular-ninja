@@ -1,5 +1,9 @@
+// 这里仍然有多个问题需要解决：
+// 1. 如果用户在上一个请求还没有完成的情况下就发出下一个请求怎么办？
+// 2. 这样把dispatch传入真的是一个好的实践吗？
 function requestData(parameters) {
 	return function (dispatch) {
+		dispatch(changeAppState('app-state-loading'));
 		$.ajax({
 			url: 'http://example.com/',
 			dataType: 'json',
@@ -10,12 +14,14 @@ function requestData(parameters) {
 					data: data,
 					error: ''
 				}))
+				dispatch(changeAppState('app-state-normal'));
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				dispatch(receiveData({
 					data: [],
 					error: textStatus
 				}));
+				dispatch(changeAppState('app-state-error'));
 			},
 			complete: function (jqXHR, textStatus) {}
 		});
@@ -88,5 +94,12 @@ function turnToPage(pageNum) {
 	return {
 		type: PAGINATION.TURN_TO_PAGE,
 		payload: pageNum
+	}
+}
+
+function changeAppState(newState) {
+	return {
+		type: APP_STATE.CHANGE_TO,
+		payload: newState
 	}
 }

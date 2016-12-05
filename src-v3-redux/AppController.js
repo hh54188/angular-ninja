@@ -33,7 +33,7 @@ angular.module('app')
 			}
 		}
 
-		function  assignState(scope, state) {
+		function assignState(scope, state) {
 			scope.keywords = state.get('keywords').toJS();
 			scope.sources = state.get('sources').toJS();
 			scope.subways = state.get('subways').toJS();

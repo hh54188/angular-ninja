@@ -62,11 +62,24 @@
 		.app-state-loading .panel-modal {
 			display: block;
 		}
+		.no-round-corner {
+			border-radius: 0;
+		}
+		.position-fixed {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
 	</style>	
 </head>
 <body>
 <body ng-app="app">
 	<div class="container-fluid"  ng-controller="AppController">
+		<div class="row">
+			<!-- <div class="alert alert-success no-round-corner position-fixed" role="alert">Success</div> -->
+			<!-- <div class="alert alert-danger no-round-corner position-fixed" role="alert">Danger</div> -->
+		</div>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="page-header">
@@ -264,6 +277,7 @@
 	<script type="text/javascript" src="./SelectedSubwayFilter.js"></script>
 	<script type="text/javascript" src="./UnselectedSubwayFilter.js"></script>	
 	<!-- Reducers -->
+	<script type="text/javascript" src="./reducers/appstate.js"></script>
 	<script type="text/javascript" src="./reducers/data.js"></script>
 	<script type="text/javascript" src="./reducers/pagination.js"></script>
 	<script type="text/javascript" src="./reducers/time.js"></script>

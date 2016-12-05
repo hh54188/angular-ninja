@@ -9,7 +9,8 @@ function rootReducer(state, action) {
 		{'subways': subwayReducer},
 		{'times': timeReducer},
 		{'pagination': paginationReducer},
-		{'data': dataReducer}
+		{'data': dataReducer},
+		{'appState': appStateReducer}
 	];
 
 	// data字段的属性和其他的属性（如keywords、sources等）不同
@@ -21,17 +22,13 @@ function rootReducer(state, action) {
 		reducers.forEach(function (reducerItem, index) {
 			for (var property in reducerItem) {
 				var reducer = reducerItem[property];
-				// if (index === reducers.length - 1) {
-				// 	initialState = reducer(initialState, action)
-				// } else {
-					initialState = initialState.set(
-						property, 
-						reducer(
-							initialState.get(property),
-							action
-						)
-					);
-				// }
+				initialState = initialState.set(
+					property, 
+					reducer(
+						initialState.get(property),
+						action
+					)
+				);
 			}
 		});
 
