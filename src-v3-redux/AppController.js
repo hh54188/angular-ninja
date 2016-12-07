@@ -46,9 +46,9 @@ angular.module('app')
 
 		Store.subscribe(function (state) {
 			assignState($scope, state);
-			console.log($scope.sources.map(function (el) {
-				return el.checked;
-			}))
+			console.log($scope.sources.map(function (item) {
+				return item.checked;
+			}));
 		});
 
 		assignState($scope, Store.getState());
@@ -61,6 +61,13 @@ angular.module('app')
 		$scope.keywordsIsEditable = false;
 		$scope.enableEditKeywords = function () {
 			$scope.keywordsIsEditable = !$scope.keywordsIsEditable;
+		}
+
+		function blurInputElementsInForm(form) {
+			var inputs = Array.prototype.slice.call(form.querySelectorAll('input'));
+			inputs.forEach(function (el) {
+				el.blur();
+			});
 		}
 
 		// Store.dispatch应该被bound起来，参考redux官方文档的的关于action部分：
@@ -78,11 +85,13 @@ angular.module('app')
 			);			
 		}
 
-
 		// Business Logic:
 		// Keywords----------
-		$scope.addKeyword = function (keyword) {
-			$scope.tempKeyword = ''; // UI Logic, bad practice
+		$scope.addKeyword = function (event, keyword) {
+			// UI Logic, bad practice
+			blurInputElementsInForm(event.target);
+			$scope.tempKeyword = ''; 
+
 			Store.dispatch(addKeyword(keyword));
 			dispatchRequestData();
 		}

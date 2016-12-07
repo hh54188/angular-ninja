@@ -4,6 +4,7 @@
 function requestData(parameters) {
 	return function (dispatch) {
 		dispatch(changeAppState('app-state-loading'));
+		console.log('Request data');
 		$.ajax({
 			url: 'http://example.com/',
 			dataType: 'json',
@@ -17,6 +18,7 @@ function requestData(parameters) {
 				dispatch(changeAppState('app-state-normal'));
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
+				console.error('canceled');
 				dispatch(receiveData({
 					data: [],
 					error: textStatus
