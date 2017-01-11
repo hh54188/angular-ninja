@@ -4,6 +4,7 @@
 	<title></title>
 	<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="../bower_components/semantic/dist/semantic.min.js"></script>
+	<script type="text/javascript" src="../bower_components/vue/dist/vue.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../bower_components/semantic/dist/semantic.min.css">
 	<style type="text/css">
 	    label, span, button, div {
@@ -27,38 +28,29 @@
 		<div class="row">
 			<div class="column">
 				<div class="ui form">
-					<div class="field">
-						<label>请输入搜索词</label>
-						<div class="ui action input">
-							<input type="text" value="">
-						  	<button class="ui teal right labeled icon button primary">
-						    	<i class="search icon"></i>
-						    	<span>输入关键词</span>
-						  	</button>
+					<form id="app" v-on:submit="submitHandler" autocomplete="off">
+						<div class="field">
+							<label>请输入搜索词</label>
+							<div class="ui action input">
+								<input id="input-keyword" v-model="keyword" type="text" value="" name="keyword">
+							  	<button type="submit" class="ui teal right labeled icon button primary">
+							    	<i class="search icon"></i>
+							    	<span>输入关键词</span>
+							  	</button>
+							</div>
+							<div style="display: none;" id="label-error" class="ui pointing label">
+						      	<span class="content">填写有误</span>
+						      	<i v-on:click="hideError" class="icon close"></i>
+						    </div>
 						</div>
-					</div>
-					<div class="ui labels">
-					  	<a class="ui label">
-					    	Fun
-					    	<i class="icon close"></i>
-					  	</a>
-					  	<a class="ui label">
-					    	Fun
-					    	<i class="icon close"></i>
-					  	</a>
-					  	<a class="ui label">
-					    	Fun
-					    	<i class="icon close"></i>
-					  	</a>
-					  	<a class="ui label">
-					    	Fun
-					    	<i class="icon close"></i>
-					  	</a>
-					  	<a class="ui label">
-					    	Fun
-					    	<i class="icon close"></i>
-					  	</a>
-					</div>
+						<div class="ui labels">
+						  	<a v-for="word in keywords" class="ui label">
+						    	<span>{{word}}</span>
+						    	<i v-on:click="deleteWordHandler" v-bind:data-word="word" class="icon close"></i>
+						  	</a>
+						</div>
+					</form>
+
 					<div class="ui top attached tabular menu">
 					  	<a class="active item" data-tab="first">
 					  		<span>最新</span>
@@ -103,5 +95,6 @@
 	<script type="text/javascript">
 		$('.menu .item').tab();
 	</script>
+	<script type="text/javascript" src="./app.js"></script>
 </body>
 </html>
