@@ -8,6 +8,29 @@
 	<script type="text/javascript" src="../bower_components/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../bower_components/immutable/dist/immutable.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/css/bootstrap.min.css">	
+	<link rel="stylesheet" type="text/css" href="./spinner.css">
+	<script type="text/javascript">
+		// $.ajax({
+		// 	url: 'http://example.com/',
+		// 	dataType: 'json',
+		// 	timeout: 1000 * 1,
+		// 	data: {
+		// 		str1: 'str1',
+		// 		str2: 'str2',
+		// 		str3: 'str3',
+		// 		keywords: ['keyword01', 'keyword02']
+		// 	},
+		// 	success: function (data, textStatus, jqXHR) {
+		// 		console.log('success------>', data, textStatus, jqXHR)
+		// 	},
+		// 	error: function (jqXHR, textStatus, errorThrown) {
+		// 		console.log('error------>', jqXHR, textStatus, errorThrown);
+		// 	},
+		// 	complete: function (jqXHR, textStatus) {
+		// 		console.log('complete------>', jqXHR, textStatus);
+		// 	}
+		// });
+	</script>
 	<style type="text/css">
 		html body {
 			font-family: '微软雅黑', '思源黑体';
@@ -25,11 +48,38 @@
 		* {
 			outline: none;
 		}
+		.panel-modal {
+			display: none;
+			position: absolute;
+		    left: 0;
+		    top: 0;
+		    background: white;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 1050; /* 参考bootstrap .modal组件 */
+		    opacity: 0.6;
+		}
+		.app-state-loading .panel-modal {
+			display: block;
+		}
+		.no-round-corner {
+			border-radius: 0;
+		}
+		.position-fixed {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
 	</style>	
 </head>
 <body>
 <body ng-app="app">
 	<div class="container-fluid"  ng-controller="AppController">
+		<div class="row">
+			<!-- <div class="alert alert-success no-round-corner position-fixed" role="alert">Success</div> -->
+			<!-- <div class="alert alert-danger no-round-corner position-fixed" role="alert">Danger</div> -->
+		</div>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="page-header">
@@ -41,15 +91,31 @@
 			<div class="col-lg-5 col-md-6 col-sm-6">
 				<div class="row">
 					<div class="col-lg-6 col-md-6 col-sm-7">
+						<div class="panel-modal">
+							<div class="sk-circle">
+								<div class="sk-circle1 sk-child"></div>
+								<div class="sk-circle2 sk-child"></div>
+								<div class="sk-circle3 sk-child"></div>
+								<div class="sk-circle4 sk-child"></div>
+								<div class="sk-circle5 sk-child"></div>
+								<div class="sk-circle6 sk-child"></div>
+								<div class="sk-circle7 sk-child"></div>
+								<div class="sk-circle8 sk-child"></div>
+								<div class="sk-circle9 sk-child"></div>
+								<div class="sk-circle10 sk-child"></div>
+								<div class="sk-circle11 sk-child"></div>
+								<div class="sk-circle12 sk-child"></div>
+							</div>
+						</div>
 						<div class="panel panel-default">
 						  	<div class="panel-heading">
 						  		<span>搜索关键词</span>
 						  		<button type="button" class="btn btn-default btn-xs pull-right" aria-label="Left Align">
-							<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
-						</button>
+									<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+								</button>
 						  	</div>
 						  	<div class="panel-body">
-								<form ng-submit="addKeyword(tempKeyword)" required>
+								<form ng-submit="addKeyword($event, tempKeyword)" required>
 									<div class="form-group">						
 								    	<label>关键词</label>
 									    <div class="input-group">
@@ -95,6 +161,22 @@
 						</div>						
 					</div>
 					<div class="col-lg-6 col-md-6 col-sm-5">
+						<div class="panel-modal">
+							<div class="sk-circle">
+								<div class="sk-circle1 sk-child"></div>
+								<div class="sk-circle2 sk-child"></div>
+								<div class="sk-circle3 sk-child"></div>
+								<div class="sk-circle4 sk-child"></div>
+								<div class="sk-circle5 sk-child"></div>
+								<div class="sk-circle6 sk-child"></div>
+								<div class="sk-circle7 sk-child"></div>
+								<div class="sk-circle8 sk-child"></div>
+								<div class="sk-circle9 sk-child"></div>
+								<div class="sk-circle10 sk-child"></div>
+								<div class="sk-circle11 sk-child"></div>
+								<div class="sk-circle12 sk-child"></div>
+							</div>
+						</div>					
 						<div class="panel panel-default">
 							<div class="panel-heading clearfix">
 								<span>结果过滤</span>						
@@ -178,7 +260,8 @@
 				  			</tfoot>
 				  		</table>									
 				  	</div>
-				  	<div class="panel-footer">
+				  	<div class="panel-footer" style="position: relative;">
+						<div class="panel-modal"></div>
 				  		<div go-page-action="goPage(pageNum)" pagination total="{{pagination.total}}" cur="{{pagination.cur}}" class="text-center"></div>
 				  	</div>
 				</div>
@@ -194,6 +277,8 @@
 	<script type="text/javascript" src="./SelectedSubwayFilter.js"></script>
 	<script type="text/javascript" src="./UnselectedSubwayFilter.js"></script>	
 	<!-- Reducers -->
+	<script type="text/javascript" src="./reducers/appstate.js"></script>
+	<script type="text/javascript" src="./reducers/data.js"></script>
 	<script type="text/javascript" src="./reducers/pagination.js"></script>
 	<script type="text/javascript" src="./reducers/time.js"></script>
 	<script type="text/javascript" src="./reducers/subway.js"></script>

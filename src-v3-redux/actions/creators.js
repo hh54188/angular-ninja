@@ -1,3 +1,42 @@
+// 这里仍然有多个问题需要解决：
+// 1. 如果用户在上一个请求还没有完成的情况下就发出下一个请求怎么办？
+// 2. 这样把dispatch传入真的是一个好的实践吗？
+function requestData(parameters) {
+	return function (dispatch) {
+		dispatch(changeAppState('app-state-loading'));
+		console.log('Request data');
+		$.ajax({
+			url: 'http://example.com/',
+			dataType: 'json',
+			timeout: 1000 * 1,
+			data: parameters,
+			success: function (data, textStatus, jqXHR) {
+				dispatch(receiveData({
+					data: data,
+					error: ''
+				}))
+				dispatch(changeAppState('app-state-normal'));
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.error('canceled');
+				dispatch(receiveData({
+					data: [],
+					error: textStatus
+				}));
+				dispatch(changeAppState('app-state-error'));
+			},
+			complete: function (jqXHR, textStatus) {}
+		});
+	}
+}
+
+function receiveData(result) {
+	return {
+		type: DATA.RECEIVE_DATA,
+		payload: result // {data: [], error: ''}
+	}
+}
+
 function addKeyword(word) {
 	return {
 		type: KEYWORD.ADD_KEYWORD,
@@ -57,5 +96,12 @@ function turnToPage(pageNum) {
 	return {
 		type: PAGINATION.TURN_TO_PAGE,
 		payload: pageNum
+	}
+}
+
+function changeAppState(newState) {
+	return {
+		type: APP_STATE.CHANGE_TO,
+		payload: newState
 	}
 }

@@ -1,6 +1,7 @@
 var _listenerQueue = [];
 var _currentState = null;
 var _initialState = Immutable.fromJS({
+	appState: 'app-state-normal',
 	pagination: {
 		total: 10,
 		cur: 3
@@ -211,13 +212,23 @@ function publish(state) {
 	});
 }
 
+function isFunction(obj) {
+	return Object.prototype.toString.call(obj) === '[object Function]'
+			? true
+			: false;
+}
+
 var Store = {
 	dispatch: function (action) {
-		_currentState = rootReducer(
-			this.getState(),
-			action
-		);
-		publish(_currentState);
+		if (isFunction(action)) {
+			action(this.dispatch.bind(this));
+		} else {
+			_currentState = rootReducer(
+				this.getState(),
+				action
+			);
+			publish(_currentState);
+		}
 	},
 	getState: function () {
 		return _currentState || _initialState;
