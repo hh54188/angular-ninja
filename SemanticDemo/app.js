@@ -2,7 +2,23 @@ var app = new Vue({
     el: '#app',
     data: {
     	keyword: '',
-    	keywords: ['word1', 'word2']
+    	keywords: ['word1', 'word2'],
+        maxWordsCount: 10,
+        formIsAvailable: true,
+        latestData: {
+            data: [],
+            pagination: {
+                total: 10,
+                cur: 1
+            }
+        },
+        searchData: {
+            data: [],
+            pagination: {
+                total: 10,
+                cur: 1
+            }            
+        } 
     },
     methods: {
     	validate: function (value) {
@@ -52,7 +68,27 @@ var app = new Vue({
     		this.hideError();
     		this.keywords.push(this.keyword);
     		this.keyword = '';
+
+            this.fetch();
     	},
+        enableForm: function () {
+            this.formIsAvailable = true;
+        },
+        disableForm: function () {
+            this.formIsAvailable = false;
+        },
+        swtichToSearchResultTab: function () {
+            PubSub.publish('swtichToSearchResultTab');
+        },
+        fetch: function () {
+            this.disableForm();
+            this.swtichToSearchResultTab();
+            var timeoutCounter = setInterval(function () {
+                if (!this.formIsAvailable) {
+                    this.enableForm();
+                }
+            }.bind(this), 1000 * 3);
+        },
     	deleteWordHandler: function (event) {
     		var target = event.target;
     		var wordToDelete = target.getAttribute('data-word');

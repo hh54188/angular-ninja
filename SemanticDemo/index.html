@@ -5,6 +5,7 @@
 	<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="../bower_components/semantic/dist/semantic.min.js"></script>
 	<script type="text/javascript" src="../bower_components/vue/dist/vue.min.js"></script>
+	<script type="text/javascript" src="../bower_components/PubSubJS/src/pubsub.js"></script>
 	<link rel="stylesheet" type="text/css" href="../bower_components/semantic/dist/semantic.min.css">
 	<style type="text/css">
 	    label, span, button, div {
@@ -27,10 +28,10 @@
         </div>
 		<div class="row">
 			<div class="column">
-				<div class="ui form">
-					<form id="app" v-on:submit="submitHandler" autocomplete="off">
+				<div id="app">
+					<form v-bind:class="{ 'loading': !formIsAvailable }" class="ui form" v-on:submit="submitHandler" autocomplete="off">
 						<div class="field">
-							<label>请输入搜索词</label>
+							<label>请输入搜索关键词(最多{{maxWordsCount}}个)</label>
 							<div class="ui action input">
 								<input id="input-keyword" v-model="keyword" type="text" value="" name="keyword">
 							  	<button type="submit" class="ui teal right labeled icon button primary">
@@ -92,9 +93,12 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$('.menu .item').tab();
-	</script>
 	<script type="text/javascript" src="./app.js"></script>
+	<script type="text/javascript">
+		var tab = $('.menu .item').tab();
+		PubSub.subscribe('swtichToSearchResultTab', function () {
+			tab.tab('change tab', 'second');
+		});
+	</script>
 </body>
 </html>
