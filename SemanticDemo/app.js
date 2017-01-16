@@ -12,7 +12,7 @@ var app = new Vue({
                 cur: 1
             }
         },
-        searchData: {
+        searchedData: {
             data: [],
             pagination: {
                 total: 10,
@@ -20,7 +20,29 @@ var app = new Vue({
             }            
         } 
     },
-    methods: {
+    watch: {
+        keywords: {
+            deep: true,
+            handler: function () {
+                console.log('keywords Changed!');
+            }
+        },
+        'searchedData.pagination': {
+            deep: true,
+            handler: function () {
+                console.log('searchedData.pagination Changed!--->', JSON.stringify(this.searchedData.pagination));
+                this.search();
+            }
+        },
+        'latestData.pagination' : {
+            deep: true,
+            handler: function () {
+                console.log('latestData.pagination Changed!--->', JSON.stringify(this.latestData.pagination));
+                this.fetch();
+            }
+        }
+    },
+    methods: { 
     	validate: function (value) {
     		// 如果没有值，返回
     		if (!value) {
@@ -68,8 +90,10 @@ var app = new Vue({
     		this.hideError();
     		this.keywords.push(this.keyword);
     		this.keyword = '';
+            // 搜索词发生修改时需要重置当前页数
+            this.searchedData.pagination.cur = 1;
 
-            this.fetch();
+            this.search();
     	},
         enableForm: function () {
             this.formIsAvailable = true;
@@ -81,13 +105,51 @@ var app = new Vue({
             PubSub.publish('swtichToSearchResultTab');
         },
         fetch: function () {
+            console.log('fetch');
+            this.disableForm();
+            $.ajax({
+                url: 'http://example.com/',
+                dataType: 'json',
+                timeout: 1000 * 1,
+                data: {
+                    page: this.latestData.pagination.cur
+                },
+                success: function (data, textStatus, jqXHR) {
+
+                }.bind(this),
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }.bind(this),
+                complete: function (jqXHR, textStatus) {
+                    this.enableForm();
+                }.bind(this)              
+            });            
+        },
+        search: function () {
+            console.log('search');
             this.disableForm();
             this.swtichToSearchResultTab();
-            var timeoutCounter = setInterval(function () {
-                if (!this.formIsAvailable) {
+
+            var parameters = {
+                keywords: this.keywords.join('_'),
+                page: this.searchedData.pagination.cur
+            };
+
+            $.ajax({
+                url: 'http://example.com/',
+                dataType: 'json',
+                timeout: 1000 * 1,
+                data: parameters,
+                success: function (data, textStatus, jqXHR) {
+
+                }.bind(this),
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }.bind(this),
+                complete: function (jqXHR, textStatus) {
                     this.enableForm();
-                }
-            }.bind(this), 1000 * 3);
+                }.bind(this)
+            });
         },
     	deleteWordHandler: function (event) {
     		var target = event.target;
