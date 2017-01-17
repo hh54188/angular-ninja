@@ -25,20 +25,23 @@ var app = new Vue({
             deep: true,
             handler: function () {
                 console.log('keywords Changed!');
+                // 搜索词发生修改时需要重置当前页数
+                this.searchedData.pagination.cur = 1;
+                this.searchByKeywords();
             }
         },
         'searchedData.pagination': {
             deep: true,
             handler: function () {
                 console.log('searchedData.pagination Changed!--->', JSON.stringify(this.searchedData.pagination));
-                this.search();
+                this.searchByKeywords();
             }
         },
         'latestData.pagination' : {
             deep: true,
             handler: function () {
                 console.log('latestData.pagination Changed!--->', JSON.stringify(this.latestData.pagination));
-                this.fetch();
+                this.fetchLatest();
             }
         }
     },
@@ -76,24 +79,7 @@ var app = new Vue({
     		errorLabel.style.display = 'none';
     	},
     	submitHandler: function (event) {
-    		event.preventDefault();
-    		var form = event.target;
-    		var keywordInput = form.querySelector('#input-keyword');
-    		var validateResult = this.validate(this.keyword);
-    		
-    		if (validateResult > 0) {
-    			this.showError(this.errorCodeMapping(validateResult));
-    			this.keyword = '';
-    			return;
-    		}
-
-    		this.hideError();
-    		this.keywords.push(this.keyword);
-    		this.keyword = '';
-            // 搜索词发生修改时需要重置当前页数
-            this.searchedData.pagination.cur = 1;
-
-            this.search();
+            // this.searchByKeywords();
     	},
         enableForm: function () {
             this.formIsAvailable = true;
@@ -104,8 +90,14 @@ var app = new Vue({
         swtichToSearchResultTab: function () {
             PubSub.publish('swtichToSearchResultTab');
         },
-        fetch: function () {
-            console.log('fetch');
+        resolveKeywordsSearchResult: function (data) {
+            this.searchedData.data = JSON.parse(data);
+        },
+        resolveLatestFetchResult: function (data) {
+            this.latestData.data = JSON.parse(data);
+        },        
+        fetchLatest: function () {
+            console.log('fetchLatest');
             this.disableForm();
             $.ajax({
                 url: 'http://example.com/',
@@ -115,18 +107,20 @@ var app = new Vue({
                     page: this.latestData.pagination.cur
                 },
                 success: function (data, textStatus, jqXHR) {
-
+                    this.resolveLatestFetchResult(data);
                 }.bind(this),
+                
                 error: function (jqXHR, textStatus, errorThrown) {
 
                 }.bind(this),
+                
                 complete: function (jqXHR, textStatus) {
                     this.enableForm();
                 }.bind(this)              
             });            
         },
-        search: function () {
-            console.log('search');
+        searchByKeywords: function () {
+            console.log('searchByKeywords');
             this.disableForm();
             this.swtichToSearchResultTab();
 
@@ -135,21 +129,41 @@ var app = new Vue({
                 page: this.searchedData.pagination.cur
             };
 
+            console.log(JSON.stringify(parameters));
+
             $.ajax({
                 url: 'http://example.com/',
                 dataType: 'json',
                 timeout: 1000 * 1,
                 data: parameters,
                 success: function (data, textStatus, jqXHR) {
-
+                    this.resolveKeywordsSearchResult(data);
                 }.bind(this),
+                
                 error: function (jqXHR, textStatus, errorThrown) {
 
                 }.bind(this),
+                
                 complete: function (jqXHR, textStatus) {
                     this.enableForm();
                 }.bind(this)
             });
+        },
+        addWordHandler: function (event) {
+            event.preventDefault();
+            var form = event.target;
+            var keywordInput = form.querySelector('#input-keyword');
+            var validateResult = this.validate(this.keyword);
+            
+            if (validateResult > 0) {
+                this.showError(this.errorCodeMapping(validateResult));
+                this.keyword = '';
+                return;
+            }
+
+            this.hideError();
+            this.keywords.push(this.keyword);
+            this.keyword = '';
         },
     	deleteWordHandler: function (event) {
     		var target = event.target;

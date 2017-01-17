@@ -32,7 +32,7 @@
 		<div class="row">
 			<div class="column">
 				<div id="app" class="ui form"  v-bind:class="{ 'loading': !formIsAvailable }">
-					<form v-on:submit="submitHandler" autocomplete="off">
+					<form v-on:submit="addWordHandler" autocomplete="off">
 						<div class="field">
 							<label>请输入搜索关键词(最多{{maxWordsCount}}个)</label>
 							<div class="ui action input">
