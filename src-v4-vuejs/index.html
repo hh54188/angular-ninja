@@ -17,10 +17,13 @@
         .hide {
         	display: none!important;
         }
+        a {
+        	outline: none!important;
+        }
 	</style>
 </head>
 <body>
-	<div class="ui small modal error">
+	<div id="modal-error" class="ui small modal">
 	  	<div class="ui header">
 	  		<span>出错啦</span>
 	  	</div>
@@ -35,20 +38,92 @@
 	    	</div>
 	  	</div>
 	</div>
-	<div class="ui menu" style="margin-top: 0;">
-	  	<a class="item">
+	<div id="modal-brief"  class="ui small modal">
+	  	<div class="ui header">
+	  		<span>关于这个工具</span>
+	  	</div>
+	  	<div class="content">
+	  		<p>这是这个租房小工具的第二版，很抱歉隔了这么久才重新上线，不知道看到这段话的人有多少是老用户</p>
+	  		<p>这个工具抓取了豆瓣上十余个小组的租房信息，并且支持最多同时搜索10个关键词相关的租房信息</p>
+	  		<p>未来还有可能加入58同城上的租房信息</p>
+	  		<p>这是个开源工具，程序托管在github上，地址是 https://github.com/hh54188/angular-ninja， 如果你是一名程序员的话你可以尝试修改这个程序抓取其他的数据，或者部署在自己的服务器上。但<strong>请保留出处以及勿做商用</strong> </p>
+	  	</div>
+	  	<div class="actions">
+	   		<div class="ui green ok inverted button">
+	      		<i class="checkmark icon"></i>
+	      		<span>明白</span>
+	    	</div>
+	  	</div>		
+	</div>
+	<div id="modal-contact"  class="ui small modal">
+	  	<div class="ui header">
+	  		<span>联络我</span>
+	  	</div>
+	  	<div class="content">
+	  		<p>欢迎给这个工具提出意见或者建议。我的邮箱地址是 juststayinvegas@gmail.com。</p>
+	  		<p>但在邮件我之前，可以先看看FAQ，那里或许我对一些工具上的设计做出了解释:)</p>
+	  	</div>
+	  	<div class="actions">
+	   		<div class="ui green ok inverted button">
+	      		<i class="checkmark icon"></i>
+	      		<span>明白</span>
+	    	</div>
+	  	</div>		
+	</div>
+	<div id="modal-faq"  class="ui small modal">
+	  	<div class="ui header">
+	  		<span>常见问题</span>
+	  	</div>
+	  	<div class="content">
+	  		<li>问：为什么没有完整的翻页功能？比如跳转到指定页数，显示当前页数等</li>
+	  		<li>答：简单来说，开发一个完整的翻页功能有点麻烦。比如开发整个页面需要一天，开发完整的翻页也需要一天，没有性价比，就算了。</li>
+	  		<p></p>
+	  		<li>问：为什么搜索那么慢，而且还常常搜索失败？</li>
+	  		<li>答：毕竟这个程序涉及到的硬件成本只有个十几美元，自然速度不快了</li>
+	  		<p></p>
+	  		<li>问：那为什么不追加成本呢？</li>
+	  		<li>答：因为用这个工具的人不多，每天有十几人就很不错了。而且没有人会一直用它，通常找到房子了也就不用了。更重要的是，花的不是您的钱呐</li>
+	  	</div>
+	  	<div class="actions">
+	   		<div class="ui green ok inverted button">
+	      		<i class="checkmark icon"></i>
+	      		<span>明白</span>
+	    	</div>
+	  	</div>		
+	</div>
+	<div id="modal-donate"  class="ui small modal">
+	  	<div class="ui header">
+	  		<span>为什么要捐助</span>
+	  	</div>
+	  	<div class="content">
+	  		<p>编写这个程序是有成本的。人工成本可以忽略不计，就我一人，当作练手好了。但是运行是有成本的，买域名是有成本了。具体的成本是：</p>
+	  		<li>部署在Heroku上一个月7美元</li>
+	  		<li>购买数据库</li>
+	  		<p></p>
+	  		<p>这些成本是这个程序独享的，而且未来如果访问人数较多并且性能不够用的话，还有可能进行追加</p>
+	  		<p>当然这些成本也在我的承受范围之内。但如果有你的一点支持的话，我会做的更好:)</p>
+	  	</div>
+	  	<div class="actions">
+	   		<div class="ui green ok inverted button">
+	      		<i class="checkmark icon"></i>
+	      		<span>完成</span>
+	    	</div>
+	  	</div>		
+	</div>	
+	<div class="ui menu fluid" style="margin-top: 0;">
+	  	<a id="nav-brief" class="item nav-item" href="javascript:void(0);">
 			<i class="ui icon info circle"></i>	  	
 	    	<span>简单说明</span>
 	  	</a>
-		<a class="item">
+		<a id="nav-contact" class="item nav-item" href="javascript:void(0);">
 			<i class="ui icon mail"></i>
 		    <span>联系作者（意见与建议）</span>
 		</a>
-		<a class="item">
+		<a id="nav-faq" class="item nav-item" href="javascript:void(0);">
 			<i class="ui icon help circle"></i>
 		    <span>FAQ（常见问题）</span>
 		</a>
-		<a class="item">
+		<a id="nav-donate" class="item nav-item" href="javascript:void(0);">
 			<i class="ui icon yen"></i>
 		    <span>捐助</span>
 		</a>		
@@ -136,6 +211,10 @@
 		PubSub.subscribe('swtichToSearchResultTab', function () {
 			tab.tab('change tab', 'second');
 		});
+		$('.nav-item').on('click', function () {
+			var navItemId = this.id;
+			$('#modal-' + navItemId.split('-')[1]).modal('show');
+		})
 	</script>
 </body>
 </html>

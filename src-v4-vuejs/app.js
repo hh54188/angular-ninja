@@ -2,7 +2,7 @@ var app = new Vue({
     el: '#app',
     data: {
     	keyword: '',
-    	keywords: ['word1', 'word2'],
+    	keywords: [],
         maxWordsCount: 10,
         formIsAvailable: true,
         latestData: {
@@ -99,7 +99,10 @@ var app = new Vue({
             response = JSON.parse(response);
             this.latestData.data = response.data;
             this.latestData.pagination.total = response.pagination.total;
-        },        
+        },
+        openErrorWindow: function () {
+            $('#modal-error').modal('show');
+        },
         fetchLatest: function () {
             console.log('fetchLatest');
             this.disableForm();
@@ -115,7 +118,7 @@ var app = new Vue({
                 }.bind(this),
                 
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus, errorThrown);
+                    this.openErrorWindow();
                 }.bind(this),
                 
                 complete: function (jqXHR, textStatus) {
@@ -145,7 +148,7 @@ var app = new Vue({
                 }.bind(this),
                 
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('.modal.error').modal('show');
+                    this.openErrorWindow();
                 }.bind(this),
                 
                 complete: function (jqXHR, textStatus) {
