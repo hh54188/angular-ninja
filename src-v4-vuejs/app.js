@@ -90,11 +90,15 @@ var app = new Vue({
         swtichToSearchResultTab: function () {
             PubSub.publish('swtichToSearchResultTab');
         },
-        resolveKeywordsSearchResult: function (data) {
-            this.searchedData.data = JSON.parse(data);
+        resolveKeywordsSearchResult: function (response) {
+            response = JSON.parse(response);
+            this.searchedData.data = response.data;
+            this.searchedData.pagination.total = response.pagination.total;
         },
-        resolveLatestFetchResult: function (data) {
-            this.latestData.data = JSON.parse(data);
+        resolveLatestFetchResult: function (response) {
+            response = JSON.parse(response);
+            this.latestData.data = response.data;
+            this.latestData.pagination.total = response.pagination.total;
         },        
         fetchLatest: function () {
             console.log('fetchLatest');
@@ -111,7 +115,7 @@ var app = new Vue({
                 }.bind(this),
                 
                 error: function (jqXHR, textStatus, errorThrown) {
-
+                    console.log(textStatus, errorThrown);
                 }.bind(this),
                 
                 complete: function (jqXHR, textStatus) {
@@ -141,7 +145,7 @@ var app = new Vue({
                 }.bind(this),
                 
                 error: function (jqXHR, textStatus, errorThrown) {
-
+                    $('.modal.error').modal('show');
                 }.bind(this),
                 
                 complete: function (jqXHR, textStatus) {
@@ -169,7 +173,7 @@ var app = new Vue({
     		var target = event.target;
     		var wordToDelete = target.getAttribute('data-word');
     		var wordIndex = this.keywords.indexOf(wordToDelete);
-    		this.keywords.splice(wordIndex);
+    		this.keywords.splice(wordIndex, 1);
     	}
     }
 });
